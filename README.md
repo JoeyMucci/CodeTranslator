@@ -12,5 +12,5 @@ Inside our components we will also have various cells, which are Redwood specifi
 One more important file in the web folder is routes.jsx, which sets all the urls for our different pages. 
 
 In api, the src folder contains our services, which are various functions we perform by querying from the database Redwood provides. 
-Under the graphql folder are .sdl files where we define CRUD (create, read, update, delete) operations that our app supports various items we store in our database. 
-Importantly, under the db folder are our migrations and schema provided by Prisma, which handle our database operations. 
+Under the graphql folder are .sdl files where we define CRUD (create, read, update, delete) operations that our app supports various for items we store in our database. 
+Importantly, under the db folder are our migrations and schema provided by Prisma, which handles our database operations. 
