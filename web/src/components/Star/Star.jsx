@@ -5,10 +5,21 @@ import starOutline from '../../../public/starOutline.png'
 const Star = () => {
   return (
     <div>
-      {/* <img src={starOutline} alt="Star" /> */}
       <a id="home">
-        <img className="image_off" src={starFilled} alt="Filled Star" />
-        <img className="image_on" src={starOutline} alt="Empty Star" />
+        <img
+          className="image_off"
+          src={starFilled}
+          alt="Filled Star"
+          width="48"
+          height="48"
+        />
+        <img
+          className="image_on"
+          src={starOutline}
+          alt="Empty Star"
+          width="48"
+          height="48"
+        />
       </a>
     </div>
   )

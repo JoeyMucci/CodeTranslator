@@ -4,3 +4,9 @@
 .image_on, #home:hover .image_off{
   display:block
 }
+.inline-block {
+  display: inline-block;
+}
+.code {
+  font-family: "Lucida Console", "Courier New", monospace;
+}
