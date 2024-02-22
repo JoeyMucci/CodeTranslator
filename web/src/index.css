@@ -1,0 +1,6 @@
+.image_off, #home:hover .image_on{
+  display:none
+}
+.image_on, #home:hover .image_off{
+  display:block
+}

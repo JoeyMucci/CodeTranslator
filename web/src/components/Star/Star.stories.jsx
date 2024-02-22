@@ -14,4 +14,6 @@ import Star from './Star'
 
 export default { component: Star }
 
-export const Primary = {}
+export const unhovered = {}
+
+export const hovered = {}
