@@ -1,12 +1,20 @@
-.image_off, #home:hover .image_on{
+/* .image_off, #home:hover .image_on{
   display:none
 }
 .image_on, #home:hover .image_off{
   display:block
-}
+} */
 .inline-block {
   display: inline-block;
 }
-.code {
+/* .code {
   font-family: "Lucida Console", "Courier New", monospace;
+} */
+.error
+{
+  color: red;
+}
+.problem
+{
+  text-decoration: underline dotted red;
 }
