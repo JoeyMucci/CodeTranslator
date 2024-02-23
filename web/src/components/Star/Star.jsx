@@ -2,11 +2,11 @@
 import starFilled from '../../../public/starFilled.png'
 import starOutline from '../../../public/starOutline.png'
 
-const Star = ({ hov = false }) => {
+const Star = ({ num, hov = false }) => {
   let color = hov ? starFilled : starOutline
   let text = hov ? 'Filled Star' : 'Empty Star'
   return (
-    <div>
+    <div id={num}>
       <img src={color} alt={text} width="48" height="48" />
     </div>
   )

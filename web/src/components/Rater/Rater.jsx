@@ -1,11 +1,16 @@
 import Star from '../Star/Star.jsx'
 
 const Rater = ({ stars = 0 }) => {
-  let star1 = stars > 0 ? <Star hov={true} /> : <Star />
-  let star2 = stars > 1 ? <Star hov={true} /> : <Star />
-  let star3 = stars > 2 ? <Star hov={true} /> : <Star />
-  let star4 = stars > 3 ? <Star hov={true} /> : <Star />
-  let star5 = stars > 4 ? <Star hov={true} /> : <Star />
+  let star1 =
+    stars > 0 ? <Star num="starone" hov={true} /> : <Star num="starone" />
+  let star2 =
+    stars > 1 ? <Star num="startwo" hov={true} /> : <Star num="startwo" />
+  let star3 =
+    stars > 2 ? <Star num="starthree" hov={true} /> : <Star num="starthree" />
+  let star4 =
+    stars > 3 ? <Star num="starfour" hov={true} /> : <Star num="starfour" />
+  let star5 =
+    stars > 4 ? <Star num="starfive" hov={true} /> : <Star num="starfive" />
   let message = ''
   switch (stars) {
     case 0:
