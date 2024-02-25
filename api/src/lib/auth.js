@@ -15,6 +15,14 @@ export const hasRole = ({ roles }) => {
   return roles !== undefined
 }
 
+const bcrypt = require('bcrypt')
+
+const hashPassword = async (password) => {
+  const HashedPassword = await bcrypt.hash(password, 10)
+  return HashedPassword
+}
+
+module.exports = { hashPassword }
 // This is used by the redwood directive
 // in ./api/src/directives/requireAuth
 
