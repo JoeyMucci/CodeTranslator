@@ -1,4 +1,4 @@
-import { render } from '@redwoodjs/testing/web'
+import { render, screen } from '@redwoodjs/testing/web'
 
 import Star from './Star'
 
@@ -10,5 +10,15 @@ describe('Star', () => {
     expect(() => {
       render(<Star />)
     }).not.toThrow()
+  })
+
+  it('empty by default', () => {
+    render(<Star />)
+    expect(screen.getByAltText('Empty Star')).toBeInTheDocument()
+  })
+
+  it('lights up', () => {
+    render(<Star hov={true} />)
+    expect(screen.getByAltText('Filled Star')).toBeInTheDocument()
   })
 })

@@ -35,10 +35,10 @@ const Rater = ({ stars = 0 }) => {
       message = <code>response == &quot;needs some tweaks&quot;</code>
       break
     case 4:
-      message = <code>reponse = &quot;mostly correct&quot;</code>
+      message = <code>response = &quot;mostly correct&quot;</code>
       break
     case 5:
-      message = <code>reponse = &quot;Perfect!&quot;;</code>
+      message = <code>response = &quot;Perfect!&quot;;</code>
       break
   }
   return (
