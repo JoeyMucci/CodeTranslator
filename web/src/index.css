@@ -7,6 +7,22 @@
 .inline-block {
   display: inline-block;
 }
+.form-header {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+}
+
+.reg-flex {
+  display: flex;
+  flex-direction: column;
+  width: 540px;
+}
 /* .code {
   font-family: "Lucida Console", "Courier New", monospace;
 } */
@@ -17,4 +33,18 @@
 .problem
 {
   text-decoration: underline dotted red;
+}
+.text {
+  font-family: "Lucida Console", "Courier New", monospace;
+  color: white;
+  font-size: 32px;
+}
+.box {
+  background: gray;
+  border-radius: 10px;
+}
+.submitbox {
+  background: gray;
+  border-radius: 10px;
+  width: 540px;
 }
