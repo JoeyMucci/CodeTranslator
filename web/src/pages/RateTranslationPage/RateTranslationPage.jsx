@@ -1,4 +1,4 @@
-import Rater from 'web/src/components/Rater/Rater'
+import Rater from 'web/src/components/Rater/Rater.jsx'
 
 // import { Link, routes } from '@redwoodjs/router'
 

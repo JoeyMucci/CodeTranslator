@@ -6,12 +6,9 @@ import {
   Submit,
   TextAreaField,
   TextField,
-  useForm,
 } from '@redwoodjs/forms'
 
-const FeedbackForm = ({ onSubmit, error, loading }) => {
-  const formMethods = useForm()
-
+const FeedbackForm = ({ onSubmit, error, loading, formMethods }) => {
   return (
     <>
       <Form

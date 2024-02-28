@@ -20,10 +20,13 @@ describe('FeedbackForm', () => {
 
     await waitFor(() => userEvent.click(submitButton))
 
+    expect(screen.getByText('name is required')).toBeInTheDocument()
+    expect(screen.getByText('email is required')).toBeInTheDocument()
+    expect(screen.getByText('message is required')).toBeInTheDocument()
     expect(onSubmit).not.toHaveBeenCalled()
   })
 
-  it('submits when required fields are entered', async () => {
+  it('submits when valid fields are entered', async () => {
     const name = 'My Name'
     const email = 'valid@email.com'
     const message = "No suggestions, it's perfect!"
@@ -55,30 +58,50 @@ describe('FeedbackForm', () => {
     )
   })
 
-  it('submits with the expected, entered data', async () => {
+  it('does not submit with invalid email', async () => {
     const name = 'My Name'
-    const nickname = 'My Nickname'
+    const email = 'invalid@.email'
+    const message = "No suggestions, it's perfect!"
 
     const onSubmit = jest.fn()
 
     render(<FeedbackForm onSubmit={onSubmit} />)
 
-    const nameField = screen.getByPlaceholderText('Name')
-    const nicknameField = screen.getByPlaceholderText('Nickname')
+    const nameField = screen.getByPlaceholderText('John Smith')
+    const emailField = screen.getByPlaceholderText('john.smith@gmail.com')
+    const messageField = screen.getByPlaceholderText(
+      'Please submit any issue or feedback here. We like to gain information on how we can improve our product'
+    )
     const submitButton = screen.getByText('Submit')
 
     await waitFor(() => userEvent.type(nameField, name))
-    await waitFor(() => userEvent.type(nicknameField, nickname))
+    await waitFor(() => userEvent.type(emailField, email))
+    await waitFor(() => userEvent.type(messageField, message))
     await waitFor(() => userEvent.click(submitButton))
 
-    expect(onSubmit).toHaveBeenCalledTimes(1)
-    expect(onSubmit).toHaveBeenCalled()
-    expect(onSubmit).toHaveBeenCalledWith(
-      { name, nickname },
-      expect.objectContaining({
-        _reactName: 'onSubmit',
-        type: 'submit',
-      })
-    )
+    expect(
+      screen.getByText('Please enter a valid email address')
+    ).toBeInTheDocument()
+    expect(onSubmit).not.toHaveBeenCalled()
+  })
+
+  it('does not submit when some field is missing', async () => {
+    const name = 'My Name'
+    const email = 'valid@email.com'
+
+    const onSubmit = jest.fn()
+
+    render(<FeedbackForm onSubmit={onSubmit} />)
+
+    const nameField = screen.getByPlaceholderText('John Smith')
+    const emailField = screen.getByPlaceholderText('john.smith@gmail.com')
+    const submitButton = screen.getByText('Submit')
+
+    await waitFor(() => userEvent.type(nameField, name))
+    await waitFor(() => userEvent.type(emailField, email))
+    await waitFor(() => userEvent.click(submitButton))
+
+    expect(screen.getByText('message is required')).toBeInTheDocument()
+    expect(onSubmit).not.toHaveBeenCalled()
   })
 })

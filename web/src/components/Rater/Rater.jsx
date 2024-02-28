@@ -19,39 +19,44 @@ const Rater = ({ stars = 0 }) => {
       message = (
         <div>
           <code className="error">error:</code>
-          <code> expected usable code</code>
+          <code className="smalltext"> expected usable code</code>
         </div>
       )
       break
     case 2:
       message = (
         <div>
-          <code>response == </code>
+          <code className="smalltext">response == </code>
           <code className="problem">&quot;significant errors</code>
         </div>
       )
       break
     case 3:
-      message = <code>response == &quot;needs some tweaks&quot;</code>
+      message = (
+        <p className="smalltext">response == &quot;needs some tweaks&quot;</p>
+      )
       break
     case 4:
-      message = <code>response = &quot;mostly correct&quot;</code>
+      message = (
+        <p className="smalltext">response = &quot;mostly correct&quot;</p>
+      )
       break
     case 5:
-      message = <code>response = &quot;Perfect!&quot;;</code>
+      message = <p className="smalltext">response = &quot;Perfect!&quot;;</p>
       break
   }
   return (
-    <div>
-      <div className="inline-block">{star1}</div>
-      <div className="inline-block">{star2}</div>
-      <div className="inline-block">{star3}</div>
-      <div className="inline-block">{star4}</div>
-      <div className="inline-block">{star5}</div>
-
-      <p className="code">How was our translation?</p>
+    <>
+      <div>
+        <div className="inline-block">{star1}</div>
+        <div className="inline-block">{star2}</div>
+        <div className="inline-block">{star3}</div>
+        <div className="inline-block">{star4}</div>
+        <div className="inline-block">{star5}</div>
+      </div>
+      <p className="smalltext">How was our translation?</p>
       {message}
-    </div>
+    </>
   )
 }
 

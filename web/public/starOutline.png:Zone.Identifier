@@ -1,5 +1,5 @@
 [ZoneTransfer]
 ZoneId=3
 ReferrerUrl=vscode-file://vscode-app/c:/Users/jmucc/AppData/Local/Programs/Microsoft%20VS%20Code/resources/app/out/vs/code/electron-sandbox/workbench/workbench.html
-HostUrl=file://wsl.localhost/Ubuntu/home/joey/CS490/codetranslator/web/public/starFilled.png
+HostUrl=file://wsl.localhost/Ubuntu/home/joey/CS490/codetranslator/web/public/starOutline.png
 LastWriterPackageFamilyName=Microsoft.MSPaint_8wekyb3d8bbwe
