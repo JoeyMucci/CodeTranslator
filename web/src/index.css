@@ -23,9 +23,11 @@
   flex-direction: column;
   width: 540px;
 }
-/* .code {
-  font-family: "Lucida Console", "Courier New", monospace;
-} */
+.center {
+  margin: auto;
+  width: 36%;
+  padding: 10px;
+}
 .error
 {
   color: red;

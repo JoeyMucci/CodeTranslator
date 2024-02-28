@@ -1,4 +1,4 @@
-import Star from '../Star/Star.jsx'
+import Star from 'web/src/components/Star/Star.jsx'
 
 const Rater = ({ stars = 0 }) => {
   let star1 =

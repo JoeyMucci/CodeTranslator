@@ -15,16 +15,3 @@ export const createContact = ({ input }) => {
     data: input,
   })
 }
-
-export const updateContact = ({ id, input }) => {
-  return db.contact.update({
-    data: input,
-    where: { id },
-  })
-}
-
-export const deleteContact = ({ id }) => {
-  return db.contact.delete({
-    where: { id },
-  })
-}
