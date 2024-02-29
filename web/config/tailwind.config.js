@@ -7,8 +7,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '0D1F2D',
-        secondary: '8C8B8B',
+        primary: '#0D1F2D',
+        secondary: '#8C8B8B',
+        text_box: '#8BA7BC',
+      },
+      fontFamily: {
+        customFont: ['"Chakra_Petch"'],
       },
     },
   },

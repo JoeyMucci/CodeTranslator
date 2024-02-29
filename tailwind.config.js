@@ -5,7 +5,11 @@ module.exports = {
   //purge: ['./src/**/*.{js,jsx,ts,tsx}'],
   darkMode: false,
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        customFont: ['"Chakra Petch"'],
+      },
+    },
   },
   plugins: [],
 }
