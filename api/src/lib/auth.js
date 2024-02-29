@@ -1,12 +1,9 @@
-/**
- * Once you are ready to add authentication to your application
- * you'll build out requireAuth() with real functionality. For
- * now we just return `true` so that the calls in services
- * have something to check against, simulating a logged
- * in user that is allowed to access that service.
- *
- * See https://redwoodjs.com/docs/authentication for more info.
- */
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+
+const JWT_SECRET =
+  '7f86a5fc42f352f1e51d22a1ff4c4fb9c626f205c4bfc7be8bfb4f90f0eeb4a5'
+
 export const isAuthenticated = () => {
   return true
 }
@@ -15,11 +12,29 @@ export const hasRole = ({ roles }) => {
   return roles !== undefined
 }
 
-const bcrypt = require('bcrypt')
+export const comparePasswords = async (plainTextPassword, hashedPassword) => {
+  try {
+    return await bcrypt.compare(plainTextPassword, hashedPassword)
+  } catch (error) {
+    throw new Error('Error comparing passwords')
+  }
+}
 
-const hashPassword = async (password) => {
-  const HashedPassword = await bcrypt.hash(password, 10)
-  return HashedPassword
+export const createToken = (payload) => {
+  try {
+    return jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' })
+  } catch (error) {
+    throw new Error('Error creating token')
+  }
+}
+
+export const hashPassword = async (password) => {
+  try {
+    const saltRounds = 10
+    return await bcrypt.hash(password, saltRounds)
+  } catch (error) {
+    throw new Error('Error hashing password')
+  }
 }
 
 module.exports = { hashPassword }
