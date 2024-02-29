@@ -1,4 +1,4 @@
-@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css); /* Star font */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,7 +9,7 @@
 .form-header {
   display: flex;
   flex-direction: row;
-  gap: 50px;
+  gap: 100px;
 }
 .form-group {
   display: flex;
@@ -26,17 +26,6 @@
   margin: auto;
   width: 36%;
   padding: 10px;
-}
-.error
-{
-  color: red;
-  font-size: 16px;
-}
-.problem
-{
-  color: white;
-  text-decoration: underline dotted red;
-  font-size: 16px;
 }
 .text {
   font-family: "Lucida Console", "Courier New", monospace;
@@ -58,22 +47,23 @@
   width: 540px;
 }
 .submitbutton {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
   background-color: rgb(200, 200, 200);
   border-radius: 10px;
-  width: 100px;
+  width: 90px;
 }
-.transbutton {
-  background-color: rgb(13, 31, 45);
-}
-.filler {
-  font-size: 0px;
+.error
+{
+  color: red;
+  font-size: 16px;
 }
 
-fieldset, label { margin: 0; padding: 0; }
-body{ margin: 20px; }
-h1 { font-size: 1.5em; margin: 10px; }
+/* !!!!! I (Joey) got the following from https://codepen.io/jamesbarnett/pen/najzYK Credit to James Barnett*/
 
 /****** Style Star Rating Widget *****/
+
+fieldset, label { margin: 0; padding: 0; }
 
 .rating {
   border: none;

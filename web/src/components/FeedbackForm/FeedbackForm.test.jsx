@@ -18,8 +18,9 @@ describe('FeedbackForm', () => {
 
     const submitButton = screen.getByText('Submit')
 
-    await waitFor(() => userEvent.click(submitButton))
+    await waitFor(() => userEvent.click(submitButton)) // Submit without enetering any fields
 
+    // Says fields are missing and does not submit
     expect(screen.getByText('name is required')).toBeInTheDocument()
     expect(screen.getByText('email is required')).toBeInTheDocument()
     expect(screen.getByText('message is required')).toBeInTheDocument()
@@ -42,11 +43,13 @@ describe('FeedbackForm', () => {
     )
     const submitButton = screen.getByText('Submit')
 
+    // Submit after entering all fields
     await waitFor(() => userEvent.type(nameField, name))
     await waitFor(() => userEvent.type(emailField, email))
     await waitFor(() => userEvent.type(messageField, message))
     await waitFor(() => userEvent.click(submitButton))
 
+    // Submit is successful and relays the data
     expect(onSubmit).toHaveBeenCalledTimes(1)
     expect(onSubmit).toHaveBeenCalled()
     expect(onSubmit).toHaveBeenCalledWith(
@@ -60,7 +63,7 @@ describe('FeedbackForm', () => {
 
   it('does not submit with invalid email', async () => {
     const name = 'My Name'
-    const email = 'invalid@.email'
+    const email = 'invalid@.email' // invalid email
     const message = "No suggestions, it's perfect!"
 
     const onSubmit = jest.fn()
@@ -74,11 +77,13 @@ describe('FeedbackForm', () => {
     )
     const submitButton = screen.getByText('Submit')
 
+    // Enter data (including invalid email)
     await waitFor(() => userEvent.type(nameField, name))
     await waitFor(() => userEvent.type(emailField, email))
     await waitFor(() => userEvent.type(messageField, message))
     await waitFor(() => userEvent.click(submitButton))
 
+    // Message saying email is not in correct form displayed, submit is not successful
     expect(
       screen.getByText('Please enter a valid email address')
     ).toBeInTheDocument()

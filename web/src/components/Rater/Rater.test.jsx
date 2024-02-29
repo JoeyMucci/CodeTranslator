@@ -20,8 +20,8 @@ describe('Rater', () => {
     const onSubmit = jest.fn()
     render(<Rater onSubmit={onSubmit} />)
     const submitButton = screen.getByText('Submit')
-    await waitFor(() => userEvent.click(submitButton))
-    expect(onSubmit).not.toHaveBeenCalled()
+    await waitFor(() => userEvent.click(submitButton)) // Click submit without selecting a star
+    expect(onSubmit).not.toHaveBeenCalled() //onSubmit is not called
   })
 
   it('does allow a valid repsonse', async () => {
@@ -29,8 +29,8 @@ describe('Rater', () => {
     render(<Rater onSubmit={onSubmit} />)
     const oneStarButton = screen.getByTitle('error: expected usable code')
     const submitButton = screen.getByText('Submit')
-    await waitFor(() => userEvent.click(oneStarButton))
-    await waitFor(() => userEvent.click(submitButton))
-    expect(onSubmit).toHaveBeenCalled()
+    await waitFor(() => userEvent.click(oneStarButton)) // Select one star
+    await waitFor(() => userEvent.click(submitButton)) // Then click submi
+    expect(onSubmit).toHaveBeenCalled() // onSubmit is called
   })
 })

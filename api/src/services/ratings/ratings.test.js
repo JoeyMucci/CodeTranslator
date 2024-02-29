@@ -21,10 +21,10 @@ describe('ratings', () => {
 
   scenario('creates a rating', async () => {
     const result = await createRating({
-      input: { score: 2248997 },
+      input: { score: 2 },
     })
 
-    expect(result.score).toEqual(2248997)
+    expect(result.score).toEqual(2)
   })
 
   //   scenario('updates a rating', async (scenario) => {
