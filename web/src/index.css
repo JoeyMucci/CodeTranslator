@@ -3,3 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 
+.custom-syntax-highlighter .react-syntax-highlighter {
+  background-color: transparent !important; /* Remove background */
+  box-shadow: none !important; /* Remove shadow if any */
+  border: none !important; /* Remove border */
+}

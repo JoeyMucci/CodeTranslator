@@ -28,6 +28,8 @@
     "autoprefixer": "^10.4.17",
     "highlight.js": "^11.9.0",
     "postcss": "^8.4.35",
+    "prismjs": "^1.29.0",
+    "react-syntax-highlighter": "^15.5.0",
     "react-toastify": "^10.0.4"
   }
 }

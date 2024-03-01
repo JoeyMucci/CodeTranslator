@@ -2,31 +2,38 @@ import { useState } from 'react'
 import React, { useEffect, useRef } from 'react'
 
 import hljs from 'highlight.js'
+import 'highlight.js/styles/default.css'
 import { toast } from 'react-toastify'
 
 import { Link, routes } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
 
-import 'highlight.js/styles/default.css'
+import 'web/src/index.css'
 
 const CodeTranslatorPage = () => {
   const [inputText1, setInputText1] = useState('')
-  const languageDropdownRef = useRef(null)
+  //const languageDropdownRef1 = useRef(null)
+  const languageDropdownRef2 = useRef(null)
+  const [code, setCode] = useState('')
 
   //for code highlighting
 
   useEffect(() => {
     // Initialize highlight.js
     hljs.highlightAll()
+    if (languageDropdownRef2.current) {
+      console.log(languageDropdownRef2.current.value)
+      // Perform operations
+    }
   }, [])
 
-  const handleTextareaChange = () => {
-    // Apply syntax highlighting when the content of the textarea changes
-    hljs.highlightBlock(translatedCodeRef.current)
-  }
   //
   const handleInputChange1 = (e) => {
     setInputText1(e.target.value)
+  }
+
+  const codeChange = (e) => {
+    setCode(e.target.value)
   }
 
   const fileInputRef = useRef(null)
@@ -52,14 +59,15 @@ const CodeTranslatorPage = () => {
 
   //ONLY COPIES THE LEFT TEXT BOX FOR NOW
   const handleTranslateSubmission = () => {
-    translatedCodeRef.current.value = rawCodeRef.current.value
+    codeRef.current.value = rawCodeRef.current.value
+    setCode(rawCodeRef.current.value)
   }
   //
 
   //handles download button
   const handleDownloadClick = () => {
-    const contentToDownload = translatedCodeRef.current.value
-    const selectedLanguageValue = languageDropdownRef.current.value
+    const contentToDownload = codeRef.current.value
+    const selectedLanguageValue = languageDropdownRef2.current.value
 
     // Determine the file extension based on the selected language
     if (contentToDownload === '') {
@@ -124,7 +132,8 @@ const CodeTranslatorPage = () => {
   //copy button
   const translatedCodeRef = useRef(null)
   const rawCodeRef = useRef(null)
-  const [translatedCode] = useState('')
+  const codeRef = useRef(null)
+  //const [translatedCode] = useState('')
 
   const handleCopyClick = () => {
     // Select the text in the textarea
@@ -149,11 +158,26 @@ const CodeTranslatorPage = () => {
 
   //
 
+  //function languageMapping(selectedLanguage) {
+  // switch (selectedLanguage) {
+  //  case 'C':
+  //    console.log('we in c for mapping')
+  //   return 'c'
+  //  case 'C++':
+  //  //  return 'cpp'
+  // case 'Java':
+  //   return 'java'
+  // Add other cases as needed
+  //  default:
+  // return 'plaintext' // Use 'plaintext' for unsupported languages
+  // }
+  // }
+
   return (
     <>
       <div className="min-h-screen bg-primary">
         <Metadata title="CodeTranslator" description="CodeTranslator page" />
-        <div className="w-full flex justify-center ">
+        <div className="flex w-full justify-center ">
           <img
             src="images/Rosetta_Code.png"
             alt="rosetta code"
@@ -161,10 +185,10 @@ const CodeTranslatorPage = () => {
           />
         </div>
 
-        <div className="flex flex-row pt-10 justify-center space-x-20">
+        <div className="flex flex-row justify-center space-x-20 pt-10">
           {/* Input Box */}
 
-          <div className="flex flex-col basis-1/4 ">
+          <div className="flex basis-1/4 flex-col ">
             <label htmlFor="language" className="text-white">
               Choose a coding language:
             </label>
@@ -172,7 +196,7 @@ const CodeTranslatorPage = () => {
               <select
                 name="language"
                 id="language"
-                className="mt-1 rounded w-20 h-7 text-center basis-3/4 bg-text_box hover:bg-blue-200 "
+                className="mt-1 h-7 w-20 basis-3/4 rounded bg-text_box text-center hover:bg-blue-200 "
               >
                 <option value="C">C</option>
                 <option value="C++">C++</option>
@@ -190,7 +214,7 @@ const CodeTranslatorPage = () => {
               />
 
               <button
-                className=" text-white hover:bg-gray-800 w-8 rounded basis-1/8 "
+                className=" basis-1/8 w-8 rounded text-white hover:bg-gray-800 "
                 onClick={handleButtonClick}
               >
                 {' '}
@@ -209,11 +233,11 @@ const CodeTranslatorPage = () => {
               ref={rawCodeRef}
               rows={20}
               placeholder="Enter code to translate"
-              className=" w-full resize-none p-4 bg-text_box border-gray-300 placeholder-gray-600 rounded mt-5"
+              className=" mt-5 w-full resize-none rounded border-gray-300 bg-text_box p-4 placeholder-gray-600"
             />
 
             <button
-              className="bg-sky-700 text-white hover:bg-sky-800  mt-5 w-1/2 rounded justify-center "
+              className="mt-5 w-1/2 justify-center  rounded bg-sky-700 text-white hover:bg-sky-800 "
               onClick={handleTranslateSubmission}
             >
               {'Translate'}
@@ -221,16 +245,16 @@ const CodeTranslatorPage = () => {
           </div>
 
           {/* Output Box */}
-          <div className="flex flex-col basis-1/4 ">
+          <div className="flex basis-1/4 flex-col ">
             <label htmlFor="language" className="text-white">
               Choose a coding language to translate to:
             </label>
             <div className="flex flex-row justify-between">
               <select
-                ref={languageDropdownRef}
+                ref={languageDropdownRef2}
                 name="language"
                 id="language"
-                className="mt-1 rounded w-20 h-7 text-center basis-3/4 bg-text_box hover:bg-blue-200 "
+                className="mt-1 h-7 w-20 basis-3/4 rounded bg-text_box text-center hover:bg-blue-200 "
               >
                 <option value="C">C</option>
                 <option value="C++">C++</option>
@@ -241,7 +265,7 @@ const CodeTranslatorPage = () => {
               </select>
 
               <button
-                className=" text-white hover:bg-gray-800 w-8 text-center rounded basis-1/8"
+                className=" basis-1/8 w-8 rounded text-center text-white hover:bg-gray-800"
                 onClick={handleCopyClick}
               >
                 {' '}
@@ -252,7 +276,7 @@ const CodeTranslatorPage = () => {
                 />
               </button>
               <button
-                className=" text-white hover:bg-gray-800  w-8 rounded items-center basis-1/8"
+                className=" basis-1/8 w-8  items-center rounded text-white hover:bg-gray-800"
                 onClick={handleDownloadClick}
               >
                 <img
@@ -262,16 +286,32 @@ const CodeTranslatorPage = () => {
                 />
               </button>
             </div>
-            <textarea
-              readOnly
-              type="text"
-              value={translatedCode}
-              ref={translatedCodeRef}
-              onChange={handleTextareaChange}
-              rows={20}
-              placeholder="Translated code will appear here"
-              className="w-full l resize-none p-4 border-gray-300 rounded mt-5 bg-text_box"
-            />
+
+            <div
+              ref={codeRef}
+              onChange={codeChange}
+              className=" custom-syntax-highlighter mt-5 w-full resize-none overflow-auto rounded border-gray-300 bg-text_box p-4"
+              style={{
+                fontFamily: 'monospace',
+                whiteSpace: 'pre-wrap',
+                height: '510px', // Height for approximately 20 row
+                padding: '8px',
+                // Use a background color that matches your theme
+                fontSize: '16px', // Adjust as needed
+                lineHeight: '1.5', // Adjust as needed
+                overflowY: 'auto', // Ensure vertical scrolling
+              }}
+              aria-readonly="true"
+            >
+              <pre>
+                <code
+                  className={`language-${languageDropdownRef2.current?.value}`}
+                  dangerouslySetInnerHTML={{
+                    __html: hljs.highlightAuto(code).value,
+                  }}
+                />
+              </pre>
+            </div>
           </div>
         </div>
         <p className="absolute bottom-0 items-center  text-center">
