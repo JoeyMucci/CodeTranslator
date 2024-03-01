@@ -10,7 +10,7 @@ const TranslatorLayout = ({ children }) => {
         <nav>
           <ul>
             <li>
-              <Link to={routes.home()}>Home</Link>
+              <Link to={routes.ratetranslation()}>Home</Link>
             </li>
             <li>
               <Link to={routes.feedback()}>Feedback</Link>
