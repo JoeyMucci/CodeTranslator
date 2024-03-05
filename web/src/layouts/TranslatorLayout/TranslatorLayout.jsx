@@ -23,4 +23,4 @@ const TranslatorLayout = ({ children }) => {
   )
 }
 
-export default CodeTranslatorLayout
+export default TranslatorLayout

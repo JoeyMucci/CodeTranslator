@@ -1,13 +1,201 @@
-/**
- * START --- SETUP TAILWINDCSS EDIT
- *
- * `yarn rw setup ui tailwindcss` placed these directives here
- * to inject Tailwind's styles into your CSS.
- * For more information, see: https://tailwindcss.com/docs/installation
- */
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+/* Star font */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/**
- * END --- SETUP TAILWINDCSS EDIT
- */
+
+.inline-block {
+  display: inline-block;
+}
+
+.form-header {
+  display: flex;
+  flex-direction: row;
+  gap: 100px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+}
+
+.reg-flex {
+  display: flex;
+  flex-direction: column;
+  width: 540px;
+}
+
+.center {
+  margin: auto;
+  width: 36%;
+  padding: 10px;
+}
+
+.text {
+  font-family: "Lucida Console", "Courier New", monospace;
+  color: white;
+  font-size: 32px;
+}
+
+.smalltext {
+  font-family: "Lucida Console", "Courier New", monospace;
+  color: white;
+  font-size: 16px;
+}
+
+.box {
+  background-color: rgb(200, 200, 200);
+  border-radius: 10px;
+}
+
+.submitbox {
+  background-color: rgb(200, 200, 200);
+  border-radius: 10px;
+  width: 540px;
+}
+
+.submitbutton {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  background-color: rgb(200, 200, 200);
+  border-radius: 10px;
+  width: 90px;
+}
+
+.error {
+  color: red;
+  font-size: 16px;
+}
+
+/* !!!!! I (Joey) got the following from https://codepen.io/jamesbarnett/pen/najzYK Credit to James Barnett*/
+
+/****** Style Star Rating Widget *****/
+
+fieldset,
+label {
+  margin: 0;
+  padding: 0;
+}
+
+.rating {
+  border: none;
+  float: left;
+  display: inline;
+}
+
+.rating>input {
+  display: none;
+}
+
+.rating>label:before {
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+}
+
+.rating>.half:before {
+  content: "\f089";
+  position: absolute;
+}
+
+.rating>label {
+  color: #ddd;
+  float: right;
+}
+
+/* Navbar container */
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  font-family: Arial;
+}
+
+/* Links inside the navbar */
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* The dropdown container */
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+/* Dropdown button */
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  /* Important for vertical align on mobile phones */
+  margin: 0;
+  /* Important for vertical align on mobile phones */
+}
+
+/* Add a red background color to navbar links on hover */
+.navbar a:hover,
+.dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating>input:checked~label,
+/* show gold star when clicked */
+.rating:not(:checked)>label:hover,
+/* hover current star */
+.rating:not(:checked)>label:hover~label {
+  color: #FFD700;
+}
+
+/* hover previous stars in list */
+
+.rating>input:checked+label:hover,
+/* hover current star when changing rating */
+.rating>input:checked~label:hover,
+.rating>label:hover~input:checked~label,
+/* lighten current selection */
+.rating>input:checked~label:hover~label {
+  color: #FFED85;
+}
