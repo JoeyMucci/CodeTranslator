@@ -1,15 +1,10 @@
-import bcrypt from 'bcrypt'
-
+import { hashPassword } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 
 const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const hashPassword = async (password) => {
-  const saltRounds = 10
-  return await bcrypt.hash(password, saltRounds)
-}
 
 export const users = () => {
   return db.user.findMany()

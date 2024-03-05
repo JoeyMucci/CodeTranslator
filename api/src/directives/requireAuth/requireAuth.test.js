@@ -13,6 +13,6 @@ describe('requireAuth directive', () => {
       context: { currentUser: { id: 1, name: 'Lebron McGretzky' } },
     })
 
-    expect(mockExecution).not.toThrowError()
+    expect(mockExecution).toThrowError("You don't have permission to do that.")
   })
 })

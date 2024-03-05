@@ -1,6 +1,13 @@
+import bcrypt from 'bcrypt'
+
 import { AuthenticationError, ForbiddenError } from '@redwoodjs/graphql-server'
 
 import { db } from './db'
+
+export const hashPassword = async (password) => {
+  const saltRounds = 10
+  return await bcrypt.hash(password, saltRounds)
+}
 
 /**
  * The name of the cookie that dbAuth sets
@@ -9,7 +16,7 @@ import { db } from './db'
  * If you have multiple RW apps running on the same host, you'll need to
  * make sure they all use unique cookie names
  */
-export const cookieName = 'session_%port%'
+export const cookieName = 'session_8911'
 
 /**
  * The session object sent in as the first argument to getCurrentUser() will
