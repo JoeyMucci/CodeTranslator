@@ -10,7 +10,8 @@
     "@redwoodjs/cli-storybook": "6.6.4",
     "@redwoodjs/core": "6.6.4",
     "prettier-plugin-tailwindcss": "0.4.1",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "@redwoodjs/auth-dbauth-setup": "6.6.4"
   },
   "eslintConfig": {
     "extends": "@redwoodjs/eslint-config",
@@ -30,6 +31,7 @@
     "postcss": "^8.4.35",
     "prismjs": "^1.29.0",
     "react-syntax-highlighter": "^15.5.0",
-    "react-toastify": "^10.0.4"
+    "react-toastify": "^10.0.4",
+    "bcrypt": "^5.1.1"
   }
 }
