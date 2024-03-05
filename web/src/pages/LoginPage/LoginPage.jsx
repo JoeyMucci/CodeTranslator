@@ -9,7 +9,7 @@ const Button = ({ children, extraClasses }) => (
 function LoginSignupForm() {
   return (
     <form className="flex flex-col rounded-xl bg-gray-100 px-20 py-12 max-md:max-w-full max-md:px-5">
-      <label htmlFor="emailInput" className="mt-2">
+      <label htmlFor="emailInput" className="mt-2 text-black">
         Email:
       </label>
       <input
@@ -19,7 +19,7 @@ function LoginSignupForm() {
         placeholder="Example.email@njit.edu"
         aria-label="Enter your email"
       />
-      <label htmlFor="passwordInput" className="mt-6 max-md:mt-2">
+      <label htmlFor="passwordInput" className="mt-6 text-black max-md:mt-2">
         Password:
       </label>
       <input
@@ -41,7 +41,7 @@ function LoginSignupForm() {
 
 function HowItWorksSection() {
   return (
-    <section className="ml-5 flex w-full flex-col max-md:ml-0 max-md:w-full">
+    <section className="ml-5 flex w-full  max-md:ml-0 max-md:w-full">
       <div className="flex w-full grow flex-col items-center bg-gray-100 px-12 py-12 text-2xl text-black max-md:mt-10 max-md:max-w-full max-md:px-5">
         <h2 className="whitespace-nowrap">How It Works:</h2>
         <p className="mt-8 text-lg">
@@ -66,10 +66,10 @@ function HowItWorksSection() {
 function LoginPage() {
   return (
     <main
-      className="flex flex-col justify-center bg-blue-500"
+      className="flex flex-col justify-center bg-primary"
       style={{ minHeight: '100vh' }}
     >
-      <header className="w-full bg-gray-800 pl-20 max-md:max-w-full max-md:pl-5">
+      <header className="bg-gray-primary w-full pl-20 max-md:max-w-full max-md:pl-5">
         <div className="flex gap-5 max-md:flex-col max-md:gap-0">
           <section className="flex w-full flex-col max-md:ml-0 max-md:w-full">
             <div className="mt-14 flex flex-col whitespace-nowrap text-lg text-white max-md:mt-10 max-md:max-w-full">
