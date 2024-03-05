@@ -6,8 +6,8 @@ export const schema = gql`
   }
 
   type Query {
-    ratings: [Rating!]! @requireAuth
-    rating(id: Int!): Rating @requireAuth
+    ratings: [Rating!]! @skipAuth
+    rating(id: Int!): Rating @skipAuth
   }
 
   input CreateRatingInput {
@@ -19,6 +19,6 @@ export const schema = gql`
   }
 
   type Mutation {
-    createRating(input: CreateRatingInput!): Rating! @requireAuth
+    createRating(input: CreateRatingInput!): Rating! @skipAuth
   }
 `
