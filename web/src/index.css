@@ -110,7 +110,7 @@ label {
 .navbar {
   overflow: hidden;
   background-color: #333;
-  font-family: Arial;
+  font-family: "Lucida Console", "Courier New", monospace;
 }
 
 /* Links inside the navbar */

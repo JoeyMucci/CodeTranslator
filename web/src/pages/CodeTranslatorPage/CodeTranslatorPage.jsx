@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import React, { useEffect, useRef } from 'react'
 
-import hljs from 'highlight.js'
 import 'highlight.js/styles/default.css'
+import hljs from 'highlight.js'
+
 import { toast } from 'react-toastify'
 
 import { Link, routes } from '@redwoodjs/router'
