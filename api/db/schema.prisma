@@ -29,4 +29,11 @@ model User {
   hashedPassword      String
   resetToken          String?
   resetTokenExpiresAt DateTime?
+  roles               String    @default("moderator")
+}
+
+model blacklisted_tokens {
+  id         Int      @id @default(autoincrement())
+  token      String
+  created_at DateTime @default(now())
 }
