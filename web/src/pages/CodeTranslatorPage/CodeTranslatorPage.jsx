@@ -2,14 +2,39 @@ import React, { useEffect, useRef, useState } from 'react'
 
 import hljs from 'highlight.js'
 import 'highlight.js/styles/default.css'
-import { toast } from 'react-toastify'
+import Rater from 'web/src/components/Rater/Rater.jsx'
 
 //import { Link, routes } from '@redwoodjs/router'
-import { Metadata } from '@redwoodjs/web'
+import { useForm } from '@redwoodjs/forms'
+import { Metadata, useMutation } from '@redwoodjs/web'
+import { toast, Toaster } from '@redwoodjs/web/toast'
 
 import 'web/src/index.css'
 
+const CREATE_RATING = gql`
+  mutation CreateRatingMutation($input: CreateRatingInput!) {
+    createRating(input: $input) {
+      id
+    }
+  }
+`
+
 const CodeTranslatorPage = () => {
+  const formMethods = useForm()
+
+  const [create, { loading, error }] = useMutation(CREATE_RATING, {
+    onCompleted: () => {
+      toast.success('Thank you for rating us!')
+      formMethods.reset()
+    },
+  })
+
+  const onSubmit = (data) => {
+    if (data.score == null) return // If the user does not give a star rating do not let that go to db
+    data.score = parseInt(data.score) // Covert string to int
+    create({ variables: { input: data } })
+  }
+
   const [inputText1, setInputText1] = useState('')
   //const languageDropdownRef1 = useRef(null)
   const languageDropdownRef2 = useRef(null)
@@ -324,6 +349,13 @@ const CodeTranslatorPage = () => {
                 />
               </pre>
             </div>
+            <Toaster />
+            <Rater
+              onSubmit={onSubmit}
+              error={error}
+              loading={loading}
+              formMethods={formMethods}
+            />
           </div>
         </div>
       </div>

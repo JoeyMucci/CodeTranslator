@@ -17,6 +17,7 @@ const Routes = () => {
       <Route path="/feedback" page={FeedbackPage} name="feedback" />
       <Route path="/rate-translation" page={RateTranslationPage} name="rateTranslation" />
       <Route path="/code-translator" page={CodeTranslatorPage} name="codeTranslator" />
+      <Route path="/login-page" page={LoginPage} name="login" />
       <Route notfound page={NotFoundPage} />
     </Router>
   )
