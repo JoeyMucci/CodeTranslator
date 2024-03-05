@@ -26,6 +26,7 @@
   },
   "packageManager": "yarn@4.0.2",
   "dependencies": {
+    "@redwoodjs/auth-dbauth-web": "^7.0.6",
     "autoprefixer": "^10.4.17",
     "bcrypt": "^5.1.1",
     "highlight.js": "^11.9.0",
