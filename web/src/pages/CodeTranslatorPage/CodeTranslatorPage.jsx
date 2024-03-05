@@ -1,11 +1,10 @@
-import { useState } from 'react'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import hljs from 'highlight.js'
 import 'highlight.js/styles/default.css'
 import { toast } from 'react-toastify'
 
-import { Link, routes } from '@redwoodjs/router'
+//import { Link, routes } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
 
 import 'web/src/index.css'
@@ -56,21 +55,28 @@ const CodeTranslatorPage = () => {
       }
     }
   }
-
   //ONLY COPIES THE LEFT TEXT BOX FOR NOW
   const handleTranslateSubmission = () => {
-    codeRef.current.value = rawCodeRef.current.value
-    setCode(rawCodeRef.current.value)
+    translateCode()
   }
   //
+  const translateCode = async () => {
+    try {
+      if (codeRef.current.value != '')
+        codeRef.current.value = rawCodeRef.current.value
 
+      setCode(rawCodeRef.current.value)
+    } catch (error) {
+      console.error('Translation error:', error)
+    }
+  }
   //handles download button
   const handleDownloadClick = () => {
     const contentToDownload = codeRef.current.value
     const selectedLanguageValue = languageDropdownRef2.current.value
 
     // Determine the file extension based on the selected language
-    if (contentToDownload === '') {
+    if (contentToDownload == '' || contentToDownload == undefined) {
       alert('Translation area is empty. Please enter code before downloading.')
       return
     }
@@ -215,6 +221,7 @@ const CodeTranslatorPage = () => {
 
               <button
                 className=" basis-1/8 w-8 rounded text-white hover:bg-gray-800 "
+                aria-label="add file"
                 onClick={handleButtonClick}
               >
                 {' '}
@@ -234,13 +241,15 @@ const CodeTranslatorPage = () => {
               rows={20}
               placeholder="Enter code to translate"
               className=" mt-5 w-full resize-none rounded border-gray-300 bg-text_box p-4 placeholder-gray-600"
+              data-testid="InputBoxTestId"
             />
 
             <button
               className="mt-5 w-1/2 justify-center  rounded bg-sky-700 text-white hover:bg-sky-800 "
               onClick={handleTranslateSubmission}
+              aria-label="Translate"
             >
-              {'Translate'}
+              Translate
             </button>
           </div>
 
@@ -278,6 +287,7 @@ const CodeTranslatorPage = () => {
               <button
                 className=" basis-1/8 w-8  items-center rounded text-white hover:bg-gray-800"
                 onClick={handleDownloadClick}
+                aria-label="Download"
               >
                 <img
                   src="https://img.icons8.com/material-rounded/64/FFFFFF/download--v1.png"
@@ -302,10 +312,12 @@ const CodeTranslatorPage = () => {
                 overflowY: 'auto', // Ensure vertical scrolling
               }}
               aria-readonly="true"
+              data-testid="codeDivTestId"
             >
               <pre>
                 <code
                   className={`language-${languageDropdownRef2.current?.value}`}
+                  placeholder="test"
                   dangerouslySetInnerHTML={{
                     __html: hljs.highlightAuto(code).value,
                   }}
@@ -314,10 +326,6 @@ const CodeTranslatorPage = () => {
             </div>
           </div>
         </div>
-        <p className="absolute bottom-0 items-center  text-center">
-          My default route is named <code>codeTranslator</code>, link to me with
-          `<Link to={routes.codeTranslator()}>CodeTranslator</Link>`
-        </p>
       </div>
     </>
   )
