@@ -30,7 +30,6 @@ const CodeTranslatorPage = () => {
   })
 
   const onSubmit = (data) => {
-    if (data.score == null) return // If the user does not give a star rating do not let that go to db
     data.score = parseInt(data.score) // Covert string to int
     create({ variables: { input: data } })
   }

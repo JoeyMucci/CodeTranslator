@@ -30,7 +30,7 @@ describe('Rater', () => {
     const oneStarButton = screen.getByTitle('error: expected usable code')
     const submitButton = screen.getByText('Submit')
     await waitFor(() => userEvent.click(oneStarButton)) // Select one star
-    await waitFor(() => userEvent.click(submitButton)) // Then click submi
+    await waitFor(() => userEvent.click(submitButton)) // Then click submit
     expect(onSubmit).toHaveBeenCalled() // onSubmit is called
   })
 })

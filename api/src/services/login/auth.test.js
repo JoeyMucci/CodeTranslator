@@ -42,8 +42,7 @@ describe('Authentication Service', () => {
       const mockUser = {
         id: 1,
         email: 'user@example.com',
-        password:
-          '$2b$10$0w5ZlW07G3zL3/7xvB2VsebkfNPeTGVuZi7J30Xqtk3Fu09I.35Pm', // Hashed password
+        password: '$2b$10$0w5ZlW07G3zL3/7xvB2VsebkfNPeTGVuZi7J30Xqtk3Fu09I.35Pm', // Hashed password
       }
 
       db.user.findOne.mockResolvedValue(mockUser)
@@ -61,8 +60,7 @@ describe('Authentication Service', () => {
       const mockUser = {
         id: 1,
         email: 'user@example.com',
-        password:
-          '$2b$10$0w5ZlW07G3zL3/7xvB2VsebkfNPeTGVuZi7J30Xqtk3Fu09I.35Pm', // Hashed password
+        password: '$2b$10$0w5ZlW07G3zL3/7xvB2VsebkfNPeTGVuZi7J30Xqtk3Fu09I.35Pm', // Hashed password
       }
 
       db.user.findOne.mockResolvedValue(mockUser)
@@ -79,8 +77,7 @@ describe('Authentication Service', () => {
       const mockUser = {
         id: 1,
         email: 'user@example.com',
-        password:
-          '$2b$10$0w5ZlW07G3zL3/7xvB2VsebkfNPeTGVuZi7J30Xqtk3Fu09I.35Pm', // Hashed password
+        password: '$2b$10$0w5ZlW07G3zL3/7xvB2VsebkfNPeTGVuZi7J30Xqtk3Fu09I.35Pm', // Hashed password
       }
 
       db.user.findOne.mockResolvedValue(mockUser)
