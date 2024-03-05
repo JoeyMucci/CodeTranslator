@@ -15,6 +15,6 @@ describe('requireAuth directive', () => {
     })
     const mockExecution = mockRedwoodDirective(requireAuth, { context: {} })
 
-    expect(mockExecution).not.toThrowError()
+    expect(mockExecution).toThrowError("You don't have permission to do that.")
   })
 })
