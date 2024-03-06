@@ -1,8 +1,7 @@
 import { hashPassword } from 'src/lib/auth'
 import { db } from 'src/lib/db'
 
-const passwordRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
