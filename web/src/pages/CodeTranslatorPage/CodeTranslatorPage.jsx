@@ -88,11 +88,21 @@ const CodeTranslatorPage = () => {
     try {
       if (codeRef.current.value != '')
         codeRef.current.value = rawCodeRef.current.value
-
       setCode(rawCodeRef.current.value)
     } catch (error) {
       console.error('Translation error:', error)
     }
+    // try {
+    //   if (codeRef.current.value != '') {
+    //     codeRef.current.value = rawCodeRef.current.value
+    //     setCode(runTranslation('Python', 'C', codeRef.current.value))
+    //     // console.log(
+    //     //   codeRef.runTranslation('Python', 'C', codeRef.current.value)
+    //     // )
+    //   }
+    // } catch (error) {
+    //   console.error('Translation error:', error)
+    // }
   }
   //handles download button
   const handleDownloadClick = () => {

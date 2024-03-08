@@ -6,16 +6,15 @@ const openai = new OpenAI({
   apiKey: OPENAI_API_KEY, // This is also the default, can be omitted
 })
 
-async function runCompletion() {
+export const runTranslation = async ({ fromLanguage, toLanguage, code }) => {
   const chatCompletion = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
     messages: [
       {
         role: 'user',
-        content: 'Tell me a joke',
+        content: 'Translate the following ' + { fromLanguage } + ' code to ' + { toLanguage } + ' code: ' + { code },
       },
     ],
   })
-  console.log(chatCompletion.choices[0].message)
+  return chatCompletion.choices[0].message.content
 }
-runCompletion()
