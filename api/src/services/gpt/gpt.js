@@ -6,7 +6,7 @@ const openai = new OpenAI({
   apiKey: OPENAI_API_KEY,
 })
 
-async function runTranslation({ fromLanguage, toLanguage, code }) {
+export const runTranslation = async ({ fromLanguage, toLanguage, code }) => {
   if (fromLanguage == toLanguage) {
     const chatCompletion = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
@@ -31,9 +31,10 @@ async function runTranslation({ fromLanguage, toLanguage, code }) {
     return chatCompletion.choices[0].message.content
   }
 }
-const input = { fromLanguage: 'Python', toLanguage: 'C', code: 'print("hello world")' }
-const inputtwo = { fromLanguage: 'Python', toLanguage: 'Python', code: 'x=0\nx+=1\nx+=1\nprint(x)' }
-const result = runTranslation(input).resolve()
-const resulttwo = runTranslation(inputtwo).resolve()
-console.log(result)
-console.log(resulttwo)
+// const nonsense = 'Im baby everyday carry cold-pressed solarpunk viral'
+// const nonsensecode = runTranslation({ fromLanguage: 'Java', toLanguage: 'SQL', code: nonsense })
+// let b = ''
+// nonsensecode.then(function (result) {
+//   b = result
+// })
+// console.log(b)
