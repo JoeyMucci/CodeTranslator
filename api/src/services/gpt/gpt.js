@@ -7,6 +7,15 @@ const openai = new OpenAI({
 })
 
 export const runTranslation = async ({ fromLanguage, toLanguage, code }) => {
+  await openai.chat.completions.create({
+    model: 'gpt-3.5-turbo',
+    messages: [
+      {
+        role: 'user',
+        content: 'From now on, reply "ERROR" if you cannot do the task' + code,
+      },
+    ],
+  })
   if (fromLanguage == toLanguage) {
     const chatCompletion = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
@@ -17,6 +26,7 @@ export const runTranslation = async ({ fromLanguage, toLanguage, code }) => {
         },
       ],
     })
+    if (chatCompletion.choices[0].message.content == 'ERROR') throw new Error('ChatGPT got confused')
     return chatCompletion.choices[0].message.content
   } else {
     const chatCompletion = await openai.chat.completions.create({
@@ -28,13 +38,7 @@ export const runTranslation = async ({ fromLanguage, toLanguage, code }) => {
         },
       ],
     })
+    if (chatCompletion.choices[0].message.content == 'ERROR') throw new Error('ChatGPT got confused')
     return chatCompletion.choices[0].message.content
   }
 }
-// const nonsense = 'Im baby everyday carry cold-pressed solarpunk viral'
-// const nonsensecode = runTranslation({ fromLanguage: 'Java', toLanguage: 'SQL', code: nonsense })
-// let b = ''
-// nonsensecode.then(function (result) {
-//   b = result
-// })
-// console.log(b)
