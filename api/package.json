@@ -6,5 +6,9 @@
     "@redwoodjs/api": "6.6.4",
     "@redwoodjs/auth-dbauth-api": "6.6.4",
     "@redwoodjs/graphql-server": "6.6.4"
+  },
+  "scripts": {
+    "start": "nodemon src/ --exec \"node --require dotenv/config --require babel-register\"",
+    "start:prod": "babel-node --require dotenv/config --require babel-register src/"
   }
 }

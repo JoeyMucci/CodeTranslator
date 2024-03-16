@@ -1,6 +1,7 @@
 import dns from 'dns'
 
 import { defineConfig } from 'vite'
+// import { defineConfig, loadEnv } from 'vite'
 
 import redwood from '@redwoodjs/vite'
 
@@ -13,3 +14,13 @@ const viteConfig = {
 }
 
 export default defineConfig(viteConfig)
+
+// export default defineConfig(({ mode }) => {
+//   const env = loadEnv(mode, __dirname, '')
+//   return {
+//     define: {
+//       'process.env.OPENAI_API_KEY': JSON.stringify(env.OPENAI_API_KEY),
+//     },
+//     plugins: [redwood()],
+//   }
+// })

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 
+import { runTranslation } from 'api/src/services/gpt/gpt.js'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/default.css'
 import Rater from 'web/src/components/Rater/Rater.jsx'
@@ -35,7 +36,7 @@ const CodeTranslatorPage = () => {
   }
 
   const [inputText1, setInputText1] = useState('')
-  //const languageDropdownRef1 = useRef(null)
+  const languageDropdownRef1 = useRef(null)
   const languageDropdownRef2 = useRef(null)
   const [code, setCode] = useState('')
 
@@ -85,24 +86,30 @@ const CodeTranslatorPage = () => {
   }
   //
   const translateCode = async () => {
-    try {
-      if (codeRef.current.value != '')
-        codeRef.current.value = rawCodeRef.current.value
-      setCode(rawCodeRef.current.value)
-    } catch (error) {
-      console.error('Translation error:', error)
-    }
     // try {
-    //   if (codeRef.current.value != '') {
+    //   if (codeRef.current.value != '')
     //     codeRef.current.value = rawCodeRef.current.value
-    //     setCode(runTranslation('Python', 'C', codeRef.current.value))
-    //     // console.log(
-    //     //   codeRef.runTranslation('Python', 'C', codeRef.current.value)
-    //     // )
-    //   }
+    //   console.log(codeRef.current.value)
+    //   setCode(codeRef.current.value)
     // } catch (error) {
     //   console.error('Translation error:', error)
     // }
+    try {
+      if (codeRef.current.value != '') {
+        codeRef.current.value = rawCodeRef.current.value
+        codeRef.current.value = await runTranslation({
+          fromLanguage: languageDropdownRef1.current.value,
+          toLanguage: languageDropdownRef2.current.value,
+          code: codeRef.current.value,
+        })
+        setCode(codeRef.current.value)
+      }
+    } catch (error) {
+      console.error('Translation error:', error)
+      setCode('')
+      if (error.code == 'nonsense') toast.error('ChatGPT got confused')
+      else toast.error('Rate limit reached')
+    }
   }
   //handles download button
   const handleDownloadClick = () => {
@@ -234,6 +241,7 @@ const CodeTranslatorPage = () => {
             </label>
             <div className="flex flex-row justify-between">
               <select
+                ref={languageDropdownRef1}
                 name="language"
                 id="language"
                 className="mt-1 h-7 w-20 basis-3/4 rounded bg-text_box text-center hover:bg-blue-200 "
