@@ -13,9 +13,14 @@ const TranslationRequest = ({ text }) => {
 
  useEffect(() => {
     const fetchTranslation = async () => {
-      const result = await translateText(text);
-      setTranslatedText(result);
-      setIsLoading(false);
+      try {
+        const result = await translateText(text);
+        setTranslatedText(result);
+      } catch (error) {
+        console.error('Translation error:', error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchTranslation();
@@ -28,20 +33,4 @@ const TranslationRequest = ({ text }) => {
  return <div>{translatedText}</div>;
 };
 
-const App = () => {
- const [requests, setRequests] = useState([
-    { id: 1, text: 'Hello, world!' },
-    { id: 2, text: 'Goodbye, world!' },
-    { id: 3, text: 'How are you?' },
- ]);
-
- return (
-    <div>
-      {requests.map((request) => (
-        <TranslationRequest key={request.id} text={request.text} />
-      ))}
-    </div>
- );
-};
-
-export default App;
+export default TranslationRequest;
