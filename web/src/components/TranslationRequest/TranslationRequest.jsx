@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
-// Simulate a long-running translation task
-const translateText = async (text) => {
- // Simulate a delay
- await new Promise((resolve) => setTimeout(resolve, 2000)); // 2 seconds delay
- return `Translated: ${text}`;
-};
+import axios from 'axios';
 
 const TranslationRequest = ({ text }) => {
  const [translatedText, setTranslatedText] = useState('');
@@ -14,10 +8,17 @@ const TranslationRequest = ({ text }) => {
  useEffect(() => {
     const fetchTranslation = async () => {
       try {
-        const result = await translateText(text);
-        setTranslatedText(result);
+        // Assuming your backend endpoint is at '/api/translate'
+        const response = await axios.post('/api/translate', {
+          fromLanguage: 'en', // source language
+          toLanguage: 'es', // target language
+          code: text, // The text to be translated
+        });
+
+        setTranslatedText(response.data);
       } catch (error) {
         console.error('Translation error:', error);
+        setTranslatedText('Error occurred during translation.');
       } finally {
         setIsLoading(false);
       }
@@ -34,3 +35,4 @@ const TranslationRequest = ({ text }) => {
 };
 
 export default TranslationRequest;
+
