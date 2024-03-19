@@ -103,11 +103,13 @@ const CodeTranslatorPage = () => {
           code: codeRef.current.value,
         })
         setCode(codeRef.current.value)
+        toast.success('Successful translation')
       }
     } catch (error) {
       console.error('Translation error:', error)
       setCode('')
-      if (error.code == 'nonsense') toast.error('ChatGPT got confused')
+      if (error.code == 'nonsense') toast.error('Invalid input')
+      else if (error.code == 'too long') toast.error('Code is too long')
       else toast.error('Rate limit reached')
     }
   }

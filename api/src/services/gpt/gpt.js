@@ -6,10 +6,16 @@ const openai = new OpenAI({
 })
 
 export const runTranslation = async ({ fromLanguage, toLanguage, code }) => {
-  let chatCompletion = ''
+  if (code.length > 65535) {
+    const problemo = new Error('Input code is too long')
+    problemo.code = 'too long'
+    throw problemo
+  }
+  let optimization = ''
+  let translation = ''
   if (fromLanguage == toLanguage) {
     console.log('Optimize the following ' + fromLanguage + ' code: ' + code)
-    chatCompletion = await openai.chat.completions.create({
+    optimization = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [
         {
@@ -18,23 +24,32 @@ export const runTranslation = async ({ fromLanguage, toLanguage, code }) => {
         },
       ],
     })
-  } else {
-    console.log('Translate the following ' + fromLanguage + ' code to ' + toLanguage + ' code: ' + code)
-    chatCompletion = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      messages: [
-        {
-          role: 'user',
-          content: 'Translate the following ' + fromLanguage + ' code to ' + toLanguage + ' code: ' + code,
-        },
-      ],
-    })
   }
-  const start = chatCompletion.choices[0].message.content.substring(0, 9)
-  if (start.includes('orry') || start == 'Apologies') {
-    const problemo = new Error('ChatGPT got confused')
+  console.log('Translate the following ' + fromLanguage + ' code to ' + toLanguage + ' code: ' + code)
+  translation = await openai.chat.completions.create({
+    model: 'gpt-3.5-turbo',
+    messages: [
+      {
+        role: 'user',
+        content: 'Translate the following ' + fromLanguage + ' code to ' + toLanguage + ' code: ' + code,
+      },
+    ],
+  })
+  const tstart = translation.choices[0].message.content.substring(0, 9)
+  const ostart = translation.choices[0].message.content.substring(0, 9)
+  if (
+    tstart.includes('orry') ||
+    tstart == 'Apologies' ||
+    tstart.substring(0, 2) == 'It' ||
+    tstart.substring(0, 4) == 'This' ||
+    ostart.includes('orry') ||
+    ostart == 'Apologies' ||
+    ostart.substring(0, 2) == 'It' ||
+    ostart.substring(0, 4) == 'This'
+  ) {
+    const problemo = new Error('Invalid input')
     problemo.code = 'nonsense'
     throw problemo
   }
-  return chatCompletion.choices[0].message.content
+  return fromLanguage == toLanguage ? optimization.choices[0].message.content : translation.choices[0].message.content
 }
