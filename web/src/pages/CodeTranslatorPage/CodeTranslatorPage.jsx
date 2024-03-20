@@ -80,7 +80,7 @@ const CodeTranslatorPage = () => {
       }
     }
   }
-  //ONLY COPIES THE LEFT TEXT BOX FOR NOW
+
   const handleTranslateSubmission = () => {
     translateCode()
   }
@@ -108,9 +108,15 @@ const CodeTranslatorPage = () => {
     } catch (error) {
       console.error('Translation error:', error)
       setCode('')
-      if (error.code == 'nonsense') toast.error('Invalid input')
-      else if (error.code == 'too long') toast.error('Code is too long')
-      else toast.error('Rate limit reached')
+      if (error.code == 'nonsense') toast.error('Your code was not recognized')
+      else if (error.code == 'mt') toast.error('Please enter code')
+      else if (error.code == 'too long')
+        toast.error('Code is too long, try breaking up input')
+      else if (error.code == 'wrong lang')
+        toast.error('Ensure selected language matches input')
+      else if (error.code == '429')
+        toast.error('Rate limit reached, try again later')
+      else toast.error('OpenAI error')
     }
   }
   //handles download button
@@ -179,7 +185,7 @@ const CodeTranslatorPage = () => {
   }
 
   //copy button
-  const translatedCodeRef = useRef(null)
+  //const translatedCodeRef = useRef(null)
   const rawCodeRef = useRef(null)
   const codeRef = useRef(null)
   //const [translatedCode] = useState('')
@@ -187,7 +193,9 @@ const CodeTranslatorPage = () => {
   const handleCopyClick = () => {
     // Select the text in the textarea
 
-    translatedCodeRef.current.select()
+    console.log('handle copy click called')
+
+    code.value.select()
 
     // Copy the selected text to the clipboard
     document.execCommand('copy')

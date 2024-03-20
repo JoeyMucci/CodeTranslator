@@ -533,6 +533,12 @@ describe('Actual translation', () => {
     expect(oldcode).toContain(orgcode) // Check that the retranslated code contains starting code
   }, 100000)
 
+  it('throws error when input code is in different language', async () => {
+    expect(async () => {
+      await runTranslation({ fromLanguage: tolang, toLanguage: fromlang, code: orgcode })
+    }).rejects.toThrow('Wrong language')
+  })
+
   it('throws error when given nonsense', async () => {
     const nonsense = 'The quick brown fox jumps over the lazy dog'
     expect(async () => {
@@ -545,6 +551,11 @@ describe('Actual translation', () => {
       await runTranslation({ fromLanguage: 'Java', toLanguage: 'SQL', code: toolong })
     }).rejects.toThrow('Input code is too long')
   }, 100000)
+  it('throws error when message is empty', async () => {
+    expect(async () => {
+      await runTranslation({ fromLanguage: 'Java', toLanguage: 'SQL', code: '' })
+    }).rejects.toThrow('No code')
+  }, 100000)
 })
 
 describe('Optimization', () => {
@@ -555,17 +566,25 @@ describe('Optimization', () => {
     const shortcode = await runTranslation({ fromLanguage: lang, toLanguage: lang, code: longcode }) // Call optimization
     expect(shortcode.length).toBeLessThan(oldlength) // Make sure optimized code is shorter than unoptimized code
   }, 100000)
-
+  it('throws error when input code is in different language', async () => {
+    expect(async () => {
+      await runTranslation({ fromLanguage: tolang, toLanguage: tolang, code: orgcode })
+    }).rejects.toThrow('Wrong language')
+  })
   it('throws error when given nonsense', async () => {
     const nonsense = 'El rápido zorro marrón salta sobre el perro perezoso'
     expect(async () => {
       await runTranslation({ fromLanguage: 'Java', toLanguage: 'Java', code: nonsense })
     }).rejects.toThrow('Invalid input')
   }, 100000)
-
   it('throws error when message is too long', async () => {
     expect(async () => {
       await runTranslation({ fromLanguage: 'Java', toLanguage: 'Java', code: toolong })
     }).rejects.toThrow('Input code is too long')
+  }, 100000)
+  it('throws error when message is empty', async () => {
+    expect(async () => {
+      await runTranslation({ fromLanguage: 'Java', toLanguage: 'Java', code: '' })
+    }).rejects.toThrow('No code')
   }, 100000)
 })
