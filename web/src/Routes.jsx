@@ -14,6 +14,7 @@ import { useAuth } from './auth'
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
+      <Route path="/translationhistory" page={TranslationhistoryPage} name="translationhistory" />
       <Route path="/feedback" page={FeedbackPage} name="feedback" />
       <Route path="/code-translator" page={CodeTranslatorPage} name="codeTranslator" />
       <Route path="/" page={LoginPage} name="login" />
