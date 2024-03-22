@@ -28,6 +28,18 @@ describe('CodeTranslatorPage', () => {
     //expect(codeDiv).toContainHTML('')
   })
 
+  test('when copy is clicked with no text in the outputBox, make sure theres an alert msg', async () => {
+    window.alert = jest.fn()
+    render(<CodeTranslatorPage />)
+    const copyButton = screen.getByRole('button', { name: 'Copy' })
+
+    await waitFor(() => fireEvent.click(copyButton))
+    expect(window.alert).toHaveBeenCalledWith(
+      'Translation area is empty. Please enter code before copying.'
+    )
+    //expect(codeDiv).toContainHTML('')
+  })
+
   beforeAll(() => {
     global.URL.createObjectURL = jest.fn()
   })
@@ -49,6 +61,24 @@ describe('CodeTranslatorPage', () => {
 
     await waitFor(() => fireEvent.click(translateButton))
     await waitFor(() => fireEvent.click(downloadButton))
+
+    expect(window.alert).toHaveBeenCalledTimes(0)
+  })
+
+  test('when copy is clicked with text in the outputBox, make sure there is no alert msg', async () => {
+    window.alert = jest.fn()
+    document.execCommand = jest.fn()
+    render(<CodeTranslatorPage />)
+
+    const copyButton = screen.getByRole('button', { name: 'Copy' })
+    const translateButton = screen.getByRole('button', { name: 'Translate' })
+
+    fireEvent.change(screen.getByTestId('InputBoxTestId'), {
+      target: { value: 'int main()' },
+    })
+
+    await waitFor(() => fireEvent.click(translateButton))
+    await waitFor(() => fireEvent.click(copyButton))
 
     expect(window.alert).toHaveBeenCalledTimes(0)
   })

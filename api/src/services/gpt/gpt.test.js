@@ -1,4 +1,4 @@
-import { runTranslation } from './gpt.js'
+import { isCorrectLanguage, doTranslation, doOptimization, runTranslation } from './gpt.js'
 
 const toolong = `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -522,22 +522,179 @@ const toolong = `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`
-const fromlang = 'Python'
-const tolang = 'C'
-const orgcode = 'print("hello world")'
 
+// API MOCKS
+describe('Language detection', () => {
+  jest.restoreAllMocks()
+  jest.resetModules()
+  jest.mock('openai', () => {
+    return jest.fn().mockImplementation(() => {
+      return {
+        chat: {
+          completions: {
+            create: jest.fn().mockImplementation(async () => {
+              return { choices: [{ message: { content: 'The code is written in Python' } }] }
+            }),
+          },
+        },
+      }
+    })
+  })
+  const OpenAI = require('openai')
+  it('returns false when language detection is different from given language', async () => {
+    const openai = OpenAI()
+    const openaiResponse = await isCorrectLanguage({
+      language: 'SQL',
+      code: 'print("hello world")',
+      openai: openai,
+    })
+    expect(openaiResponse).toBe(false)
+  })
+
+  it('returns true when language detection is same from given language', async () => {
+    const openai = OpenAI()
+    const openaiResponse = await isCorrectLanguage({
+      language: 'Python',
+      code: 'print("hello world")',
+      openai: openai,
+    })
+    expect(openaiResponse).toBe(true)
+  })
+}, 10000)
+
+describe('Translation', () => {
+  it('returns null when input is not recognized', async () => {
+    jest.restoreAllMocks()
+    jest.resetModules()
+    jest.mock('openai', () => {
+      return jest.fn().mockImplementation(() => {
+        return {
+          chat: {
+            completions: {
+              create: jest.fn().mockImplementation(async () => {
+                return {
+                  choices: [{ message: { content: "I'm sorry, but I could not understand the code you supplied" } }],
+                }
+              }),
+            },
+          },
+        }
+      })
+    })
+    const OpenAI = require('openai')
+    const openai = OpenAI()
+    const openaiResponse = await doTranslation({
+      fromLanguage: 'PHP',
+      toLanguage: 'Java',
+      code: 'Big elephants can always use small elephants',
+      openai: openai,
+    })
+    expect(openaiResponse).toBe(null)
+  })
+
+  it('does not return null when translation is successful', async () => {
+    jest.restoreAllMocks()
+    jest.resetModules()
+    jest.mock('openai', () => {
+      return jest.fn().mockImplementation(() => {
+        return {
+          chat: {
+            completions: {
+              create: jest.fn().mockImplementation(async () => {
+                return { choices: [{ message: { content: 'System.out.println("Hello world")' } }] }
+              }),
+            },
+          },
+        }
+      })
+    })
+    const OpenAI = require('openai')
+    const openai = OpenAI()
+    const openaiResponse = await doTranslation({
+      fromLanguage: 'Python',
+      toLanguage: 'Java',
+      code: 'print("hello world")',
+      openai: openai,
+    })
+    expect(openaiResponse).not.toBe(null)
+  })
+}, 10000)
+
+describe('Optimization', () => {
+  it('returns null when input is not recognized', async () => {
+    jest.restoreAllMocks()
+    jest.resetModules()
+    jest.mock('openai', () => {
+      return jest.fn().mockImplementation(() => {
+        return {
+          chat: {
+            completions: {
+              create: jest.fn().mockImplementation(async () => {
+                return {
+                  choices: [
+                    {
+                      message: {
+                        content: 'Unfortunately, the code you provided is not C++ code so it cannot be optimized',
+                      },
+                    },
+                  ],
+                }
+              }),
+            },
+          },
+        }
+      })
+    })
+    const OpenAI = require('openai')
+    const openai = OpenAI()
+    const openaiResponse = await doOptimization({
+      language: 'C++',
+      code: 'Four Dragons Hawk Dive Now Scorch Arrow of Fortune',
+      openai: openai,
+    })
+    expect(openaiResponse).toBe(null)
+  })
+
+  it('does not return null when optimization is successful', async () => {
+    jest.restoreAllMocks()
+    jest.resetModules()
+    jest.mock('openai', () => {
+      return jest.fn().mockImplementation(() => {
+        return {
+          chat: {
+            completions: {
+              create: jest.fn().mockImplementation(async () => {
+                return { choices: [{ message: { content: 'x=0\nx+=2\nprint(x)' } }] }
+              }),
+            },
+          },
+        }
+      })
+    })
+    const OpenAI = require('openai')
+    const openai = OpenAI()
+    const openaiResponse = await doOptimization({
+      language: 'Python',
+      code: 'x=0\nx+=1\nx+=1\nprint(x)',
+      openai: openai,
+    })
+    expect(openaiResponse).not.toBe(null)
+  })
+}, 10000)
+
+// REAL SHIT
 describe('Actual translation', () => {
   it('consistent translation of simple code', async () => {
-    const newcode = await runTranslation({ fromLanguage: fromlang, toLanguage: tolang, code: orgcode }) // Translate code
-    const oldcode = await runTranslation({ fromLanguage: tolang, toLanguage: fromlang, code: newcode }) // Reverse translation
-    expect(oldcode).toContain(orgcode) // Check that the retranslated code contains starting code
+    const newcode = await runTranslation({ fromLanguage: 'Python', toLanguage: 'C', code: 'print("hello world")' }) // Translate code
+    const oldcode = await runTranslation({ fromLanguage: 'C', toLanguage: 'Python', code: newcode }) // Reverse translation
+    expect(oldcode).toContain('print("hello world")') // Check that the retranslated code contains starting code
   }, 100000)
 
   it('throws error when input code is in different language', async () => {
     expect(async () => {
-      await runTranslation({ fromLanguage: tolang, toLanguage: fromlang, code: orgcode })
+      await runTranslation({ fromLanguage: 'C', toLanguage: 'Python', code: 'print("hello world")' })
     }).rejects.toThrow('Wrong language')
-  })
+  }, 10000)
 
   it('throws error when given nonsense', async () => {
     const nonsense = 'The quick brown fox jumps over the lazy dog'
@@ -558,7 +715,7 @@ describe('Actual translation', () => {
   }, 100000)
 })
 
-describe('Optimization', () => {
+describe('Actual Optimization', () => {
   it('condenses redundant code', async () => {
     const lang = 'Python'
     const longcode = 'x=0\nx+=1\nx+=1\nprint(x)' // Inefficient code
@@ -568,11 +725,11 @@ describe('Optimization', () => {
   }, 100000)
   it('throws error when input code is in different language', async () => {
     expect(async () => {
-      await runTranslation({ fromLanguage: tolang, toLanguage: tolang, code: orgcode })
+      await runTranslation({ fromLanguage: 'C', toLanguage: 'C', code: 'print("hello world")' })
     }).rejects.toThrow('Wrong language')
-  })
+  }, 10000)
   it('throws error when given nonsense', async () => {
-    const nonsense = 'El rápido zorro marrón salta sobre el perro perezoso'
+    const nonsense = 'The quick brown fox jumps over the lazy dog'
     expect(async () => {
       await runTranslation({ fromLanguage: 'Java', toLanguage: 'Java', code: nonsense })
     }).rejects.toThrow('Invalid input')

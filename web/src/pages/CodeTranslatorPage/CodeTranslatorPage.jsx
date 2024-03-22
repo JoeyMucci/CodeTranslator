@@ -95,16 +95,15 @@ const CodeTranslatorPage = () => {
     //   console.error('Translation error:', error)
     // }
     try {
-      if (codeRef.current.value != '') {
+      if (codeRef.current.value != '')
         codeRef.current.value = rawCodeRef.current.value
-        codeRef.current.value = await runTranslation({
-          fromLanguage: languageDropdownRef1.current.value,
-          toLanguage: languageDropdownRef2.current.value,
-          code: codeRef.current.value,
-        })
-        setCode(codeRef.current.value)
-        toast.success('Successful translation')
-      }
+      let res = await runTranslation({
+        fromLanguage: languageDropdownRef1.current.value,
+        toLanguage: languageDropdownRef2.current.value,
+        code: rawCodeRef.current.value,
+      })
+      setCode(res)
+      toast.success('Successful translation')
     } catch (error) {
       console.error('Translation error:', error)
       setCode('')
@@ -116,7 +115,7 @@ const CodeTranslatorPage = () => {
         toast.error('Ensure selected language matches input')
       else if (error.code == '429')
         toast.error('Rate limit reached, try again later')
-      else toast.error('OpenAI error')
+      else toast.error('Unkown error')
     }
   }
   //handles download button
@@ -191,17 +190,20 @@ const CodeTranslatorPage = () => {
   //const [translatedCode] = useState('')
 
   const handleCopyClick = () => {
+    const contentToDownload = codeRef.current.value
     // Select the text in the textarea
-
-    console.log('handle copy click called')
-
-    code.value.select()
-
-    // Copy the selected text to the clipboard
-    document.execCommand('copy')
-
-    // Deselect the text
+    if (contentToDownload == '' || contentToDownload == undefined) {
+      alert('Translation area is empty. Please enter code before copying.')
+      return
+    }
+    let r = document.createRange()
+    r.selectNode(document.getElementById('copy me'))
+    console.log(document.getElementById('copy me'))
     window.getSelection().removeAllRanges()
+    window.getSelection().addRange(r)
+    document.execCommand('copy') // DEPRECATED BRUH
+    window.getSelection().removeAllRanges()
+
     toast.success('Copied to clipboard!', {
       position: 'top-right',
       autoClose: 2000, // Milliseconds, set to 0 to stay open until manually closed
@@ -328,6 +330,7 @@ const CodeTranslatorPage = () => {
               <button
                 className=" basis-1/8 w-8 rounded text-center text-white hover:bg-gray-800"
                 onClick={handleCopyClick}
+                aria-label="Copy"
               >
                 {' '}
                 <img
@@ -350,6 +353,7 @@ const CodeTranslatorPage = () => {
             </div>
 
             <div
+              id="copy me"
               ref={codeRef}
               onChange={codeChange}
               className=" custom-syntax-highlighter mt-5 w-full resize-none overflow-auto rounded border-gray-300 bg-text_box p-4"
