@@ -165,6 +165,40 @@ fieldset, label { margin: 0; padding: 0; }
 }
 
 /*****STUFF FOR THE FAQ PAGE ******/
+header {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding-bottom: 100px;
+  padding-top: 20px;
+
+}
+
+header h1 {
+  color: #EEE;
+  font-size: 48px;
+  font-weight: 700;
+  text-transform: uppercase;
+
+}
+
+h1 {
+  color: #EEE;
+  font-size: 48px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding-left: 20px;
+  max-width: 1536px;
+  margin: auto;
+}
+
+hr {
+  justify-content: center;
+  align-content: center;
+  max-width: 1536px;
+  margin: auto;
+}
+
 .faqs {
   width: 100%;
   max-width: 1536px;

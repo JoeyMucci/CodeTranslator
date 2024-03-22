@@ -6,7 +6,7 @@ function FAQ ({faq, index, toggleFAQ}) {
          key={index}
          onClick={() => toggleFAQ(index)}
     >
-      <div className="faq-question">
+      <div className="faq-question hover:bg-blue-200 ">
         {faq.question}
       </div>
 
