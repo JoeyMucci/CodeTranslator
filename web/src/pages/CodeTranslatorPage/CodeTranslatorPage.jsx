@@ -103,19 +103,20 @@ const CodeTranslatorPage = () => {
         code: rawCodeRef.current.value,
       })
       setCode(res)
+      codeRef.current.value = res
       toast.success('Successful translation')
     } catch (error) {
       console.error('Translation error:', error)
       setCode('')
+      codeRef.current.value = ''
       if (error.code == 'nonsense') toast.error('Your code was not recognized')
       else if (error.code == 'mt') toast.error('Please enter code')
       else if (error.code == 'too long')
         toast.error('Code is too long, try breaking up input')
       else if (error.code == 'wrong lang')
         toast.error('Ensure selected language matches input')
-      else if (error.code == '429')
-        toast.error('Rate limit reached, try again later')
-      else toast.error('Unkown error')
+      else if (error.code == 'spam') toast.error("We're working on it!")
+      else toast.error('Open AI error: ' + error.code)
     }
   }
   //handles download button
@@ -190,15 +191,13 @@ const CodeTranslatorPage = () => {
   //const [translatedCode] = useState('')
 
   const handleCopyClick = () => {
-    const contentToDownload = codeRef.current.value
     // Select the text in the textarea
-    if (contentToDownload == '' || contentToDownload == undefined) {
+    if (codeRef.current.value == '' || codeRef.current.value == undefined) {
       alert('Translation area is empty. Please enter code before copying.')
       return
     }
     let r = document.createRange()
     r.selectNode(document.getElementById('copy me'))
-    console.log(document.getElementById('copy me'))
     window.getSelection().removeAllRanges()
     window.getSelection().addRange(r)
     document.execCommand('copy') // DEPRECATED BRUH

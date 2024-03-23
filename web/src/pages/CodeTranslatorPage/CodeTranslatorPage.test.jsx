@@ -6,9 +6,6 @@ import { render, screen, waitFor, fireEvent } from '@redwoodjs/testing/web'
 
 import CodeTranslatorPage from './CodeTranslatorPage'
 
-//   Improve this test with help from the Redwood Testing Doc:
-//   https://redwoodjs.com/docs/testing#testing-pages-layouts
-
 describe('CodeTranslatorPage', () => {
   it('renders successfully', () => {
     expect(() => {
@@ -56,7 +53,7 @@ describe('CodeTranslatorPage', () => {
     const translateButton = screen.getByRole('button', { name: 'Translate' })
 
     fireEvent.change(screen.getByTestId('InputBoxTestId'), {
-      target: { value: 'int main()' },
+      target: { value: 'int main() {printf("gollygee\n")' },
     })
 
     await waitFor(() => fireEvent.click(translateButton))
@@ -68,13 +65,14 @@ describe('CodeTranslatorPage', () => {
   test('when copy is clicked with text in the outputBox, make sure there is no alert msg', async () => {
     window.alert = jest.fn()
     document.execCommand = jest.fn()
+    window.matchMedia = jest.fn()
     render(<CodeTranslatorPage />)
 
     const copyButton = screen.getByRole('button', { name: 'Copy' })
     const translateButton = screen.getByRole('button', { name: 'Translate' })
 
     fireEvent.change(screen.getByTestId('InputBoxTestId'), {
-      target: { value: 'int main()' },
+      target: { value: 'int main() {printf("geegee\n")' },
     })
 
     await waitFor(() => fireEvent.click(translateButton))
