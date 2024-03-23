@@ -16,7 +16,7 @@ const Routes = () => {
     <Router useAuth={useAuth}>
       <Route path="/feedback" page={FeedbackPage} name="feedback" />
       <Route path="/code-translator" page={CodeTranslatorPage} name="codeTranslator" />
-      <Route path="/" page={LoginPage} name="login" />
+      <Route path="/" page={HomePage} name="Homepage" />
       <Route notfound page={NotFoundPage} />
     </Router>
   )

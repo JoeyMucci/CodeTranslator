@@ -1,10 +1,6 @@
-import { hashPassword } from 'src/lib/auth'
+import bcrypt from 'bcrypt'
+
 import { db } from 'src/lib/db'
-
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
 export const users = () => {
   return db.user.findMany()
 }
@@ -15,21 +11,12 @@ export const user = ({ id }) => {
   })
 }
 
-export const createUser = async ({ email, password }) => {
-  if (!emailRegex.test(email)) {
-    throw new Error('Invalid email format')
-  }
-  if (!passwordRegex.test(password)) {
-    throw new Error(
-      'Weak password. Password must contain at least 8 characters, including uppercase, lowercase, numbers, and special characters.'
-    )
-  }
-  const hashedPassword = await hashPassword(password)
-
+export const createUser = async ({ input }) => {
+  const hashedPassword = await bcrypt.hash(input.password, 10)
   const user = await db.user.create({
     data: {
-      email,
-      hashedPassword,
+      email: input.email,
+      password: hashedPassword,
     },
   })
 
