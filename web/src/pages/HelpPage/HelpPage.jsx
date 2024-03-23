@@ -13,6 +13,11 @@ const HelpPage = () => {
       open: false
     },
     {
+      question: 'How does Rosetta Code translate my submissions?',
+      answer: 'Rosetta Code uses GPT-3 to translate all of our submissions :)',
+      open: false
+    },
+    {
       question: 'How will I know when GPT-3 is available?',
       answer: 'On the translation page there will be an availabilty indicator to let you know if GPT-3 is available for translation. A green indicator means you\'re good to go, and a red indicator mean\'s there\'s an issue.',
       open: false
@@ -83,7 +88,7 @@ const HelpPage = () => {
                 fontSize: '16px', // Adjust as needed
                 lineHeight: '1.5',
               }} className="basis-1/4 rounded bg-text_box text-center hover:bg-blue-200">
-            <a href="https://www.python.org/downloads/">
+            <a href="https://www.python.org/downloads/" aria-label="Python">
             <p>Install Python</p>
             <br></br>
 
@@ -102,9 +107,9 @@ const HelpPage = () => {
               }} className='basis-1/4 rounded bg-text_box text-center hover:bg-blue-200'>
 
 
-                <a href="https://www.java.com/en/download/help/download_options.html">
+                <a href="https://www.java.com/en/download/help/download_options.html" aria-label="Java">
                 <p>install java</p>
-                <br></br>
+                <br/>
                 <img classname="justify-center" src="images/Java-Logo 1.png" alt="Java" style={{width: '150px', margin: 'auto'}} />
                 </a>
               </div>
@@ -120,7 +125,7 @@ const HelpPage = () => {
               }} className='basis-1/4 rounded bg-text_box text-center hover:bg-blue-200'>
 
 
-                <a href="https://code.visualstudio.com/docs/cpp/config-mingw">
+                <a href="https://code.visualstudio.com/docs/cpp/config-mingw" aria-label="C compiler">
                 <p>GCC C++ compiler in VS Code</p>
                 <br></br>
                 <img classname="justify-center" src="images/C_Logo.png" alt="C" style={{width: '120px', margin: 'auto'}} />
@@ -135,7 +140,7 @@ const HelpPage = () => {
               }} className='basis-1/4 rounded bg-text_box text-center hover:bg-blue-200'>
 
 
-              <a href="https://www.w3schools.com/php/">
+              <a href="https://www.w3schools.com/php/" aria-label="php">
               <p>PHP tutorial</p>
               <br></br>
               <img classname="justify-center" src="images/PHP-logo.svg.png" alt="PHP" style={{width: '230px', margin: 'auto'}} />
