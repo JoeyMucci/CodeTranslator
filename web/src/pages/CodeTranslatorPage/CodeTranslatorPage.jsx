@@ -80,7 +80,7 @@ const CodeTranslatorPage = () => {
       }
     }
   }
-  //ONLY COPIES THE LEFT TEXT BOX FOR NOW
+
   const handleTranslateSubmission = () => {
     translateCode()
   }
@@ -95,20 +95,28 @@ const CodeTranslatorPage = () => {
     //   console.error('Translation error:', error)
     // }
     try {
-      if (codeRef.current.value != '') {
+      if (codeRef.current.value != '')
         codeRef.current.value = rawCodeRef.current.value
-        codeRef.current.value = await runTranslation({
-          fromLanguage: languageDropdownRef1.current.value,
-          toLanguage: languageDropdownRef2.current.value,
-          code: codeRef.current.value,
-        })
-        setCode(codeRef.current.value)
-      }
+      let res = await runTranslation({
+        fromLanguage: languageDropdownRef1.current.value,
+        toLanguage: languageDropdownRef2.current.value,
+        code: rawCodeRef.current.value,
+      })
+      setCode(res)
+      codeRef.current.value = res
+      toast.success('Successful translation')
     } catch (error) {
       console.error('Translation error:', error)
       setCode('')
-      if (error.code == 'nonsense') toast.error('ChatGPT got confused')
-      else toast.error('Rate limit reached')
+      codeRef.current.value = ''
+      if (error.code == 'nonsense') toast.error('Your code was not recognized')
+      else if (error.code == 'mt') toast.error('Please enter code')
+      else if (error.code == 'too long')
+        toast.error('Code is too long, try breaking up input')
+      else if (error.code == 'wrong lang')
+        toast.error('Ensure selected language matches input')
+      else if (error.code == 'spam') toast.error("We're working on it!")
+      else toast.error('Open AI error: ' + error.code)
     }
   }
   //handles download button
@@ -177,21 +185,24 @@ const CodeTranslatorPage = () => {
   }
 
   //copy button
-  const translatedCodeRef = useRef(null)
+  //const translatedCodeRef = useRef(null)
   const rawCodeRef = useRef(null)
   const codeRef = useRef(null)
   //const [translatedCode] = useState('')
 
   const handleCopyClick = () => {
     // Select the text in the textarea
-
-    translatedCodeRef.current.select()
-
-    // Copy the selected text to the clipboard
-    document.execCommand('copy')
-
-    // Deselect the text
+    if (codeRef.current.value == '' || codeRef.current.value == undefined) {
+      alert('Translation area is empty. Please enter code before copying.')
+      return
+    }
+    let r = document.createRange()
+    r.selectNode(document.getElementById('copy me'))
     window.getSelection().removeAllRanges()
+    window.getSelection().addRange(r)
+    document.execCommand('copy') // DEPRECATED BRUH
+    window.getSelection().removeAllRanges()
+
     toast.success('Copied to clipboard!', {
       position: 'top-right',
       autoClose: 2000, // Milliseconds, set to 0 to stay open until manually closed
@@ -318,6 +329,7 @@ const CodeTranslatorPage = () => {
               <button
                 className=" basis-1/8 w-8 rounded text-center text-white hover:bg-gray-800"
                 onClick={handleCopyClick}
+                aria-label="Copy"
               >
                 {' '}
                 <img
@@ -340,6 +352,7 @@ const CodeTranslatorPage = () => {
             </div>
 
             <div
+              id="copy me"
               ref={codeRef}
               onChange={codeChange}
               className=" custom-syntax-highlighter mt-5 w-full resize-none overflow-auto rounded border-gray-300 bg-text_box p-4"
