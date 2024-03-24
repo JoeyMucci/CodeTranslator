@@ -1,11 +1,10 @@
 //import userEvent from '@testing-library/user-event'
 
+// import { runTranslation } from 'api/src/services/gpt/gpt.js'
+
 import { render, screen, waitFor, fireEvent } from '@redwoodjs/testing/web'
 
 import CodeTranslatorPage from './CodeTranslatorPage'
-
-//   Improve this test with help from the Redwood Testing Doc:
-//   https://redwoodjs.com/docs/testing#testing-pages-layouts
 
 describe('CodeTranslatorPage', () => {
   it('renders successfully', () => {
@@ -26,6 +25,18 @@ describe('CodeTranslatorPage', () => {
     //expect(codeDiv).toContainHTML('')
   })
 
+  test('when copy is clicked with no text in the outputBox, make sure theres an alert msg', async () => {
+    window.alert = jest.fn()
+    render(<CodeTranslatorPage />)
+    const copyButton = screen.getByRole('button', { name: 'Copy' })
+
+    await waitFor(() => fireEvent.click(copyButton))
+    expect(window.alert).toHaveBeenCalledWith(
+      'Translation area is empty. Please enter code before copying.'
+    )
+    //expect(codeDiv).toContainHTML('')
+  })
+
   beforeAll(() => {
     global.URL.createObjectURL = jest.fn()
   })
@@ -42,11 +53,30 @@ describe('CodeTranslatorPage', () => {
     const translateButton = screen.getByRole('button', { name: 'Translate' })
 
     fireEvent.change(screen.getByTestId('InputBoxTestId'), {
-      target: { value: 'int main()' },
+      target: { value: 'int main() {printf("gollygee\n")' },
     })
 
     await waitFor(() => fireEvent.click(translateButton))
     await waitFor(() => fireEvent.click(downloadButton))
+
+    expect(window.alert).toHaveBeenCalledTimes(0)
+  })
+
+  test('when copy is clicked with text in the outputBox, make sure there is no alert msg', async () => {
+    window.alert = jest.fn()
+    document.execCommand = jest.fn()
+    window.matchMedia = jest.fn()
+    render(<CodeTranslatorPage />)
+
+    const copyButton = screen.getByRole('button', { name: 'Copy' })
+    const translateButton = screen.getByRole('button', { name: 'Translate' })
+
+    fireEvent.change(screen.getByTestId('InputBoxTestId'), {
+      target: { value: 'int main() {printf("geegee\n")' },
+    })
+
+    await waitFor(() => fireEvent.click(translateButton))
+    await waitFor(() => fireEvent.click(copyButton))
 
     expect(window.alert).toHaveBeenCalledTimes(0)
   })

@@ -1,36 +1,319 @@
-import { runTranslation } from './gpt.js'
+import { isCorrectLanguage, doTranslation, doOptimization, runTranslationHelper, canGPTDoBasicMath } from './gpt.js'
 
-describe('Actual translation', () => {
-  it('consistent translation of simple code', async () => {
-    const fromlang = 'Python'
-    const tolang = 'C'
-    const orgcode = 'print("hello world")'
-    const newcode = await runTranslation({ fromLanguage: fromlang, toLanaguage: tolang, code: orgcode }) // Translate code
-    const oldcode = await runTranslation({ fromLanguage: tolang, toLanguage: fromlang, code: newcode }) // Reverse translation
-    expect(oldcode).toContain(orgcode) // Check that the retranslated code contains starting code
+// API MOCKS
+describe('Language detection', () => {
+  jest.restoreAllMocks()
+  jest.resetModules()
+  jest.mock('openai', () => {
+    return jest.fn().mockImplementation(() => {
+      return {
+        chat: {
+          completions: {
+            create: jest.fn().mockImplementation(async () => {
+              return { choices: [{ message: { content: 'The code is written in Python' } }] }
+            }),
+          },
+        },
+      }
+    })
+  })
+  const OpenAI = require('openai')
+  it('returns false when language detection is different from given language', async () => {
+    const openai = OpenAI()
+    const openaiResponse = await isCorrectLanguage({
+      language: 'SQL',
+      code: 'print("hello world")',
+      openai: openai,
+    })
+    expect(openaiResponse).toBe(false)
+  })
+
+  it('returns true when language detection is same from given language', async () => {
+    const openai = OpenAI()
+    const openaiResponse = await isCorrectLanguage({
+      language: 'Python',
+      code: 'print("hello world")',
+      openai: openai,
+    })
+    expect(openaiResponse).toBe(true)
+  })
+}, 10000)
+
+describe('Translation', () => {
+  it('returns null when input is not recognized', async () => {
+    jest.restoreAllMocks()
+    jest.resetModules()
+    jest.mock('openai', () => {
+      return jest.fn().mockImplementation(() => {
+        return {
+          chat: {
+            completions: {
+              create: jest.fn().mockImplementation(async () => {
+                return {
+                  choices: [{ message: { content: "I'm sorry, but I could not understand the code you supplied" } }],
+                }
+              }),
+            },
+          },
+        }
+      })
+    })
+    const OpenAI = require('openai')
+    const openai = OpenAI()
+    const openaiResponse = await doTranslation({
+      fromLanguage: 'PHP',
+      toLanguage: 'Java',
+      code: 'Big elephants can always use small elephants',
+      openai: openai,
+    })
+    expect(openaiResponse).toBe(null)
+  })
+
+  it('does not return null when translation is successful', async () => {
+    jest.restoreAllMocks()
+    jest.resetModules()
+    jest.mock('openai', () => {
+      return jest.fn().mockImplementation(() => {
+        return {
+          chat: {
+            completions: {
+              create: jest.fn().mockImplementation(async () => {
+                return { choices: [{ message: { content: 'System.out.println("Hello world")' } }] }
+              }),
+            },
+          },
+        }
+      })
+    })
+    const OpenAI = require('openai')
+    const openai = OpenAI()
+    const openaiResponse = await doTranslation({
+      fromLanguage: 'Python',
+      toLanguage: 'Java',
+      code: 'print("hello world")',
+      openai: openai,
+    })
+    expect(openaiResponse).not.toBe(null)
+  })
+}, 10000)
+
+describe('Optimization', () => {
+  it('returns null when input is not recognized', async () => {
+    jest.restoreAllMocks()
+    jest.resetModules()
+    jest.mock('openai', () => {
+      return jest.fn().mockImplementation(() => {
+        return {
+          chat: {
+            completions: {
+              create: jest.fn().mockImplementation(async () => {
+                return {
+                  choices: [
+                    {
+                      message: {
+                        content: 'Unfortunately, the code you provided is not C++ code so it cannot be optimized',
+                      },
+                    },
+                  ],
+                }
+              }),
+            },
+          },
+        }
+      })
+    })
+    const OpenAI = require('openai')
+    const openai = OpenAI()
+    const openaiResponse = await doOptimization({
+      language: 'C++',
+      code: 'Four Dragons Hawk Dive Now Scorch Arrow of Fortune',
+      openai: openai,
+    })
+    expect(openaiResponse).toBe(null)
+  })
+
+  it('does not return null when optimization is successful', async () => {
+    jest.restoreAllMocks()
+    jest.resetModules()
+    jest.mock('openai', () => {
+      return jest.fn().mockImplementation(() => {
+        return {
+          chat: {
+            completions: {
+              create: jest.fn().mockImplementation(async () => {
+                return { choices: [{ message: { content: 'x=0\nx+=2\nprint(x)' } }] }
+              }),
+            },
+          },
+        }
+      })
+    })
+    const OpenAI = require('openai')
+    const openai = OpenAI()
+    const openaiResponse = await doOptimization({
+      language: 'Python',
+      code: 'x=0\nx+=1\nx+=1\nprint(x)',
+      openai: openai,
+    })
+    expect(openaiResponse).not.toBe(null)
+  })
+}, 10000)
+
+describe('Queueing', () => {
+  it('queues small task after long task', async () => {
+    jest.restoreAllMocks()
+    jest.resetModules()
+    jest.mock('openai', () => {
+      return jest.fn().mockImplementation(() => {
+        return {
+          chat: {
+            completions: {
+              create: jest.fn().mockImplementation(async () => {
+                await new Promise((resolve) => setTimeout(resolve, 5000)) // Simulate 5 second task
+                return {
+                  choices: [
+                    {
+                      message: {
+                        content: 'Python', // to prevent error on first call
+                      },
+                    },
+                  ],
+                }
+              }),
+            },
+          },
+        }
+      })
+    })
+    let OpenAI = require('openai')
+    let openai = OpenAI()
+    runTranslationHelper({
+      fromLanguage: 'Python',
+      toLanguage: 'C++',
+      code: 'print("hello World")',
+      openai: openai,
+    })
+    jest.restoreAllMocks()
+    jest.resetModules()
+    jest.mock('openai', () => {
+      return jest.fn().mockImplementation(() => {
+        return {
+          chat: {
+            completions: {
+              create: jest.fn().mockImplementation(async () => {
+                await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate 1 second task
+                return {
+                  choices: [
+                    {
+                      message: {
+                        content: 'Python', // to prevent error on first call
+                      },
+                    },
+                  ],
+                }
+              }),
+            },
+          },
+        }
+      })
+    })
+    OpenAI = require('openai')
+    openai = OpenAI()
+    const start = Date.now()
+    await runTranslationHelper({
+      fromLanguage: 'Python',
+      toLanguage: 'C++',
+      code: 'print("hello WOrld")',
+      openai: openai,
+    })
+    const end = Date.now()
+    expect(end - start).toBeGreaterThan(1500) // task queue
   }, 100000)
+  it('does not run allow same task to run twice', async () => {
+    jest.restoreAllMocks()
+    jest.resetModules()
+    jest.mock('openai', () => {
+      return jest.fn().mockImplementation(() => {
+        return {
+          chat: {
+            completions: {
+              create: jest.fn().mockImplementation(async () => {
+                await new Promise((resolve) => setTimeout(resolve, 5000)) // Simulate 5 second task
+                return {
+                  choices: [
+                    {
+                      message: {
+                        content: 'Python', // to prevent error on first call
+                      },
+                    },
+                  ],
+                }
+              }),
+            },
+          },
+        }
+      })
+    })
+    let OpenAI = require('openai')
+    let openai = OpenAI()
+    runTranslationHelper({
+      fromLanguage: 'Python',
+      toLanguage: 'C',
+      code: 'print("hello World")',
+      openai: openai,
+    })
+    return expect(async () => {
+      await runTranslationHelper({
+        fromLanguage: 'Python',
+        toLanguage: 'C',
+        code: 'print("hello World")',
+        openai: openai,
+      })
+    }).rejects.toThrow("We're working on it!")
+  })
+})
 
-  it('throws error when given nonsense', async () => {
-    const nonsense = 'The quick brown fox jumps over the lazy dog'
-    expect(async () => {
-      await runTranslation({ fromLanguage: 'Java', toLanguage: 'SQL', code: nonsense })
-    }).rejects.toThrow('ChatGPT got confused')
+describe('OpenAI error', () => {
+  it('catches OpenAI errors', async () => {
+    jest.restoreAllMocks()
+    jest.resetModules()
+    jest.mock('openai', () => {
+      return jest.fn().mockImplementation(() => {
+        return {
+          chat: {
+            completions: {
+              create: jest.fn().mockImplementation(async () => {
+                const problemo = new Error('429')
+                problemo.code = 'rate_limit_exceeded'
+                throw problemo
+              }),
+            },
+          },
+        }
+      })
+    })
+    const OpenAI = require('openai')
+    const openai = OpenAI()
+    return expect(async () => {
+      await runTranslationHelper({
+        fromLanguage: 'Python',
+        toLanguage: 'C',
+        code: 'print("YESMAN")',
+        openai: openai,
+      })
+    }).rejects.toThrow('Open AI error')
   }, 100000)
 })
 
-describe('Optimization', () => {
-  it('condenses redundant code', async () => {
-    const lang = 'Python'
-    const longcode = 'x=0\nx+=1\nx+=1\nprint(x)' // Inefficient code
-    const oldlength = longcode.length
-    const shortcode = await runTranslation({ fromLanguage: lang, toLanguage: lang, code: longcode }) // Call optimization
-    expect(shortcode.length).toBeLessThan(oldlength) // Make sure optimized code is shorter than unoptimized code
-  }, 100000)
-
-  it('throws error when given nonsense', async () => {
-    const nonsense = 'El veloz zorro marrón salta sobre el perro perezoso'
-    expect(async () => {
-      await runTranslation({ fromLanguage: 'Java', toLanguage: 'Java', code: nonsense })
-    }).rejects.toThrow('ChatGPT got confused')
-  }, 100000)
+// API KEY
+describe('API KEY', () => {
+  it('works with the right key', async () => {
+    let res = await canGPTDoBasicMath({ apiKey: process.env.OPENAI_API_KEY }) // asks the square root of 169
+    expect(res).toContain('13')
+  })
+  it('does not work with the wrong key', async () => {
+    return expect(async () => {
+      await canGPTDoBasicMath({ apiKey: process.env.NOT_OPENAI_API_KEY })
+    }).rejects.toThrow('Incorrect API key provided')
+  })
 })
