@@ -18862,9 +18862,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"openai@npm:^4.28.4":
-  version: 4.28.4
-  resolution: "openai@npm:4.28.4"
+"openai@npm:^4.29.2":
+  version: 4.29.2
+  resolution: "openai@npm:4.29.2"
   dependencies:
     "@types/node": "npm:^18.11.18"
     "@types/node-fetch": "npm:^2.6.4"
@@ -18877,7 +18877,7 @@ __metadata:
     web-streams-polyfill: "npm:^3.2.1"
   bin:
     openai: bin/cli
-  checksum: be0cf2758abf39c1d4f4db30034da312c1a7651cc3b09b8ca9a67d5bc3dd74861612783ac775660c97af91f7afdd1dff34b0e359b41a8aec6afd8049bd578fc8
+  checksum: 4bf00d9a6ee5cde24bb473d548670e8951058122b14e2cbd72199e47178b4e3b1e0350a51fdae871b6f5dec5b569ff7f6af5fc91a77d6c26b5e7437e8f62ec6a
   languageName: node
   linkType: hard
 
@@ -21456,7 +21456,7 @@ __metadata:
     bcryptjs: "npm:^2.4.3"
     dotenv: "npm:^16.4.5"
     highlight.js: "npm:^11.9.0"
-    openai: "npm:^4.28.4"
+    openai: "npm:^4.29.2"
     postcss: "npm:^8.4.35"
     prettier-plugin-tailwindcss: "npm:0.4.1"
     prismjs: "npm:^1.29.0"

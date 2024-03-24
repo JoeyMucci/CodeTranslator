@@ -27,8 +27,14 @@ export const schema = gql`
     resetTokenExpiresAt: DateTime
   }
 
+  type AuthPayload {
+    token: String!
+    user: User!
+  }
+
   type Mutation {
     createUser(input: CreateUserInput!): User! @skipAuth
+    loginUser(email: String!, password: String!): AuthPayload! @skipAuth
     updateUser(id: Int!, input: UpdateUserInput!): User! @requireAuth
     deleteUser(id: Int!): User! @requireAuth
   }

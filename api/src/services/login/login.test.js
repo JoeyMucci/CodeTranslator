@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 
 import { db } from 'src/lib/db'
 
-import { loginUser, logoffUser } from './auth'
+import { loginUser, logoffUser } from './login'
 
 jest.mock('src/lib/db', () => ({
   db: {

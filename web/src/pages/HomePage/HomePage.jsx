@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 
 import { Form, Label, TextField, Submit } from '@redwoodjs/forms'
+import { navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { Toaster, toast } from '@redwoodjs/web/toast'
+
+import { useAuth } from 'src/auth'
 
 const Button = ({ children, extraClasses, onClick }) => (
   <div
@@ -21,6 +24,19 @@ const CREATE_USER = gql`
     }
   }
 `
+
+const LOGIN_USER = gql`
+  mutation LoginUser($email: String!, $password: String!) {
+    loginUser(email: $email, password: $password) {
+      token
+      user {
+        email
+        password
+      }
+    }
+  }
+`
+
 const HowItWorksSection = () => {
   return (
     <section className="ml-5 flex w-full  max-md:ml-0 max-md:w-full">
@@ -45,12 +61,24 @@ const HowItWorksSection = () => {
   )
 }
 
-const LoginForm = ({ onSubmit }) => {
+const LoginForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loginUser] = useMutation(LOGIN_USER)
+  const [wrongPasswordError, setWrongPasswordError] = useState(false)
 
-  const handleSubmit = (data) => {
-    onSubmit(data)
+  //const logIn = useAuth()
+
+  const handleSubmit = async () => {
+    try {
+      const response = await loginUser({ variables: { email, password } })
+      localStorage.setItem('userEmail', response.data.loginUser.user.email)
+      localStorage.setItem('authToken', response.data.loginUser.token)
+      navigate('/code-translator')
+    } catch (error) {
+      toast.error('Login Failed')
+      setWrongPasswordError(error.message)
+    }
   }
 
   return (
@@ -80,8 +108,14 @@ const LoginForm = ({ onSubmit }) => {
         placeholder="SuperSecretPassword11!"
         aria-label="Enter your password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e) => {
+          setPassword(e.target.value)
+          setWrongPasswordError(false)
+        }}
       />
+      {wrongPasswordError && (
+        <p className="mt-2 text-sm text-red-500">Password is incorrect</p>
+      )}
       <Submit className="mb-6 mt-16 w-full max-w-full items-center justify-center rounded-2xl border border-solid border-black bg-blue-500 px-16 py-2.5 text-white shadow-sm md:w-[381px]">
         Login
       </Submit>
@@ -133,7 +167,6 @@ const RegisterForm = () => {
       className="flex flex-col rounded-xl bg-gray-100 px-20 py-12 max-md:max-w-full max-md:px-5"
       onSubmit={handleSubmit}
     >
-      <Toaster />
       <Label name="email" htmlFor="emailInput" className="mt-2 text-black">
         Email:
       </Label>
@@ -230,6 +263,7 @@ const HomeForm = () => {
           <section className="flex w-full flex-col max-md:ml-0 max-md:w-full">
             <div className="mt-14 flex flex-col whitespace-nowrap text-lg text-white max-md:mt-10 max-md:max-w-full">
               <div className="flex gap-3 self-center border-[3px] border-solid border-white px-5 py-2.5 text-2xl text-white">
+                <Toaster />
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/eb7eb7143d98e414c936ef8ce29fdb58e163b2013b87092dbfb46e6261e1b373?apiKey=87f9f1533ce74b8abe2dfb3aa0215cd2&"
                   alt="Company logo"
