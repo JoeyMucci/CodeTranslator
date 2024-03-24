@@ -1,5 +1,6 @@
 import { Link, routes } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
+import TranslationCell from 'src/components/TranslationCell'
 
 const TranslationhistoryPage = () => {
   return (
@@ -9,17 +10,9 @@ const TranslationhistoryPage = () => {
         description="Translationhistory page"
       />
 
-      <h1>TranslationhistoryPage</h1>
-      <p>
-        Find me in{' '}
-        <code>
-          ./web/src/pages/TranslationhistoryPage/TranslationhistoryPage.jsx
-        </code>
-      </p>
-      <p>
-        My default route is named <code>translationhistory</code>, link to me
-        with `<Link to={routes.translationhistory()}>Translationhistory</Link>`
-      </p>
+      <h1 className="text">Translation History</h1>
+      <TranslationCell />
+
     </>
   )
 }
