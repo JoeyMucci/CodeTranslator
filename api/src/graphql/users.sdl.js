@@ -3,7 +3,7 @@ export const schema = gql`
     id: Int!
     name: String
     email: String!
-    hashedPassword: String!
+    password: String!
     resetToken: String
     resetTokenExpiresAt: DateTime
   }
@@ -11,26 +11,30 @@ export const schema = gql`
   type Query {
     users: [User!]! @skipAuth
     user(id: Int!): User @skipAuth
+    userByEmail(email: String!): User @skipAuth
   }
 
   input CreateUserInput {
-    name: String
     email: String!
-    hashedPassword: String!
-    resetToken: String
-    resetTokenExpiresAt: DateTime
+    password: String!
   }
 
   input UpdateUserInput {
     name: String
     email: String
-    hashedPassword: String
+    password: String
     resetToken: String
     resetTokenExpiresAt: DateTime
   }
 
+  type AuthPayload {
+    token: String!
+    user: User!
+  }
+
   type Mutation {
-    createUser(input: CreateUserInput!): User! @requireAuth
+    createUser(input: CreateUserInput!): User! @skipAuth
+    loginUser(email: String!, password: String!): AuthPayload! @skipAuth
     updateUser(id: Int!, input: UpdateUserInput!): User! @requireAuth
     deleteUser(id: Int!): User! @requireAuth
   }
