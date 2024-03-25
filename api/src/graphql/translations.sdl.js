@@ -1,43 +1,27 @@
 // api/src/graphql/translations.sdl.js
 export const schema = gql`
- type Translation {
+  type Translation {
     id: Int!
     userId: Int!
     originalCode: String!
     translatedCode: String
     createdAt: DateTime!
-    updatedAt: DateTime!
-    status: Status!
- }
+  }
 
- enum Status {
-    pending
-    completed
-    failed
- }
+  type Query {
+    translations: [Translation!]! @requireAuth
+  }
 
- type Query {
-    translations: [Translation!]!
- }
-
- input CreateTranslationInput {
+  input CreateTranslationInput {
     userId: Int!
     originalCode: String!
-    translatedCode: String
-    status: Status!
- }
+    translatedCode: String!
+    originalLanguage: String!
+    translatedLanguage: String!
+  }
 
- input UpdateTranslationInput {
-    id: Int!
-    userId: Int
-    originalCode: String
-    translatedCode: String
-    status: Status
- }
-
- type Mutation {
-    createTranslation(input: CreateTranslationInput!): Translation!
-    updateTranslation(id: Int!, input: UpdateTranslationInput!): Translation!
-    deleteTranslation(id: Int!): Translation!
- }
-`;
+  type Mutation {
+    createTranslation(input: CreateTranslationInput!): Translation! @requireAuth
+    deleteTranslation(id: Int!): Translation! @requireAuth
+  }
+`

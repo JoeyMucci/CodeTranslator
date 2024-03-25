@@ -1,57 +1,51 @@
 datasource db {
- provider = "sqlite"
- url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
- provider      = "prisma-client-js"
- binaryTargets = "native"
+  provider      = "prisma-client-js"
+  binaryTargets = "native"
 }
 
 model Contact {
- id        Int      @id @default(autoincrement())
- name      String
- email     String
- message   String
- createdAt DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
 }
 
 model Rating {
- id        Int      @id @default(autoincrement())
- score     Int
- createdAt DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  score     Int
+  createdAt DateTime @default(now())
 }
 
 model User {
- id                 Int       @id @default(autoincrement())
- name                String?
- email               String    @unique
- password            String
- resetToken          String?
- resetTokenExpiresAt DateTime?
- roles               String    @default("moderator")
- translations        Translation[]
+  id                  Int           @id @default(autoincrement())
+  name                String?
+  email               String        @unique
+  password            String
+  resetToken          String?
+  resetTokenExpiresAt DateTime?
+  roles               String        @default("moderator")
+  translations        Translation[]
 }
 
 model Translation {
- id          Int      @id @default(autoincrement())
- userId      Int
- originalCode String
- translatedCode String?
- createdAt   DateTime @default(now())
- updatedAt   DateTime @updatedAt
- status      Status
- user        User     @relation(fields: [userId], references: [id])
-}
-
-enum Status {
- pending
- completed
- failed
+  id                 Int      @id @default(autoincrement())
+  userId             Int
+  originalCode       String
+  translatedCode     String
+  originalLanguage   String
+  translatedLanguage String
+  createdAt          DateTime @default(now())
+  user               User     @relation(fields: [userId], references: [id])
 }
 
 model blacklisted_tokens {
- id         Int      @id @default(autoincrement())
- token      String
- created_at DateTime @default(now())
+  id         Int      @id @default(autoincrement())
+  token      String
+  created_at DateTime @default(now())
 }

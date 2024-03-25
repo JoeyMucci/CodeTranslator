@@ -6,9 +6,9 @@
 //
 // 'src/pages/HomePage/HomePage.js'         -> HomePage
 // 'src/pages/Admin/BooksPage/BooksPage.js' -> AdminBooksPage
-import { Router, Route } from '@redwoodjs/router'
-
 import AuthLayout from '/layouts/AuthLayout'
+
+import { Router, Route } from '@redwoodjs/router'
 
 const Routes = () => {
   return (
