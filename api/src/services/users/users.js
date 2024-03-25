@@ -30,6 +30,14 @@ export const updateUser = ({ id, input }) => {
   })
 }
 
+export const changePassword = async ({ id, input }) => {
+  const hashedPassword = await bcrypt.hash(input.newPassword, 10)
+  return db.user.update({
+    data: { password: hashedPassword },
+    where: { id },
+  })
+}
+
 export const deleteUser = ({ id }) => {
   return db.user.delete({
     where: { id },
