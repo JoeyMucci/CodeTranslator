@@ -1,7 +1,7 @@
 import {
   translations,
-  translation,
-  createtranslation,
+  myTranslations,
+  createTranslation,
   // updatetranslation,
   // deletetranslation,
 } from './translations'
@@ -13,17 +13,32 @@ describe('translations', () => {
     expect(result.length).toEqual(Object.keys(scenario.translation).length)
   })
 
-  scenario('returns a single translation', async (scenario) => {
-    const result = await translation({ id: scenario.translation.one.id })
+  scenario("returns one user's translations", async (scenario) => {
+    const result = await myTranslations({ emmy: 'a@a.a' })
 
-    expect(result).toEqual(scenario.translation.one)
+    expect(result[0]).toEqual(scenario.translation.one)
   })
 
   scenario('creates a translation', async () => {
-    const result = await createtranslation({
-      input: { score: 2 },
+    const result = await createTranslation({
+      input: {
+        originalCode: 'print("hello world")',
+        translatedCode: "System.out.println('Hello world')",
+        originalLanguage: 'Python',
+        translatedLanguage: 'Java',
+        user: {
+          create: {
+            id: 690,
+            name: 'Phiel',
+            email: 'a@z.a',
+            password: 'r328u9juievfhjbiwuy4fh',
+            resetToken: null,
+            resetTokenExpiresAt: null,
+            roles: 'fo',
+          },
+        },
+      },
     })
-
-    expect(result.score).toEqual(2)
+    expect(result.originalCode).toEqual('print("hello world")')
   })
 })
