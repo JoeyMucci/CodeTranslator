@@ -9,7 +9,7 @@ import { loginUser, logoffUser } from './login'
 jest.mock('src/lib/db', () => ({
   db: {
     user: {
-      findOne: jest.fn(),
+      findUnique: jest.fn(),
     },
     blacklistedToken: {
       create: jest.fn(),
@@ -28,7 +28,7 @@ describe('Authentication Service', () => {
     })
 
     it('should throw an error for nonexistent user', async () => {
-      db.user.findOne.mockResolvedValue(null)
+      db.user.findUnique.mockResolvedValue(null)
 
       await expect(
         loginUser({
@@ -45,7 +45,7 @@ describe('Authentication Service', () => {
         password: '$2b$10$0w5ZlW07G3zL3/7xvB2VsebkfNPeTGVuZi7J30Xqtk3Fu09I.35Pm', // Hashed password
       }
 
-      db.user.findOne.mockResolvedValue(mockUser)
+      db.user.findUnique.mockResolvedValue(mockUser)
       bcrypt.compare.mockResolvedValue(false)
 
       await expect(
@@ -63,7 +63,7 @@ describe('Authentication Service', () => {
         password: '$2b$10$0w5ZlW07G3zL3/7xvB2VsebkfNPeTGVuZi7J30Xqtk3Fu09I.35Pm', // Hashed password
       }
 
-      db.user.findOne.mockResolvedValue(mockUser)
+      db.user.findUnique.mockResolvedValue(mockUser)
       bcrypt.compare.mockResolvedValue(true)
 
       const sessionToken = await loginUser({
@@ -80,7 +80,7 @@ describe('Authentication Service', () => {
         password: '$2b$10$0w5ZlW07G3zL3/7xvB2VsebkfNPeTGVuZi7J30Xqtk3Fu09I.35Pm', // Hashed password
       }
 
-      db.user.findOne.mockResolvedValue(mockUser)
+      db.user.findUnique.mockResolvedValue(mockUser)
       bcrypt.compare.mockResolvedValue(true)
 
       const sessionToken = await loginUser({

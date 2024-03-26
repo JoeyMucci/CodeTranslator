@@ -35,13 +35,13 @@ model User {
 
 model Translation {
   id                 Int      @id @default(autoincrement())
-  userId             Int
+  userEmail          String
   originalCode       String
   translatedCode     String
   originalLanguage   String
   translatedLanguage String
   createdAt          DateTime @default(now())
-  user               User     @relation(fields: [userId], references: [id])
+  user               User     @relation(fields: [userEmail], references: [email])
 }
 
 model blacklisted_tokens {

@@ -3,19 +3,34 @@
 // import { runTranslation } from 'api/src/services/gpt/gpt.js'
 
 import { render, screen, waitFor, fireEvent } from '@redwoodjs/testing/web'
+import { GraphQLHooksProvider } from '@redwoodjs/web'
 
 import CodeTranslatorPage from './CodeTranslatorPage'
 
 describe('CodeTranslatorPage', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<CodeTranslatorPage />)
+      render(
+        <GraphQLHooksProvider
+          useMutation={jest.fn().mockReturnValue([jest.fn(), {}])}
+          useQuery={jest.fn().mockReturnValue({ data: {} })}
+        >
+          <CodeTranslatorPage />
+        </GraphQLHooksProvider>
+      )
     }).not.toThrow()
   })
 
   test('when download is clicked with no text in the outputBox, make sure theres an alert msg', async () => {
     window.alert = jest.fn()
-    render(<CodeTranslatorPage />)
+    render(
+      <GraphQLHooksProvider
+        useMutation={jest.fn().mockReturnValue([jest.fn(), {}])}
+        useQuery={jest.fn().mockReturnValue({ data: {} })}
+      >
+        <CodeTranslatorPage />
+      </GraphQLHooksProvider>
+    )
     const downloadButton = screen.getByRole('button', { name: 'Download' })
 
     await waitFor(() => fireEvent.click(downloadButton))
@@ -27,7 +42,14 @@ describe('CodeTranslatorPage', () => {
 
   test('when copy is clicked with no text in the outputBox, make sure theres an alert msg', async () => {
     window.alert = jest.fn()
-    render(<CodeTranslatorPage />)
+    render(
+      <GraphQLHooksProvider
+        useMutation={jest.fn().mockReturnValue([jest.fn(), {}])}
+        useQuery={jest.fn().mockReturnValue({ data: {} })}
+      >
+        <CodeTranslatorPage />
+      </GraphQLHooksProvider>
+    )
     const copyButton = screen.getByRole('button', { name: 'Copy' })
 
     await waitFor(() => fireEvent.click(copyButton))
@@ -47,7 +69,14 @@ describe('CodeTranslatorPage', () => {
 
   test('when download is clicked with text in the outputBox, make sure there is no alert msg and download link is created', async () => {
     window.alert = jest.fn()
-    render(<CodeTranslatorPage />)
+    render(
+      <GraphQLHooksProvider
+        useMutation={jest.fn().mockReturnValue([jest.fn(), {}])}
+        useQuery={jest.fn().mockReturnValue({ data: {} })}
+      >
+        <CodeTranslatorPage />
+      </GraphQLHooksProvider>
+    )
 
     const downloadButton = screen.getByRole('button', { name: 'Download' })
     const translateButton = screen.getByRole('button', { name: 'Translate' })
@@ -66,7 +95,14 @@ describe('CodeTranslatorPage', () => {
     window.alert = jest.fn()
     document.execCommand = jest.fn()
     window.matchMedia = jest.fn()
-    render(<CodeTranslatorPage />)
+    render(
+      <GraphQLHooksProvider
+        useMutation={jest.fn().mockReturnValue([jest.fn(), {}])}
+        useQuery={jest.fn().mockReturnValue({ data: {} })}
+      >
+        <CodeTranslatorPage />
+      </GraphQLHooksProvider>
+    )
 
     const copyButton = screen.getByRole('button', { name: 'Copy' })
     const translateButton = screen.getByRole('button', { name: 'Translate' })

@@ -2,18 +2,22 @@
 export const schema = gql`
   type Translation {
     id: Int!
-    userId: Int!
+    userEmail: String!
     originalCode: String!
-    translatedCode: String
+    translatedCode: String!
+    originalLanguage: String!
+    translatedLanguage: String!
     createdAt: DateTime!
+    user: User
   }
 
   type Query {
-    translations: [Translation!]! @requireAuth
+    translations: [Translation!]! @skipAuth
+    myTranslations(emmy: String!): [Translation!]! @skipAuth
   }
 
   input CreateTranslationInput {
-    userId: Int!
+    userEmail: String!
     originalCode: String!
     translatedCode: String!
     originalLanguage: String!
@@ -21,7 +25,7 @@ export const schema = gql`
   }
 
   type Mutation {
-    createTranslation(input: CreateTranslationInput!): Translation! @requireAuth
-    deleteTranslation(id: Int!): Translation! @requireAuth
+    createTranslation(input: CreateTranslationInput!): Translation! @skipAuth
+    deleteTranslation(id: Int!): Translation! @skipAuth
   }
 `
