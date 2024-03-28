@@ -37,7 +37,7 @@ describe('HelpPage', () => {
     render(<HelpPage />)
     toggleFAQ = jest.fn()
     const question = document.getElementsByClassName('faq')[0]
-    await waitFor(() => fireEvent.click(question))
+    await waitFor(() => fireEvent.click(questionTest2))
     const myClass = question.classList.contains('open')
    expect(myClass).toBe(true);
   })
