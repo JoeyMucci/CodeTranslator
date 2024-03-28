@@ -23,13 +23,25 @@ model Rating {
 }
 
 model User {
-  id                  Int       @id @default(autoincrement())
+  id                  Int           @id @default(autoincrement())
   name                String?
-  email               String    @unique
-  hashedPassword      String
+  email               String        @unique
+  password            String
   resetToken          String?
   resetTokenExpiresAt DateTime?
-  roles               String    @default("moderator")
+  roles               String        @default("moderator")
+  translations        Translation[]
+}
+
+model Translation {
+  id                 Int      @id @default(autoincrement())
+  userEmail          String
+  originalCode       String
+  translatedCode     String
+  originalLanguage   String
+  translatedLanguage String
+  createdAt          DateTime @default(now())
+  user               User     @relation(fields: [userEmail], references: [email])
 }
 
 model blacklisted_tokens {

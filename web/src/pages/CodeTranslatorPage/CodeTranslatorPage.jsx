@@ -20,6 +20,14 @@ const CREATE_RATING = gql`
   }
 `
 
+const CREATE_TRANSLATION = gql`
+  mutation CreateTranslationMutation($input: CreateTranslationInput!) {
+    createTranslation(input: $input) {
+      id
+    }
+  }
+`
+
 const CodeTranslatorPage = () => {
   const formMethods = useForm()
 
@@ -29,6 +37,14 @@ const CodeTranslatorPage = () => {
       formMethods.reset()
     },
   })
+
+  // eslint-disable-next-line no-unused-vars
+  const [createtrans, { loadingtrans, errortrans }] = useMutation(
+    CREATE_TRANSLATION,
+    {
+      onCompleted: () => {},
+    }
+  )
 
   const onSubmit = (data) => {
     data.score = parseInt(data.score) // Covert string to int
@@ -95,15 +111,29 @@ const CodeTranslatorPage = () => {
     //   console.error('Translation error:', error)
     // }
     try {
+      const originalCode = rawCodeRef.current.value
+      const originalLanguage = languageDropdownRef1.current.value
+      const translatedLanguage = languageDropdownRef2.current.value
       if (codeRef.current.value != '')
         codeRef.current.value = rawCodeRef.current.value
-      let res = await runTranslation({
-        fromLanguage: languageDropdownRef1.current.value,
-        toLanguage: languageDropdownRef2.current.value,
+      let translatedCode = await runTranslation({
+        fromLanguage: originalLanguage,
+        toLanguage: translatedLanguage,
         code: rawCodeRef.current.value,
       })
-      setCode(res)
-      codeRef.current.value = res
+      setCode(translatedCode)
+      codeRef.current.value = translatedCode
+      await createtrans({
+        variables: {
+          input: {
+            userEmail: localStorage.getItem('userEmail'),
+            originalCode: originalCode,
+            translatedCode: translatedCode,
+            originalLanguage: originalLanguage,
+            translatedLanguage: translatedLanguage,
+          },
+        },
+      })
       toast.success('Successful translation')
     } catch (error) {
       console.error('Translation error:', error)

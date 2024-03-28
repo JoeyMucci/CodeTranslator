@@ -1,13 +1,6 @@
-import bcrypt from 'bcrypt'
-
 import { AuthenticationError, ForbiddenError } from '@redwoodjs/graphql-server'
 
 import { db } from './db'
-
-export const hashPassword = async (password) => {
-  const saltRounds = 10
-  return await bcrypt.hash(password, saltRounds)
-}
 
 /**
  * The name of the cookie that dbAuth sets
@@ -88,9 +81,7 @@ export const hasRole = (roles) => {
   if (Array.isArray(roles)) {
     if (Array.isArray(currentUserRoles)) {
       // roles to check is an array, currentUser.roles is an array
-      return currentUserRoles?.some((allowedRole) =>
-        roles.includes(allowedRole)
-      )
+      return currentUserRoles?.some((allowedRole) => roles.includes(allowedRole))
     } else if (typeof currentUserRoles === 'string') {
       // roles to check is an array, currentUser.roles is a string
       return roles.some((allowedRole) => currentUserRoles === allowedRole)

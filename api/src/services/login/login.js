@@ -1,11 +1,10 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
-import 'dotenv/config'
 import { db } from 'src/lib/db'
 
 export const loginUser = async ({ email, password }) => {
-  const user = await db.user.findOne({ where: { email } })
+  const user = await db.user.findUnique({ where: { email } })
 
   if (!user) {
     throw new Error('User not found')
@@ -14,9 +13,12 @@ export const loginUser = async ({ email, password }) => {
   const passwordMatches = await comparePasswords(password, user.password)
 
   if (passwordMatches) {
-    // Generate and return a session token
     const sessionToken = generateSessionToken(user)
-    return sessionToken
+    console.log('session:', sessionToken)
+    return {
+      token: sessionToken,
+      user: user,
+    }
   } else {
     throw new Error('Invalid password')
   }
@@ -27,15 +29,14 @@ export const comparePasswords = async (plaintextPassword, hashedPassword) => {
 }
 
 export const generateSessionToken = (user) => {
-  // Generate a session token using JWT (JSON Web Tokens)
   const token = jwt.sign(
     {
       userId: user.id,
       email: user.email,
     },
-    process.env.JWT_SECRET, // Use a secret key stored in environment variables
+    process.env.JWT_SECRET,
     {
-      expiresIn: '1h', // Token expires in 1 hour
+      expiresIn: '1h',
     }
   )
 
@@ -44,7 +45,6 @@ export const generateSessionToken = (user) => {
 
 export const logoffUser = async (token) => {
   try {
-    // Add the token to the blacklist in the database
     await db.blacklistedToken.create({ token })
 
     return { success: true, message: 'User logged off successfully' }

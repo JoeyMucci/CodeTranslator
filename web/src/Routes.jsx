@@ -6,18 +6,18 @@
 //
 // 'src/pages/HomePage/HomePage.js'         -> HomePage
 // 'src/pages/Admin/BooksPage/BooksPage.js' -> AdminBooksPage
+import AuthLayout from 'web/src/layouts/AuthLayout'
 
 import { Router, Route } from '@redwoodjs/router'
 
-import { useAuth } from './auth'
-
 const Routes = () => {
   return (
-    <Router useAuth={useAuth}>
+    <Router>
+      <Route path="/translation-history" page={TranslationHistoryPage} name="translationHistory" beforeRouterUpdate={AuthLayout()} />
       <Route path="/help" page={HelpPage} name="help" />
-      <Route path="/feedback" page={FeedbackPage} name="feedback" />
-      <Route path="/code-translator" page={CodeTranslatorPage} name="codeTranslator" />
-      <Route path="/" page={LoginPage} name="login" />
+      <Route path="/feedback" page={FeedbackPage} name="feedback" beforeRouterUpdate={AuthLayout()} />
+      <Route path="/code-translator" page={CodeTranslatorPage} name="codeTranslator" beforeRouterUpdate={AuthLayout()} />
+      <Route path="/" page={HomePage} name="Homepage" />
       <Route notfound page={NotFoundPage} />
     </Router>
   )
