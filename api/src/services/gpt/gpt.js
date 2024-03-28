@@ -130,7 +130,9 @@ export const runTranslationHelper = async ({ fromLanguage, toLanguage, code, ope
   let trans = ''
   let opt = ''
   try {
-    trans = await doTranslation({ fromLanguage: fromLanguage, toLanguage: toLanguage, code: code, openai: openai })
+    let toLang = toLanguage
+    if (fromLanguage == toLanguage) toLang = fromLanguage == 'Python' ? 'Java' : 'Python'
+    trans = await doTranslation({ fromLanguage: fromLanguage, toLanguage: toLang, code: code, openai: openai })
   } catch (e) {
     const problemo = new Error('Open AI error')
     problemo.code = e.code

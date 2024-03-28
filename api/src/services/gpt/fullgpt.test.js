@@ -569,12 +569,12 @@ describe('Actual Optimization', () => {
       await runTranslation({ fromLanguage: 'C', toLanguage: 'C', code: 'print("hello world")' })
     }).rejects.toThrow('Wrong language')
   }, 100000)
-  // it('throws error when given nonsense', async () => {
-  //   const nonsense = '!@#$%^&*&^%$#$%^&*(*&^%$#@#$%^&*(*&^%$'
-  //   return expect(async () => {
-  //     await runTranslation({ fromLanguage: 'SQL', toLanguage: 'SQL', code: nonsense })
-  //   }).rejects.toThrow('Invalid input')
-  // }, 100000)
+  it('throws error when given nonsense', async () => {
+    const nonsense = 'El rápido zorro marrón salta sobre el perro perezoso.'
+    return expect(async () => {
+      await runTranslation({ fromLanguage: 'SQL', toLanguage: 'SQL', code: nonsense })
+    }).rejects.toThrow('Invalid input')
+  }, 100000)
   it('throws error when message is too long', async () => {
     return expect(async () => {
       await runTranslation({ fromLanguage: 'Java', toLanguage: 'Java', code: toolong })
