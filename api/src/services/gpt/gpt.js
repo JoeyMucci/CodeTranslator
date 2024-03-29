@@ -88,10 +88,10 @@ export const doOptimization = async ({ language, code, openai }) => {
   return owhole
 }
 
-export const cleanup = async ({ fromLanguage, code }) => {
-  console.log(code)
-  if (fromLanguage == 'C') return code
-  else return code
+export const cleanup = ({ fromLanguage, code }) => {
+  // https://blog.ostermiller.org/finding-comments-in-source-code-using-regular-expressions/
+
+  return code.replace(/(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*?\*+\/)|(\/\/.*)/g, '')
 }
 
 export const exists = ({ fromLanguage, toLanguage, code }) => {
@@ -133,7 +133,7 @@ export const runTranslationHelper = async ({ fromLanguage, toLanguage, code, ope
     queue.pop()
     throw problemo
   }
-  // code = cleanup({ fromLanguage: fromLanguage, code: code })
+  code = cleanup({ fromLanguage: fromLanguage, code: code })
   let trans = ''
   let opt = ''
   try {

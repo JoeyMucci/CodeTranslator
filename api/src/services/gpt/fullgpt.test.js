@@ -591,8 +591,9 @@ describe('Sanitation', () => {
   it('removes C comments', () => {
     const result = cleanup({
       fromLanguage: 'C',
-      code: '/* comment comment comment */\nprint("Hello world")',
+      code: '/* comment comment comment */\n// comment \nprint("Hello world")',
     })
-    expect(result).toContain('comment')
+    console.log(result)
+    expect(result).not.toContain('comment')
   })
 })
