@@ -1,4 +1,4 @@
-import { runTranslation } from './gpt.js'
+import { runTranslation, cleanup } from './gpt.js'
 
 const toolong = `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -585,4 +585,14 @@ describe('Actual Optimization', () => {
       await runTranslation({ fromLanguage: 'Java', toLanguage: 'Java', code: '' })
     }).rejects.toThrow('No code')
   }, 100000)
+})
+
+describe('Sanitation', () => {
+  it('removes C comments', () => {
+    const result = cleanup({
+      fromLanguage: 'C',
+      code: '/* comment comment comment */\nprint("Hello world")',
+    })
+    expect(result).toContain('comment')
+  })
 })

@@ -88,6 +88,12 @@ export const doOptimization = async ({ language, code, openai }) => {
   return owhole
 }
 
+export const cleanup = async ({ fromLanguage, code }) => {
+  console.log(code)
+  if (fromLanguage == 'C') return code
+  else return code
+}
+
 export const exists = ({ fromLanguage, toLanguage, code }) => {
   for (let i = 0; i < queue.length; i++)
     if (queue[i].fromLanguage == fromLanguage && queue[i].toLanguage == toLanguage && queue[0].code == code) return true
@@ -127,6 +133,7 @@ export const runTranslationHelper = async ({ fromLanguage, toLanguage, code, ope
     queue.pop()
     throw problemo
   }
+  // code = cleanup({ fromLanguage: fromLanguage, code: code })
   let trans = ''
   let opt = ''
   try {
