@@ -180,6 +180,18 @@ const CodeTranslatorPage = () => {
       case 'SQL':
         fileExtension = 'sql'
         break
+      case 'Rust':
+        fileExtension = 'rs'
+        break
+      case 'R':
+        fileExtension = 'r'
+        break
+      case 'Go':
+        fileExtension = 'go'
+        break
+      case 'Assembly':
+        fileExtension = 's'
+        break
       default:
         fileExtension = 'txt'
     }
@@ -293,6 +305,10 @@ const CodeTranslatorPage = () => {
                 <option value="PHP">PHP</option>
                 <option value="Python">Python</option>
                 <option value="SQL">SQL</option>
+                <option value="Rust">Rust</option>
+                <option value="R">R</option>
+                <option value="Go">Go</option>
+                <option value="Assembly">Assembly</option>
               </select>
 
               <input
@@ -354,6 +370,10 @@ const CodeTranslatorPage = () => {
                 <option value="PHP">PHP</option>
                 <option value="Python">Python</option>
                 <option value="SQL">SQL</option>
+                <option value="Rust">Rust</option>
+                <option value="R">R</option>
+                <option value="Go">Go</option>
+                <option value="Assembly">Assembly</option>
               </select>
 
               <button

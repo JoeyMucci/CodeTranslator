@@ -91,7 +91,14 @@ export const doOptimization = async ({ language, code, openai }) => {
 export const cleanup = ({ fromLanguage, code }) => {
   // https://blog.ostermiller.org/finding-comments-in-source-code-using-regular-expressions/
 
-  return code.replace(/(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*?\*+\/)|(\/\/.*)/g, '')
+  if (fromLanguage == 'C' || fromLanguage == 'Java' || fromLanguage == 'C++' || fromLanguage == 'Go')
+    return code.replace(/(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*?\*+\/)|(\/\/.*)/g, '')
+  else if (fromLanguage == 'SQL') return code.replace(/(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*?\*+\/)|(--.*)/g, '')
+  else if (fromLanguage == 'Python' || fromLanguage == 'R') return code.replace(/(#.*)/g, '')
+  else if (fromLanguage == 'PHP')
+    return code.replace(/(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*?\*+\/)|(\/\/.*)|(#.*)/g, '')
+  else if (fromLanguage == 'Rust') return code.replace(/(\/\/.*)/g, '')
+  else if (fromLanguage == 'Assembly') return code.replace(/(#.*)|(;.*)/g, '')
 }
 
 export const exists = ({ fromLanguage, toLanguage, code }) => {
@@ -177,5 +184,7 @@ export const runTranslationHelper = async ({ fromLanguage, toLanguage, code, ope
     throw problemo
   }
   queue.pop()
-  return fromLanguage == toLanguage ? opt : trans
+  return fromLanguage == toLanguage
+    ? cleanup({ fromLanguage: toLanguage, code: opt })
+    : cleanup({ fromLanguage: toLanguage, code: trans })
 }

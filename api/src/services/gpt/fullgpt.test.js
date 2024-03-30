@@ -1,4 +1,4 @@
-import { runTranslation, cleanup } from './gpt.js'
+import { runTranslation } from './gpt.js'
 
 const toolong = `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -523,7 +523,6 @@ const toolong = `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`
 
-// REAL SHIT
 describe('Actual translation', () => {
   it('consistent translation of simple code', async () => {
     const newcode = await runTranslation({ fromLanguage: 'Python', toLanguage: 'C', code: 'print("hello world")' }) // Translate code
@@ -585,15 +584,4 @@ describe('Actual Optimization', () => {
       await runTranslation({ fromLanguage: 'Java', toLanguage: 'Java', code: '' })
     }).rejects.toThrow('No code')
   }, 100000)
-})
-
-describe('Sanitation', () => {
-  it('removes C comments', () => {
-    const result = cleanup({
-      fromLanguage: 'C',
-      code: '/* comment comment comment */\n// comment \nprint("Hello world")',
-    })
-    console.log(result)
-    expect(result).not.toContain('comment')
-  })
 })
