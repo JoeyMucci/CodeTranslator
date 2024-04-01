@@ -153,6 +153,97 @@ export const runTranslationHelper = async ({ fromLanguage, toLanguage, code, ope
     queue.pop()
     throw problemo
   }
+
+  if (fromLanguage == toLanguage) {
+    try {
+      opt = await doOptimization({ language: fromLanguage, code: code, openai: openai })
+    } catch (e) {
+      const problemo = new Error('Open AI error')
+      problemo.code = e.code
+      queue.pop()
+      throw problemo
+    }
+  }
+
+  if (trans == null || opt == null) {
+    const problemo = new Error('Invalid input')
+    problemo.code = 'nonsense'
+    queue.pop()
+    throw problemo
+  }
+  let langres = ''
+  try {
+    langres = await isCorrectLanguage({ language: fromLanguage, code: code, openai: openai })
+  } catch (e) {
+    const problemo = new Error('Open AI error')
+    problemo.code = e.code
+    queue.pop()
+    throw problemo
+  }
+  if (!langres) {
+    const problemo = new Error('Wrong language')
+    problemo.code = 'wrong lang'
+    queue.pop()
+    throw problemo
+  }
+  queue.pop()
+  return fromLanguage == toLanguage
+    ? cleanup({ fromLanguage: toLanguage, code: opt })
+    : cleanup({ fromLanguage: toLanguage, code: trans })
+}
+
+// OLD CODE FOR OPTIMIZATION TESTING
+
+export const runTranslationOld = async ({ fromLanguage, toLanguage, code }) => {
+  return await runTranslationHelperOld({
+    fromLanguage: fromLanguage,
+    toLanguage: toLanguage,
+    code: code,
+    openai: openai,
+  })
+}
+
+export const runTranslationHelperOld = async ({ fromLanguage, toLanguage, code, openai }) => {
+  if (exists({ fromLanguage: fromLanguage, toLanguage: toLanguage, code: code })) {
+    const problemo = new Error("We're working on it!")
+    problemo.code = 'spam'
+    throw problemo
+  }
+  queue.unshift({ fromLanguage, toLanguage, code })
+  while (
+    queue[queue.length - 1].fromLanguage != fromLanguage ||
+    queue[queue.length - 1].toLanguage != toLanguage ||
+    queue[queue.length - 1].code != code
+  ) {
+    // while it is not ur turn
+    await new Promise((resolve) => setTimeout(resolve, 100)) // .1 seconds wait before recheck
+  }
+
+  if (code.length == 0) {
+    const problemo = new Error('No code')
+    problemo.code = 'mt'
+    queue.pop()
+    throw problemo
+  }
+  if (code.length > 65535) {
+    const problemo = new Error('Input code is too long')
+    problemo.code = 'too long'
+    queue.pop()
+    throw problemo
+  }
+  code = cleanup({ fromLanguage: fromLanguage, code: code })
+  let trans = ''
+  let opt = ''
+  try {
+    let toLang = toLanguage
+    if (fromLanguage == toLanguage) toLang = fromLanguage == 'Python' ? 'Java' : 'Python'
+    trans = await doTranslation({ fromLanguage: fromLanguage, toLanguage: toLang, code: code, openai: openai })
+  } catch (e) {
+    const problemo = new Error('Open AI error')
+    problemo.code = e.code
+    queue.pop()
+    throw problemo
+  }
   try {
     opt = await doOptimization({ language: fromLanguage, code: code, openai: openai })
   } catch (e) {
