@@ -28,7 +28,7 @@ const HelpPage = () => {
     {
       question: 'What languages are supported?',
       answer:
-        'Currently the languages we support are: C, C++, Java, PHP, Python, and SQL. We plan on adding more languages as time goes on',
+        'Currently the languages we support are: C, C++, Java, PHP, Python, Rust, Go, R, and SQL. We plan on adding more languages as time goes on',
       open: false,
     },
     {
