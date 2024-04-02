@@ -48,6 +48,14 @@ const HelpPage = () => {
         'it depends on the size of the file you are trying to convert. If its a small file it should only take a few seconds. As for larger files it may vary',
       open: false,
     },
+    {
+      question: 'How about a video tutorial?',
+      answer:
+        <iframe width="420" height="315"
+          src="https://www.youtube.com/embed/8NLhRSeONqM">
+        </iframe>,
+      open: false,
+    },
   ])
 
   const toggleFAQ = (index) => {
