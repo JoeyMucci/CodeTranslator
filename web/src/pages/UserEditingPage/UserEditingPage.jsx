@@ -1,8 +1,9 @@
+// web/src/pages/UserEditingPage/UserEditingPage.jsx
 import React from 'react';
 import { useForm } from '@redwoodjs/forms';
 import { MetaTags, useMutation } from '@redwoodjs/web';
 import { toast, Toaster } from '@redwoodjs/web/toast';
-import UserEditForm from 'web/src/components/UserEditForm/UserEditForm.jsx';
+import UserEditingForm from 'web/src/components/UserEditingForm/UserEditingForm.jsx';
 
 const UPDATE_USER = gql`
  mutation UpdateUserMutation($id: Int!, $input: UpdateUserInput!) {
@@ -10,7 +11,7 @@ const UPDATE_USER = gql`
       id
       name
       email
-      // Add other fields as needed
+      preferences
     }
  }
 `;
@@ -26,7 +27,6 @@ const UserEditingPage = () => {
  });
 
  const onSubmit = (data) => {
-    
     updateUser({ variables: { id: data.id, input: data } });
  };
 
@@ -34,7 +34,7 @@ const UserEditingPage = () => {
     <>
       <MetaTags title="Edit Profile" description="Edit your profile" />
       <Toaster />
-      <UserEditForm
+      <UserEditingForm
         onSubmit={onSubmit}
         error={error}
         loading={loading}
@@ -45,3 +45,4 @@ const UserEditingPage = () => {
 };
 
 export default UserEditingPage;
+
