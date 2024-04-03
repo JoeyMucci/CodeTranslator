@@ -134,7 +134,7 @@ const Record = ({
       <div className="flex flex-row justify-center space-x-20  ">
         <div className=" basis-1/4">
                <div className = "flex flex-row m-1">
-              <h2 className="centertext">{translatedLanguage}</h2>
+              <h2 className="centertext">{originalLanguage}</h2>
               <div className = "TOTHERIGHT flex flex-row m-1" style={{ marginLeft: 'auto' }}>
                 <button
                   className=" DOWNLOADBUTTON basis-1/8 w-8  items-center rounded text-white hover:bg-gray-800"
