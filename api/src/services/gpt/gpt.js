@@ -37,10 +37,34 @@ export const isCorrectLanguage = async ({ language, code, openai }) => {
   })
 
   let languageResponse = languageDetection.choices[0].message.content
+  return (
+    languageResponse.split(' ').includes(language) ||
+    languageResponse.split(' ').includes(language + '.') ||
+    languageResponse.split(' ').includes(language + ',') ||
+    languageResponse.split(' ').includes(language + ';') ||
+    languageResponse.split(' ').includes(language + '!') ||
+    languageResponse.split(' ').includes(language + '?') ||
+    (language = 'SQL' && languageResponse.includes('SQL'))
+  )
+}
+
+export const isCorrectLanguageOld = async ({ language, code, openai }) => {
+  let languageDetection = await openai.chat.completions.create({
+    model: 'gpt-3.5-turbo',
+    messages: [
+      {
+        role: 'user',
+        content: 'What language is the following code: ' + code,
+      },
+    ],
+  })
+
+  let languageResponse = languageDetection.choices[0].message.content
   return languageResponse.includes(language)
 }
 
 export const doTranslation = async ({ fromLanguage, toLanguage, code, openai }) => {
+  if (toLanguage == 'MIPS') toLanguage = 'MIPS assembly'
   let translation = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
     messages: [
@@ -108,8 +132,19 @@ export const exists = ({ fromLanguage, toLanguage, code }) => {
   return false
 }
 
-export const runTranslation = async ({ fromLanguage, toLanguage, code }) => {
-  return await runTranslationHelper({ fromLanguage: fromLanguage, toLanguage: toLanguage, code: code, openai: openai })
+export const runTranslation = async ({ input }) => {
+  console.log('bruh')
+  const fromLanguage = input.fromLanguage
+  const toLanguage = input.toLanguage
+  const code = input.code
+  return {
+    rescode: await runTranslationHelper({
+      fromLanguage: fromLanguage,
+      toLanguage: toLanguage,
+      code: code,
+      openai: openai,
+    }),
+  }
 }
 
 export const runTranslationHelper = async ({ fromLanguage, toLanguage, code, openai }) => {

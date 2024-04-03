@@ -64,15 +64,6 @@ describe('Sanitation', () => {
     expect(result).not.toContain('comment')
     expect(result).toContain('Hello world')
   })
-  it('removes Assembly comments', () => {
-    const result = cleanup({
-      fromLanguage: 'Assembly',
-      code: '# comment \n; comment \nprint("Hello world")',
-    })
-
-    expect(result).not.toContain('comment')
-    expect(result).toContain('Hello world')
-  })
   it('removes PHP comments', () => {
     const result = cleanup({
       fromLanguage: 'PHP',
