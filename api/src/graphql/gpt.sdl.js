@@ -10,6 +10,6 @@ export const schema = gql`
   }
 
   type Mutation {
-    runTranslation(input: CreateTranslationRequestInput!): TranslationRes! @skipAuth
+    runTranslationMute(input: CreateTranslationRequestInput!): TranslationRes! @skipAuth
   }
 `

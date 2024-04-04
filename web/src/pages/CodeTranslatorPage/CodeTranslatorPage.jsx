@@ -32,7 +32,7 @@ const CREATE_TRANSLATION_REQUEST = gql`
   mutation CreateTranslationRequestMutation(
     $input: CreateTranslationRequestInput!
   ) {
-    runTranslation(input: $input) {
+    runTranslationMute(input: $input) {
       rescode
     }
   }
@@ -96,6 +96,12 @@ const CodeTranslatorPage = () => {
 
   const fileInputRef = useRef(null)
 
+  const codeError = (message) => {
+    setCode('')
+    codeRef.current.value = ''
+    toast.error(message)
+  }
+
   // Function to simulate click on hidden input
   const handleButtonClick = () => {
     fileInputRef.current.click()
@@ -143,35 +149,34 @@ const CodeTranslatorPage = () => {
           },
         },
       })
-      const translatedCode = response.data.runTranslation.rescode
-      setCode(translatedCode)
-      codeRef.current.value = translatedCode
-      await createtrans({
-        variables: {
-          input: {
-            userEmail: localStorage.getItem('userEmail'),
-            originalCode: originalCode,
-            translatedCode: translatedCode,
-            originalLanguage: originalLanguage,
-            translatedLanguage: translatedLanguage,
+      const translatedCode = response.data.runTranslationMute.rescode
+      if (translatedCode == 'nonsense')
+        codeError('Your code was not recognized')
+      else if (translatedCode == 'mt') codeError('Please enter code')
+      else if (translatedCode == 'too long')
+        codeError('Code is too long, try breaking up input')
+      else if (translatedCode == 'wrong lang')
+        codeError('Ensure selected language matches input')
+      else if (translatedCode == 'spam') codeError("We're working on it!")
+      else {
+        setCode(translatedCode)
+        codeRef.current.value = translatedCode
+        await createtrans({
+          variables: {
+            input: {
+              userEmail: localStorage.getItem('userEmail'),
+              originalCode: originalCode,
+              translatedCode: translatedCode,
+              originalLanguage: originalLanguage,
+              translatedLanguage: translatedLanguage,
+            },
           },
-        },
-      })
-      toast.success('Successful translation')
+        })
+        toast.success('Successful translation')
+      }
     } catch (error) {
-      console.log(error.code)
-      console.log(error.message)
-      console.error('Translation error:', error)
-      setCode('')
-      codeRef.current.value = ''
-      if (error.code == 'nonsense') toast.error('Your code was not recognized')
-      else if (error.message == 'mt') toast.error('Please enter code')
-      else if (error.code == 'too long')
-        toast.error('Code is too long, try breaking up input')
-      else if (error.code == 'wrong lang')
-        toast.error('Ensure selected language matches input')
-      else if (error.code == 'spam') toast.error("We're working on it!")
-      else toast.error('Open AI error: ' + error.code)
+      codeError('GraphQL error: ' + error.code)
+      console.error(error)
     }
   }
   //handles download button
@@ -446,6 +451,7 @@ const CodeTranslatorPage = () => {
                   dangerouslySetInnerHTML={{
                     __html: hljs.highlightAuto(code).value,
                   }}
+                  data-testid="codeDivTestIdTwo"
                 />
               </pre>
             </div>

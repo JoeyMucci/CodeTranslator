@@ -132,19 +132,32 @@ export const exists = ({ fromLanguage, toLanguage, code }) => {
   return false
 }
 
-export const runTranslation = async ({ input }) => {
-  console.log('bruh')
+export const runTranslationMute = async ({ input }) => {
   const fromLanguage = input.fromLanguage
   const toLanguage = input.toLanguage
   const code = input.code
-  return {
-    rescode: await runTranslationHelper({
-      fromLanguage: fromLanguage,
-      toLanguage: toLanguage,
-      code: code,
-      openai: openai,
-    }),
+  try {
+    return {
+      rescode: await runTranslation({
+        fromLanguage: fromLanguage,
+        toLanguage: toLanguage,
+        code: code,
+      }),
+    }
+  } catch (error) {
+    return {
+      rescode: error.code,
+    }
   }
+}
+
+export const runTranslation = async ({ fromLanguage, toLanguage, code }) => {
+  return await runTranslationHelperOld({
+    fromLanguage: fromLanguage,
+    toLanguage: toLanguage,
+    code: code,
+    openai: openai,
+  })
 }
 
 export const runTranslationHelper = async ({ fromLanguage, toLanguage, code, openai }) => {
