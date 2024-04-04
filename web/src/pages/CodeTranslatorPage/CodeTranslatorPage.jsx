@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 
-import { runTranslation } from 'api/src/services/gpt/gpt.js'
+//import { runTranslation } from 'api/src/services/gpt/gpt.js'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/default.css'
 import Rater from 'web/src/components/Rater/Rater.jsx'
@@ -28,6 +28,16 @@ const CREATE_TRANSLATION = gql`
   }
 `
 
+const CREATE_TRANSLATION_REQUEST = gql`
+  mutation CreateTranslationRequestMutation(
+    $input: CreateTranslationRequestInput!
+  ) {
+    runTranslationMute(input: $input) {
+      rescode
+    }
+  }
+`
+
 const CodeTranslatorPage = () => {
   const formMethods = useForm()
 
@@ -41,6 +51,14 @@ const CodeTranslatorPage = () => {
   // eslint-disable-next-line no-unused-vars
   const [createtrans, { loadingtrans, errortrans }] = useMutation(
     CREATE_TRANSLATION,
+    {
+      onCompleted: () => {},
+    }
+  )
+
+  // eslint-disable-next-line no-unused-vars
+  const [createtransreq, { loadingtransreq, errortransreq }] = useMutation(
+    CREATE_TRANSLATION_REQUEST,
     {
       onCompleted: () => {},
     }
@@ -77,6 +95,12 @@ const CodeTranslatorPage = () => {
   }
 
   const fileInputRef = useRef(null)
+
+  const codeError = (message) => {
+    setCode('')
+    codeRef.current.value = ''
+    toast.error(message)
+  }
 
   // Function to simulate click on hidden input
   const handleButtonClick = () => {
@@ -116,37 +140,43 @@ const CodeTranslatorPage = () => {
       const translatedLanguage = languageDropdownRef2.current.value
       if (codeRef.current.value != '')
         codeRef.current.value = rawCodeRef.current.value
-      let translatedCode = await runTranslation({
-        fromLanguage: originalLanguage,
-        toLanguage: translatedLanguage,
-        code: rawCodeRef.current.value,
-      })
-      setCode(translatedCode)
-      codeRef.current.value = translatedCode
-      await createtrans({
+      const response = await createtransreq({
         variables: {
           input: {
-            userEmail: localStorage.getItem('userEmail'),
-            originalCode: originalCode,
-            translatedCode: translatedCode,
-            originalLanguage: originalLanguage,
-            translatedLanguage: translatedLanguage,
+            fromLanguage: originalLanguage,
+            toLanguage: translatedLanguage,
+            code: originalCode,
           },
         },
       })
-      toast.success('Successful translation')
+      const translatedCode = response.data.runTranslationMute.rescode
+      if (translatedCode == 'nonsense')
+        codeError('Your code was not recognized')
+      else if (translatedCode == 'mt') codeError('Please enter code')
+      else if (translatedCode == 'too long')
+        codeError('Code is too long, try breaking up input')
+      else if (translatedCode == 'wrong lang')
+        codeError('Ensure selected language matches input')
+      else if (translatedCode == 'spam') codeError("We're working on it!")
+      else {
+        setCode(translatedCode)
+        codeRef.current.value = translatedCode
+        await createtrans({
+          variables: {
+            input: {
+              userEmail: localStorage.getItem('userEmail'),
+              originalCode: originalCode,
+              translatedCode: translatedCode,
+              originalLanguage: originalLanguage,
+              translatedLanguage: translatedLanguage,
+            },
+          },
+        })
+        toast.success('Successful translation')
+      }
     } catch (error) {
-      console.error('Translation error:', error)
-      setCode('')
-      codeRef.current.value = ''
-      if (error.code == 'nonsense') toast.error('Your code was not recognized')
-      else if (error.code == 'mt') toast.error('Please enter code')
-      else if (error.code == 'too long')
-        toast.error('Code is too long, try breaking up input')
-      else if (error.code == 'wrong lang')
-        toast.error('Ensure selected language matches input')
-      else if (error.code == 'spam') toast.error("We're working on it!")
-      else toast.error('Open AI error: ' + error.code)
+      codeError('GraphQL error: ' + error.code)
+      console.error(error)
     }
   }
   //handles download button
@@ -179,6 +209,15 @@ const CodeTranslatorPage = () => {
         break
       case 'SQL':
         fileExtension = 'sql'
+        break
+      case 'Rust':
+        fileExtension = 'rs'
+        break
+      case 'R':
+        fileExtension = 'r'
+        break
+      case 'Go':
+        fileExtension = 'go'
         break
       default:
         fileExtension = 'txt'
@@ -293,6 +332,9 @@ const CodeTranslatorPage = () => {
                 <option value="PHP">PHP</option>
                 <option value="Python">Python</option>
                 <option value="SQL">SQL</option>
+                <option value="Rust">Rust</option>
+                <option value="R">R</option>
+                <option value="Go">Go</option>
               </select>
 
               <input
@@ -354,6 +396,9 @@ const CodeTranslatorPage = () => {
                 <option value="PHP">PHP</option>
                 <option value="Python">Python</option>
                 <option value="SQL">SQL</option>
+                <option value="Rust">Rust</option>
+                <option value="R">R</option>
+                <option value="Go">Go</option>
               </select>
 
               <button
@@ -406,6 +451,7 @@ const CodeTranslatorPage = () => {
                   dangerouslySetInnerHTML={{
                     __html: hljs.highlightAuto(code).value,
                   }}
+                  data-testid="codeDivTestIdTwo"
                 />
               </pre>
             </div>

@@ -69,9 +69,15 @@ describe('CodeTranslatorPage', () => {
 
   test('when download is clicked with text in the outputBox, make sure there is no alert msg and download link is created', async () => {
     window.alert = jest.fn()
+    window.matchMedia = jest.fn()
     render(
       <GraphQLHooksProvider
-        useMutation={jest.fn().mockReturnValue([jest.fn(), {}])}
+        useMutation={jest.fn().mockReturnValue([
+          jest.fn().mockReturnValue({
+            data: { runTranslationMute: { rescode: 'pineapple' } },
+          }),
+          {},
+        ])}
         useQuery={jest.fn().mockReturnValue({ data: {} })}
       >
         <CodeTranslatorPage />
@@ -82,7 +88,7 @@ describe('CodeTranslatorPage', () => {
     const translateButton = screen.getByRole('button', { name: 'Translate' })
 
     fireEvent.change(screen.getByTestId('InputBoxTestId'), {
-      target: { value: 'int main() {printf("gollygee\n")' },
+      target: { value: 'int main() {printf("gollygee")\n' },
     })
 
     await waitFor(() => fireEvent.click(translateButton))
@@ -97,7 +103,12 @@ describe('CodeTranslatorPage', () => {
     window.matchMedia = jest.fn()
     render(
       <GraphQLHooksProvider
-        useMutation={jest.fn().mockReturnValue([jest.fn(), {}])}
+        useMutation={jest.fn().mockReturnValue([
+          jest.fn().mockReturnValue({
+            data: { runTranslationMute: { rescode: 'pineapple' } },
+          }),
+          {},
+        ])}
         useQuery={jest.fn().mockReturnValue({ data: {} })}
       >
         <CodeTranslatorPage />
@@ -108,7 +119,7 @@ describe('CodeTranslatorPage', () => {
     const translateButton = screen.getByRole('button', { name: 'Translate' })
 
     fireEvent.change(screen.getByTestId('InputBoxTestId'), {
-      target: { value: 'int main() {printf("geegee\n")' },
+      target: { value: 'int main() {printf("geegee")\n' },
     })
 
     await waitFor(() => fireEvent.click(translateButton))
