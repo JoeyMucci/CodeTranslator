@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 
+// was previously running this directly in the fronted lmao
 //import { runTranslation } from 'api/src/services/gpt/gpt.js'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/default.css'
@@ -34,6 +35,7 @@ const CREATE_TRANSLATION_REQUEST = gql`
   ) {
     runTranslationMute(input: $input) {
       rescode
+      error
     }
   }
 `
@@ -64,9 +66,15 @@ const CodeTranslatorPage = () => {
     }
   )
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     data.score = parseInt(data.score) // Covert string to int
-    create({ variables: { input: data } })
+    console.log('ran')
+    try {
+      await create({ variables: { input: data } })
+    } catch (error) {
+      toast.error('Communication with GraphQL off, try again later')
+      console.error(error)
+    }
   }
 
   const [inputText1, setInputText1] = useState('')
@@ -150,15 +158,25 @@ const CodeTranslatorPage = () => {
         },
       })
       const translatedCode = response.data.runTranslationMute.rescode
-      if (translatedCode == 'nonsense')
-        codeError('Your code was not recognized')
-      else if (translatedCode == 'mt') codeError('Please enter code')
-      else if (translatedCode == 'too long')
-        codeError('Code is too long, try breaking up input')
-      else if (translatedCode == 'wrong lang')
-        codeError('Ensure selected language matches input')
-      else if (translatedCode == 'spam') codeError("We're working on it!")
-      else {
+      if (translatedCode == 'ERROR') {
+        const errorcode = response.data.runTranslationMute.error
+        if (errorcode == 'nonsense') codeError('Your code was not recognized')
+        else if (errorcode == 'mt') codeError('Please enter code')
+        else if (errorcode == 'too long')
+          codeError('Code is too long, try breaking up input')
+        else if (errorcode == 'wrong lang')
+          codeError('Ensure selected language matches input')
+        else if (errorcode == 'spam') codeError("We're working on it!")
+        else if (errorcode == 'invalid_api_key')
+          codeError('API Key is invalid, please contact us')
+        else if (errorcode == 'rate_limit_error')
+          codeError('Experiencing heavy traffic, try again later')
+        else if (errorcode == 'server_error')
+          codeError('OpenAI is having trouble, try again soon')
+        else if (errorcode == 'not_found_error')
+          codeError('OpenAI resource no longer exists')
+        else codeError('Open AI error: ' + errorcode)
+      } else {
         setCode(translatedCode)
         codeRef.current.value = translatedCode
         await createtrans({
@@ -175,7 +193,8 @@ const CodeTranslatorPage = () => {
         toast.success('Successful translation')
       }
     } catch (error) {
-      codeError('GraphQL error: ' + error.code)
+      codeError('')
+      toast.error('Communication with GraphQL off, try again later')
       console.error(error)
     }
   }

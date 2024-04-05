@@ -22,29 +22,29 @@ const FeedbackForm = ({ onSubmit, error, loading, formMethods }) => {
         <h1 className="text">Feedback Form</h1>
         <div className="form-header">
           <div className="form-group">
-            <Label name="name" className="text">
-              Name:
+            <Label name="subject" className="text">
+              Subject:
             </Label>
             <TextField
               className="box"
-              name="name"
-              placeholder="John Smith"
+              name="subject"
+              placeholder="History Page"
               validation={{ required: true }}
               errorClassName="error box"
             />
-            <FieldError name="name" className="error" />
+            <FieldError name="subject" className="error" />
           </div>
 
           <div className="form-group">
-            <Label name="email" className="text">
-              Email:
+            <Label name="b_email" className="text">
+              SpareEmail:
             </Label>
             <TextField
               className="box"
-              name="email"
+              name="b_email"
               placeholder="john.smith@gmail.com"
               validation={{
-                required: true,
+                required: false,
                 pattern: {
                   value: /^[^@]+@[^.]+\..+$/,
                   message: 'Please enter a valid email address',
@@ -52,7 +52,7 @@ const FeedbackForm = ({ onSubmit, error, loading, formMethods }) => {
               }}
               errorClassName="error box"
             />
-            <FieldError name="email" className="error" />
+            <FieldError name="b_email" className="error" />
           </div>
         </div>
         <br></br>

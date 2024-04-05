@@ -1,8 +1,10 @@
 import OpenAI from 'openai'
 
-const openai = new OpenAI({
+export const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true,
+  // WAS ABLE TO CHANGE THIS AFTER USING A MUTATION
+  // dangerouslyAllowBrowser: true,
+  dangerouslyAllowBrowser: false,
 })
 
 let queue = []
@@ -10,7 +12,7 @@ let queue = []
 export const canGPTDoBasicMath = async ({ apiKey }) => {
   const oppenai = new OpenAI({
     apiKey: apiKey,
-    dangerouslyAllowBrowser: true,
+    dangerouslyAllowBrowser: false,
   })
   let result = await oppenai.chat.completions.create({
     model: 'gpt-3.5-turbo',
@@ -143,10 +145,12 @@ export const runTranslationMute = async ({ input }) => {
         toLanguage: toLanguage,
         code: code,
       }),
+      error: 'none',
     }
   } catch (error) {
     return {
-      rescode: error.code,
+      rescode: 'ERROR',
+      error: error.code,
     }
   }
 }
@@ -196,7 +200,13 @@ export const runTranslationHelper = async ({ fromLanguage, toLanguage, code, ope
     if (fromLanguage == toLanguage) toLang = fromLanguage == 'Python' ? 'Java' : 'Python'
     trans = await doTranslation({ fromLanguage: fromLanguage, toLanguage: toLang, code: code, openai: openai })
   } catch (e) {
-    const problemo = new Error('Open AI error')
+    let message = ''
+    if (e.code == 'rate_limit_exceeded') message = 'Rate Limit Hit'
+    else if (e.code == 'invalid_api_key') message = 'Bad key'
+    else if (e.code == 'server_error') message = 'OpenAI crash'
+    else if (e.code == 'not_found_error') message = 'Does not exist'
+    else message = 'OpenAI error'
+    const problemo = new Error(message)
     problemo.code = e.code
     queue.pop()
     throw problemo
@@ -206,7 +216,13 @@ export const runTranslationHelper = async ({ fromLanguage, toLanguage, code, ope
     try {
       opt = await doOptimization({ language: fromLanguage, code: code, openai: openai })
     } catch (e) {
-      const problemo = new Error('Open AI error')
+      let message = ''
+      if (e.code == 'rate_limit_exceeded') message = 'Rate Limit Hit'
+      else if (e.code == 'invalid_api_key') message = 'Bad Key'
+      else if (e.code == 'server_error') message = 'OpenAI crash'
+      else if (e.code == 'not_found_error') message = 'Does not exist'
+      else message = 'OpenAI error'
+      const problemo = new Error(message)
       problemo.code = e.code
       queue.pop()
       throw problemo
@@ -223,7 +239,13 @@ export const runTranslationHelper = async ({ fromLanguage, toLanguage, code, ope
   try {
     langres = await isCorrectLanguage({ language: fromLanguage, code: code, openai: openai })
   } catch (e) {
-    const problemo = new Error('Open AI error')
+    let message = ''
+    if (e.code == 'rate_limit_exceeded') message = 'Rate Limit Hit'
+    else if (e.code == 'invalid_api_key') message = 'Bad Key'
+    else if (e.code == 'server_error') message = 'OpenAI crash'
+    else if (e.code == 'not_found_error') message = 'Does not exist'
+    else message = 'OpenAI error'
+    const problemo = new Error(message)
     problemo.code = e.code
     queue.pop()
     throw problemo

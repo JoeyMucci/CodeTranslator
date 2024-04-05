@@ -1,6 +1,7 @@
 export const schema = gql`
   type TranslationRes {
     rescode: String
+    error: String
   }
 
   input CreateTranslationRequestInput {

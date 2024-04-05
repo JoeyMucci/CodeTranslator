@@ -2,15 +2,17 @@ export const standard = defineScenario({
   contact: {
     one: {
       data: {
-        name: 'Mick',
-        email: 'yakuza@toonlink.edu',
+        email: 'yakuza@toonlink.edu2',
+        subject: 'Mick',
+        backupEmail: 'yakuza@toonlink.edu',
         message: "If it weren't for those meddling kids",
       },
     },
     two: {
       data: {
-        name: 'Mack',
         email: 'dodo@bird.bob',
+        subject: 'Mack',
+        backupEmail: 'dodo@bird.bob',
         message: 'Love this tbh ong fr',
       },
     },
