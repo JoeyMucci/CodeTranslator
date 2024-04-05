@@ -1,4 +1,4 @@
-//import userEvent from '@testing-library/user-event'
+// import userEvent from '@testing-library/user-event'
 
 // import { runTranslation } from 'api/src/services/gpt/gpt.js'
 
@@ -127,4 +127,63 @@ describe('CodeTranslatorPage', () => {
 
     expect(window.alert).toHaveBeenCalledTimes(0)
   })
+
+  it('renders toast for graphql error with translate', async () => {
+    render(
+      <GraphQLHooksProvider
+        useMutation={jest.fn().mockReturnValue([
+          jest.fn().mockImplementation(async () => {
+            throw new Error('Something went wrong')
+          }),
+          {},
+        ])}
+        useQuery={jest.fn().mockReturnValue({ data: {} })}
+      >
+        <CodeTranslatorPage />
+      </GraphQLHooksProvider>
+    )
+
+    const translateButton = screen.getByRole('button', { name: 'Translate' })
+
+    fireEvent.change(screen.getByTestId('InputBoxTestId'), {
+      target: { value: 'int main() {printf("geegee")\n' },
+    })
+
+    await waitFor(() => fireEvent.click(translateButton))
+
+    await waitFor(() =>
+      expect(
+        screen.getByText(/Communication with GraphQL off, try again later/i)
+      ).toBeInTheDocument()
+    )
+  })
+
+  it('renders toast for graphql error with rating', async () => {
+    render(
+      <GraphQLHooksProvider
+        useMutation={jest.fn().mockReturnValue([
+          jest.fn().mockImplementation(async () => {
+            throw new Error('Something went wrong')
+          }),
+          {},
+        ])}
+        useQuery={jest.fn().mockReturnValue({ data: {} })}
+      >
+        <CodeTranslatorPage />
+      </GraphQLHooksProvider>
+    )
+    await new Promise((resolve) => setTimeout(resolve, 5000)) // wait because of the previous test
+    const submitButton = screen.getByRole('button', { name: 'Submit' })
+
+    const oneStarButton = screen.getByTitle('error: expected usable code')
+    await waitFor(() => fireEvent.click(oneStarButton)) // Select one star
+
+    await waitFor(() => fireEvent.click(submitButton))
+
+    await waitFor(() =>
+      expect(
+        screen.getByText(/Communication with GraphQL off, try again later/i)
+      ).toBeInTheDocument()
+    )
+  }, 10000)
 })

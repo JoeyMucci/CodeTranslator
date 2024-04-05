@@ -15,11 +15,12 @@ describe('contacts', () => {
 
   scenario('creates a contact', async () => {
     const result = await createContact({
-      input: { name: 'String', email: 'String', message: 'String' },
+      input: { email: 'String1', subject: 'String2', backupEmail: 'String3', message: 'String4' },
     })
 
-    expect(result.name).toEqual('String')
-    expect(result.email).toEqual('String')
-    expect(result.message).toEqual('String')
+    expect(result.email).toEqual('String1')
+    expect(result.subject).toEqual('String2')
+    expect(result.backupEmail).toEqual('String3')
+    expect(result.message).toEqual('String4')
   })
 })

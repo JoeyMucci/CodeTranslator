@@ -274,7 +274,7 @@ describe('Queueing', () => {
 })
 
 describe('OpenAI error', () => {
-  it('catches OpenAI errors', async () => {
+  it('catches rate limit error', async () => {
     jest.restoreAllMocks()
     jest.resetModules()
     jest.mock('openai', () => {
@@ -301,7 +301,94 @@ describe('OpenAI error', () => {
         code: 'print("YESMAN")',
         openai: openai,
       })
-    }).rejects.toThrow('Open AI error')
+    }).rejects.toThrow('Rate Limit Hit')
+  }, 100000)
+  it('catches bad key error', async () => {
+    jest.restoreAllMocks()
+    jest.resetModules()
+    jest.mock('openai', () => {
+      return jest.fn().mockImplementation(() => {
+        return {
+          chat: {
+            completions: {
+              create: jest.fn().mockImplementation(async () => {
+                const problemo = new Error('401')
+                problemo.code = 'invalid_api_key'
+                throw problemo
+              }),
+            },
+          },
+        }
+      })
+    })
+    const OpenAI = require('openai')
+    const openai = OpenAI()
+    return expect(async () => {
+      await runTranslationHelper({
+        fromLanguage: 'Python',
+        toLanguage: 'C',
+        code: 'print("YESMAN1")',
+        openai: openai,
+      })
+    }).rejects.toThrow('Bad key')
+  }, 100000)
+  it('catches server error', async () => {
+    jest.restoreAllMocks()
+    jest.resetModules()
+    jest.mock('openai', () => {
+      return jest.fn().mockImplementation(() => {
+        return {
+          chat: {
+            completions: {
+              create: jest.fn().mockImplementation(async () => {
+                const problemo = new Error('500')
+                problemo.code = 'server_error'
+                throw problemo
+              }),
+            },
+          },
+        }
+      })
+    })
+    const OpenAI = require('openai')
+    const openai = OpenAI()
+    return expect(async () => {
+      await runTranslationHelper({
+        fromLanguage: 'Python',
+        toLanguage: 'C',
+        code: 'print("YESMAN11")',
+        openai: openai,
+      })
+    }).rejects.toThrow('OpenAI crash')
+  }, 100000)
+  it('catches not found error', async () => {
+    jest.restoreAllMocks()
+    jest.resetModules()
+    jest.mock('openai', () => {
+      return jest.fn().mockImplementation(() => {
+        return {
+          chat: {
+            completions: {
+              create: jest.fn().mockImplementation(async () => {
+                const problemo = new Error('404')
+                problemo.code = 'not_found_error'
+                throw problemo
+              }),
+            },
+          },
+        }
+      })
+    })
+    const OpenAI = require('openai')
+    const openai = OpenAI()
+    return expect(async () => {
+      await runTranslationHelper({
+        fromLanguage: 'Python',
+        toLanguage: 'C',
+        code: 'print("YESMAN111")',
+        openai: openai,
+      })
+    }).rejects.toThrow('Does not exist')
   }, 100000)
 })
 

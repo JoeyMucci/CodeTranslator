@@ -22,8 +22,19 @@ const ContactPage = () => {
     },
   })
 
-  const onSubmit = (data) => {
-    create({ variables: { input: data } })
+  const onSubmit = async (partialdata) => {
+    const fulldata = {
+      email: localStorage.getItem('userEmail'),
+      subject: partialdata.subject,
+      backupEmail: partialdata.b_email,
+      message: partialdata.message,
+    }
+    try {
+      await create({ variables: { input: fulldata } })
+    } catch (error) {
+      toast.error('Communication with GraphQL off, try again later')
+      console.error(error)
+    }
   }
   return (
     <>
