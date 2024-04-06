@@ -1,6 +1,0 @@
--- CreateTable
-CREATE TABLE "blacklisted_tokens" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "token" TEXT NOT NULL,
-    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
