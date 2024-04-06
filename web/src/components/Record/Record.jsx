@@ -11,6 +11,7 @@ const Record = ({
   translatedCode,
   originalLanguage,
   translatedLanguage,
+  createdAt,
 }) => {
   const originalCodeRef = useRef(null);
   const translatedCodeRef = useRef(null);
@@ -23,6 +24,19 @@ const Record = ({
 
   const [isOriginalCodeExpanded, setOriginalCodeExpanded] = useState(false);
   const [isTranslatedCodeExpanded, setTranslatedCodeExpanded] = useState(false);
+
+  const formatDateTime = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleString('en-US', {
+      month: 'long', // "January"
+      day: '2-digit', // "01"
+      year: 'numeric', // "2024"
+      hour: 'numeric', // "11"
+      minute: '2-digit', // "24"
+      second: '2-digit', // "15"
+      hour12: true, // Use AM/PM
+    });
+  };
 
   // Function to toggle the expansion state of original code
   const toggleOriginalCode = () => {
@@ -135,6 +149,7 @@ const Record = ({
         <div className=" basis-1/4">
                <div className = "flex flex-row m-1">
               <h2 className="centertext">{originalLanguage}</h2>
+
               <div className = "TOTHERIGHT flex flex-row m-1" style={{ marginLeft: 'auto' }}>
                 <button
                   className=" DOWNLOADBUTTON basis-1/8 w-8  items-center rounded text-white hover:bg-gray-800"
@@ -170,6 +185,7 @@ const Record = ({
             </code>
           </pre>
         </div>
+        <p className="text-white">Created on {formatDateTime(createdAt)}</p>
         </div>
         <div className="flex flex-col justify-center items-center">
           <img

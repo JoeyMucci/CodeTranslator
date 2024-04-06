@@ -8,6 +8,7 @@ export const QUERY = gql`
       translatedCode
       originalLanguage
       translatedLanguage
+      createdAt
     }
   }
 `
@@ -24,10 +25,24 @@ export const Failure = ({ error }) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ records }) => {
+export const Success = ({ records, DateAscending, inputLanguage, outputLanguage }) => {
+
+
+  const filteredRecords = records.filter(record => {
+    const inputLangMatch = inputLanguage === 'Default' || record.originalLanguage === inputLanguage;
+    const outputLangMatch = outputLanguage === 'Default' || record.translatedLanguage === outputLanguage;
+    return inputLangMatch && outputLangMatch;
+  });
+
+  //const filteredRecords = inputLanguage === 'Default' ? records : records.filter(record => record.originalLanguage === inputLanguage);
+
+  const sortedRecords = !DateAscending ? [...filteredRecords].reverse() : filteredRecords;
+
+
   return (
     <div className="translationCell flex flex-col space-y-20 p-5">
-      {records.map((item) => {
+
+      {sortedRecords.map((item) => {
         return (
           <Record
             key={item.id}
@@ -35,6 +50,7 @@ export const Success = ({ records }) => {
             translatedCode={item.translatedCode}
             originalLanguage={item.originalLanguage}
             translatedLanguage={item.translatedLanguage}
+            createdAt={item.createdAt}
           ></Record>
         )
       })}
