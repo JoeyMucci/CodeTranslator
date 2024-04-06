@@ -40,7 +40,7 @@ export const Success = ({ records, DateAscending, inputLanguage, outputLanguage 
 
 
   return (
-    <div className="translationCell flex flex-col space-y-20 p-5">
+    <div className="translationCell flex flex-col space-y-20 p-5" data-testid="translationCell">
 
       {sortedRecords.map((item) => {
         return (
