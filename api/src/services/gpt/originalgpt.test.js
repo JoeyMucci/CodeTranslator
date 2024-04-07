@@ -223,7 +223,7 @@ describe('Queueing', () => {
     await runTranslationHelper({
       fromLanguage: 'Python',
       toLanguage: 'C++',
-      code: 'print("hello WOrld")',
+      code: 'print("hello WORLD")',
       openai: openai,
     })
     const end = Date.now()
