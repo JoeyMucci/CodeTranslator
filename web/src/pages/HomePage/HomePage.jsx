@@ -30,6 +30,7 @@ const LOGIN_USER = gql`
     loginUser(email: $email, password: $password) {
       token
       user {
+        name
         email
         password
       }
@@ -72,11 +73,15 @@ const LoginForm = () => {
   const handleSubmit = async () => {
     try {
       const response = await loginUser({ variables: { email, password } })
+      localStorage.setItem('userName', response.data.loginUser.user.name)
       localStorage.setItem('userEmail', response.data.loginUser.user.email)
       localStorage.setItem('authToken', response.data.loginUser.token)
       navigate('/code-translator')
+      location.reload()
     } catch (error) {
-      toast.error('Login Failed')
+      if (error.message.includes('500'))
+        toast.error('Cannot authenticate with our API, please wait')
+      else toast.error('Login Failed')
       setWrongPasswordError(error.message)
     }
   }

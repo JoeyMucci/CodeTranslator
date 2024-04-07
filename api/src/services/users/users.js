@@ -30,6 +30,13 @@ export const updateUser = ({ id, input }) => {
   })
 }
 
+export const updateUserByEmail = ({ email, input }) => {
+  return db.user.update({
+    data: input,
+    where: { email },
+  })
+}
+
 export const changePassword = async ({ id, input }) => {
   const hashedPassword = await bcrypt.hash(input.newPassword, 10)
   return db.user.update({

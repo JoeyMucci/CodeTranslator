@@ -18,6 +18,7 @@ describe('NavBar', () => {
       screen.getByText('Feedback')
       screen.getByText('Help')
       screen.getByText('History')
+      screen.getByText('Profile')
       screen.getByText('Log Out')
     }).not.toThrow()
   })

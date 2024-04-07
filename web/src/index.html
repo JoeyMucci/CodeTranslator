@@ -14,6 +14,7 @@
         <a href="feedback">Feedback</a>
         <a href="help">Help</a>
         <a href="translation-history">History</a>
+        <a href="profile-editing">Profile</a>
         <a href="/" id="logoutBtn">Log Out</a>
       </div>
     </div>
@@ -23,9 +24,13 @@
   <!-- Please keep this div empty -->
   <div id="redwood-app"></div>
   <script>
+      const userName = localStorage.getItem('userName');
       const userEmail = localStorage.getItem('userEmail');
       document.getElementById('usernamePlaceholder').innerText = userEmail;
-      if (userEmail) {
+      if (userName) {
+        usernamePlaceholder.innerText = userName;
+      }
+      else if (userEmail) {
         usernamePlaceholder.innerText = userEmail;
     } else {
       usernamePlaceholder.innerText = "Username";

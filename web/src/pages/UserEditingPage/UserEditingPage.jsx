@@ -1,49 +1,60 @@
 // web/src/pages/UserEditingPage/UserEditingPage.jsx
-import React from 'react';
-import { useForm } from '@redwoodjs/forms';
-import { MetaTags, useMutation } from '@redwoodjs/web';
-import { toast, Toaster } from '@redwoodjs/web/toast';
-import { useAuth } from 'src/auth'; // Assuming you have an auth hook similar to HomePage.jsx
-import UserEditingForm from 'web/src/components/UserEditingForm/UserEditingForm.jsx';
+import React from 'react'
+
+import UserEditingForm from 'web/src/components/UserEditingForm/UserEditingForm.jsx'
+
+import { useForm } from '@redwoodjs/forms'
+import { MetaTags, useMutation } from '@redwoodjs/web'
+import { toast, Toaster } from '@redwoodjs/web/toast'
+
+// import { useAuth } from 'src/auth' // Assuming you have an auth hook similar to HomePage.jsx
 
 const UPDATE_USER = gql`
- mutation UpdateUserMutation($id: Int!, $input: UpdateUserInput!) {
-    updateUser(id: $id, input: $input) {
-      id
-      name
+  mutation UpdateUserMutation($email: String!, $input: UpdateUserInput!) {
+    updateUserByEmail(email: $email, input: $input) {
       email
-      preferences
     }
- }
-`;
+  }
+`
+
+let message = ''
+if (!localStorage.getItem('userName'))
+  message = 'You do not have a preferred name yet'
+else message = 'Your current email is ' + localStorage.getItem('userEmail')
 
 const UserEditingPage = () => {
- const { currentUser } = useAuth(); // Use the auth hook to get the current user
- const formMethods = useForm();
+  // const { currentUser } = useAuth() // Use the auth hook to get the current user
+  const formMethods = useForm()
 
- const [updateUser, { loading, error }] = useMutation(UPDATE_USER, {
-    onCompleted: () => {
-      toast.success('Your profile has been updated!');
-      formMethods.reset();
+  const [updateUser, { loading, error }] = useMutation(UPDATE_USER, {
+    onCompleted: async () => {
+      formMethods.reset()
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      location.reload()
     },
- });
+  })
 
- const onSubmit = (data) => {
-    if (!currentUser) {
-      toast.error('You must be logged in to edit your profile.');
-      return;
+  const onSubmit = async (data) => {
+    try {
+      await updateUser({
+        variables: { email: localStorage.getItem('userEmail'), input: data },
+      })
+      localStorage.setItem('userEmail', data.email)
+      localStorage.setItem('userName', data.name)
+      toast.success('Your profile is updated! Hang tight!')
+    } catch (error) {
+      toast.error('Update user info failed.')
+      console.log(error)
     }
-    updateUser({ variables: { id: currentUser.id, input: data } });
- };
+  }
 
- // Redirect if not logged in
- if (!currentUser) {
-    return <p>You must be logged in to edit your profile.</p>;
- }
-
- return (
+  return (
     <>
       <MetaTags title="Edit Profile" description="Edit your profile" />
+
+      <h1 className="text">Update your info</h1>
+      <h3 className="smalltext">{message}</h3>
+
       <Toaster />
       <UserEditingForm
         onSubmit={onSubmit}
@@ -52,7 +63,7 @@ const UserEditingPage = () => {
         formMethods={formMethods}
       />
     </>
- );
-};
+  )
+}
 
-export default UserEditingPage;
+export default UserEditingPage
