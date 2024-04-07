@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 
-// was previously running this directly in the fronted lmao
+// was previously running this directly in the fronted, imrpoved security by using GraphQL mutation
 //import { runTranslation } from 'api/src/services/gpt/gpt.js'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/default.css'
@@ -68,11 +68,14 @@ const CodeTranslatorPage = () => {
 
   const onSubmit = async (data) => {
     data.score = parseInt(data.score) // Covert string to int
-    console.log('ran')
     try {
       await create({ variables: { input: data } })
     } catch (error) {
-      toast.error('Communication with GraphQL off, try again later')
+      if (error.code == 'BAD_USER_INPUT')
+        codeError('Input not recognized, please enter rating appropriately')
+      else if (error.code == 'BAD_REQUEST')
+        codeError('Request could not make it to our server, try again')
+      else codeError('Communication with GraphQL off, try again later')
       console.error(error)
     }
   }
@@ -193,8 +196,11 @@ const CodeTranslatorPage = () => {
         toast.success('Successful translation')
       }
     } catch (error) {
-      codeError('')
-      toast.error('Communication with GraphQL off, try again later')
+      if (error.code == 'BAD_USER_INPUT')
+        codeError('Input not recognized, please enter code in form of text')
+      else if (error.code == 'BAD_REQUEST')
+        codeError('Request could not make it to our server, try again')
+      else codeError('Communication with GraphQL off, try again later')
       console.error(error)
     }
   }

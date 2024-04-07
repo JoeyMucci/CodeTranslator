@@ -66,7 +66,6 @@ export const isCorrectLanguageOld = async ({ language, code, openai }) => {
 }
 
 export const doTranslation = async ({ fromLanguage, toLanguage, code, openai }) => {
-  if (toLanguage == 'MIPS') toLanguage = 'MIPS assembly'
   let translation = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
     messages: [
@@ -116,6 +115,12 @@ export const doOptimization = async ({ language, code, openai }) => {
 
 export const cleanup = ({ fromLanguage, code }) => {
   // https://blog.ostermiller.org/finding-comments-in-source-code-using-regular-expressions/
+
+  // python being weird edgecase
+  if (code.substring(0, 3) == '```' && code.substring(code.length - 3, code.length) == '```') {
+    code = code.substring(code.indexOf(' '))
+    code = code.substring(0, code.length - 3)
+  }
 
   if (fromLanguage == 'C' || fromLanguage == 'Java' || fromLanguage == 'C++' || fromLanguage == 'Go')
     return code.replace(/(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*?\*+\/)|(\/\/.*)/g, '')
