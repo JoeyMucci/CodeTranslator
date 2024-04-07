@@ -57,6 +57,9 @@ const RecordhistoryPage = () => {
                 <option value="PHP">PHP</option>
                 <option value="Python">Python</option>
                 <option value="SQL">SQL</option>
+                <option value="Rust">Rust</option>
+                <option value="R">R</option>
+                <option value="Go">Go</option>
               </select>
             </div>
     </div>
@@ -80,6 +83,9 @@ const RecordhistoryPage = () => {
                 <option value="PHP">PHP</option>
                 <option value="Python">Python</option>
                 <option value="SQL">SQL</option>
+                <option value="Rust">Rust</option>
+                <option value="R">R</option>
+                <option value="Go">Go</option>
               </select>
             </div>
 

@@ -126,7 +126,7 @@ const HelpPage = () => {
               href="https://www.java.com/en/download/help/download_options.html"
               aria-label="Java"
             >
-              <p>install java</p>
+              <p>Install java</p>
               <br />
               <img
                 className="justify-center"

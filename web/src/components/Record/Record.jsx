@@ -47,6 +47,7 @@ const Record = ({
 
   // Function to toggle the expansion state of translated code
   const toggleTranslatedCode = () => {
+    console.log('test')
     if (translatedCodeRef.current.scrollHeight > 150) {
       setTranslatedCodeExpanded(!isTranslatedCodeExpanded);
     }
@@ -90,6 +91,15 @@ const Record = ({
           break
         case 'SQL':
           fileExtension = 'sql'
+          break
+        case 'Rust':
+          fileExtension = 'rs'
+          break
+        case 'R':
+          fileExtension = 'r'
+          break
+        case 'Go':
+          fileExtension = 'go'
           break
         default:
           fileExtension = 'txt'

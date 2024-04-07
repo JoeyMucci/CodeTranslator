@@ -47,7 +47,7 @@ describe('HelpPage', () => {
   test('Question 1 opens up', async () => {
     render(<HelpPage />)
     const question = document.getElementsByClassName('faq')[0]
-    await waitFor(() => fireEvent.click(questionTest2))
+    await waitFor(() => fireEvent.click(question))
     const myClass = question.classList.contains('open')
     expect(myClass).toBe(true)
   })
