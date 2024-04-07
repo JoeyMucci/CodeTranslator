@@ -13,6 +13,7 @@ const NavBar = () => {
             <a href="feedback">Feedback</a>
             <a href="help">Help</a>
             <a href="translation-history">History</a>
+            <a href="profile-editing">Profile</a>
             <a href="/" id="logoutBtn">
               Log Out
             </a>
