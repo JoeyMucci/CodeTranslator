@@ -146,11 +146,12 @@ const CodeTranslatorPage = () => {
     //   console.error('Translation error:', error)
     // }
     try {
+      setCode('loading...')
       const originalCode = rawCodeRef.current.value
       const originalLanguage = languageDropdownRef1.current.value
       const translatedLanguage = languageDropdownRef2.current.value
-      if (codeRef.current.value != '')
-        codeRef.current.value = rawCodeRef.current.value
+      // if (codeRef.current.value != '')
+      //   codeRef.current.value = rawCodeRef.current.value
       const response = await createtransreq({
         variables: {
           input: {

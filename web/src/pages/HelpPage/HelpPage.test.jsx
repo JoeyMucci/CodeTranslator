@@ -102,7 +102,10 @@ describe('HelpPage', () => {
 
   test('renders a link to the tutorial vid', async () => {
     render(<HelpPage />)
-    expect(screen.getByTitle('vid')).toHaveAttribute('src', 'https://www.youtube.com/embed/8NLhRSeONqM')
+    expect(screen.getByTitle('vid')).toHaveAttribute(
+      'src',
+      'https://www.youtube.com/embed/8NLhRSeONqM'
+    )
   })
 
   test('One question closes up when another is clicked on', async () => {
