@@ -62,7 +62,7 @@ describe('Submission errors', () => {
 
     await waitFor(() =>
       expect(
-        screen.getByText(/Please enter a valid email address/i)
+        screen.getByText(/Enter a valid email address/i)
       ).toBeInTheDocument()
     )
   })
@@ -98,7 +98,7 @@ describe('Submission errors', () => {
 
     await waitFor(() =>
       expect(
-        screen.getByText(/Please enter a valid email address/i)
+        screen.getByText(/Enter a valid email address/i)
       ).toBeInTheDocument()
     )
   })
@@ -132,7 +132,7 @@ describe('Submission errors', () => {
 
     await waitFor(() =>
       expect(
-        screen.getByText(/Please enter a valid email address/i)
+        screen.getByText(/Enter a valid email address/i)
       ).toBeInTheDocument()
     )
   })
@@ -192,7 +192,7 @@ describe('Submission errors', () => {
 
     await waitFor(() =>
       expect(
-        screen.getByText(/Please enter a valid email address/i)
+        screen.getByText(/Enter a valid email address/i)
       ).toBeInTheDocument()
     )
   })
