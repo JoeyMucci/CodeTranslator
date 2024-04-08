@@ -92,6 +92,19 @@ describe('HelpPage', () => {
     expect(myClass).toBe(true)
   })
 
+  test('Question 8 opens up', async () => {
+    render(<HelpPage />)
+    const question = document.getElementsByClassName('faq')[7]
+    await waitFor(() => fireEvent.click(question))
+    const myClass = question.classList.contains('open')
+    expect(myClass).toBe(true)
+  })
+
+  test('renders a link to the tutorial vid', async () => {
+    render(<HelpPage />)
+    expect(screen.getByTitle('vid')).toBeInTheDocument()
+  })
+
   test('One question closes up when another is clicked on', async () => {
     render(<HelpPage />)
     const questionTest2 = document.getElementsByClassName('faq')[1]

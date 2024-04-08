@@ -52,6 +52,7 @@ const HelpPage = () => {
       question: 'How about a video tutorial?',
       answer:
         <iframe width="420" height="315"
+          title='vid'
           src="https://www.youtube.com/embed/8NLhRSeONqM">
         </iframe>,
       open: false,
