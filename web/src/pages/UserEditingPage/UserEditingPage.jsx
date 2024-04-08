@@ -20,8 +20,11 @@ const UPDATE_USER = gql`
 let message = ''
 if (!localStorage.getItem('userName'))
   message = 'You do not have a preferred name yet'
-else message = 'Your current email is ' + localStorage.getItem('userEmail')
-
+else  message = (
+  <>
+    Your current email is <strong>{localStorage.getItem('userEmail')}</strong>
+  </>
+)
 const UserEditingPage = () => {
   // const { currentUser } = useAuth() // Use the auth hook to get the current user
   const formMethods = useForm()
@@ -51,9 +54,20 @@ const UserEditingPage = () => {
   return (
     <>
       <MetaTags title="Edit Profile" description="Edit your profile" />
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <div className="flex flex-col mt-5 w-1/2 justify-center" style={{margin: 'auto'}}>
+        <h1 className="text" style={{margin: 'auto'}}>Update your info</h1>
+      </div>
 
-      <h1 className="text">Update your info</h1>
-      <h3 className="smalltext">{message}</h3>
+
+
+
+
+
+      <h3 className="smalltext" style={{textAlign: 'center'}}>{message}</h3>
 
       <Toaster />
       <UserEditingForm
@@ -62,6 +76,7 @@ const UserEditingPage = () => {
         loading={loading}
         formMethods={formMethods}
       />
+
     </>
   )
 }
