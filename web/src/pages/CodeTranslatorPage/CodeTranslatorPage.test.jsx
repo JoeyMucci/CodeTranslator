@@ -1,5 +1,6 @@
 // import userEvent from '@testing-library/user-event'
 
+// was previously running this directly in the fronted, imrpoved security by using GraphQL mutation
 // import { runTranslation } from 'api/src/services/gpt/gpt.js'
 
 import { render, screen, waitFor, fireEvent } from '@redwoodjs/testing/web'
