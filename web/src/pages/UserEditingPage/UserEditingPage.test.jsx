@@ -3,6 +3,7 @@
 
 import { render, screen, fireEvent, waitFor } from '@redwoodjs/testing/web'
 import { GraphQLHooksProvider } from '@redwoodjs/web'
+
 import '@testing-library/jest-dom/extend-expect'
 
 import UserEditingPage from './UserEditingPage'
@@ -67,7 +68,7 @@ describe('Submission errors', () => {
     )
   })
 
-  it('error for incorrect email three when all info is present', async () => {
+  it('error for incorrect email two when all info is present', async () => {
     window.matchMedia = jest.fn()
     render(
       <GraphQLHooksProvider
@@ -103,7 +104,7 @@ describe('Submission errors', () => {
     )
   })
 
-  it('error for incorrect email two when all info is present', async () => {
+  it('error for incorrect email three when all info is present', async () => {
     window.matchMedia = jest.fn()
     render(
       <GraphQLHooksProvider
@@ -166,7 +167,7 @@ describe('Submission errors', () => {
     )
   })
 
-  it('error for missing name', async () => {
+  it('error for missing email', async () => {
     window.matchMedia = jest.fn()
     render(
       <GraphQLHooksProvider
@@ -199,7 +200,7 @@ describe('Submission errors', () => {
 })
 
 describe('Toast notifications', () => {
-  test('renders UserEditingPage and displays submit toast', async () => {
+  test('displays submit toast', async () => {
     // const { getByLabelText, getByText, getByRole } = render(
     //   <MockedProvider mocks={mocks} addTypename={false}>
     //     <UserEditingPage />
@@ -238,7 +239,7 @@ describe('Toast notifications', () => {
     )
   })
 
-  test('renders UserEditingPage and display reject toast', async () => {
+  test('display reject toast', async () => {
     // const { getByLabelText, getByText, getByRole } = render(
     //   <MockedProvider mocks={mocks} addTypename={false}>
     //     <UserEditingPage />
@@ -249,7 +250,7 @@ describe('Toast notifications', () => {
       <GraphQLHooksProvider
         useMutation={jest.fn().mockReturnValue([
           jest.fn().mockImplementation(async () => {
-            throw new Error('Something went wrong')
+            throw new Error('Bruh Two')
           }),
           {},
         ])}
@@ -269,7 +270,54 @@ describe('Toast notifications', () => {
     fireEvent.click(submitButton)
 
     await waitFor(() =>
-      expect(screen.getByText(/Update user info failed./i)).toBeInTheDocument()
+      expect(screen.getByText(/Update user info failed/i)).toBeInTheDocument()
+    )
+  })
+
+  test('display email already registered toast', async () => {
+    // const { getByLabelText, getByText, getByRole } = render(
+    //   <MockedProvider mocks={mocks} addTypename={false}>
+    //     <UserEditingPage />
+    //   </MockedProvider>
+    // )
+    window.matchMedia = jest.fn()
+    render(
+      <GraphQLHooksProvider
+        useMutation={jest.fn().mockReturnValue([
+          jest.fn().mockImplementation(async () => {
+            const bruh = new Error('Bruh Two')
+            bruh.graphQLErrors = {
+              0: {
+                extensions: {
+                  originalError: {
+                    message: "Unique constraint violated on field 'email'",
+                  },
+                },
+              },
+            }
+            throw bruh
+          }),
+          {},
+        ])}
+        useQuery={jest.fn().mockReturnValue({ data: {} })}
+      >
+        <UserEditingPage />
+      </GraphQLHooksProvider>
+    )
+
+    const nameInput = screen.getByTestId('name')
+    fireEvent.change(nameInput, { target: { value: 'Abigail Arya' } }) // data does not matter because of mock
+
+    const emailInput = screen.getByTestId('email')
+    fireEvent.change(emailInput, { target: { value: 'a@a.a.aaa' } }) // data does not matter because of mock
+
+    const submitButton = screen.getByRole('button', { name: /Save/i })
+    fireEvent.click(submitButton)
+
+    await waitFor(() =>
+      expect(
+        screen.getByText(/Email is already registered/i)
+      ).toBeInTheDocument()
     )
   })
 })
