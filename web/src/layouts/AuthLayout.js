@@ -8,7 +8,7 @@ const AuthLayout = () => {
   useEffect(() => {
     const authToken = localStorage.getItem('authToken')
     if (!authToken) {
-      navigate('/')
+      //navigate('/')
     }
   }, [])
 }

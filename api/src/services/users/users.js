@@ -5,9 +5,9 @@ export const users = () => {
   return db.user.findMany()
 }
 
-export const user = ({ id }) => {
+export const user = ({ email }) => {
   return db.user.findUnique({
-    where: { id },
+    where: { email },
   })
 }
 
@@ -23,18 +23,18 @@ export const createUser = async ({ input }) => {
   return user
 }
 
-export const updateUser = ({ id, input }) => {
+export const updateUser = ({ email, input }) => {
   return db.user.update({
     data: input,
-    where: { id },
+    where: { email },
   })
 }
 
-export const changePassword = async ({ id, input }) => {
+export const changePassword = async ({ email, input }) => {
   const hashedPassword = await bcrypt.hash(input.newPassword, 10)
   return db.user.update({
     data: { password: hashedPassword },
-    where: { id },
+    where: { email },
   })
 }
 

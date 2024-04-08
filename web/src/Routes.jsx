@@ -14,10 +14,12 @@ const Routes = () => {
   return (
     <Router>
       <Route path="/translation-history" page={TranslationHistoryPage} name="translationHistory" beforeRouterUpdate={AuthLayout()} />
-      <Route path="/help" page={HelpPage} name="help" />
+      <Route path="/help" page={HelpPage} name="help" beforeRouterUpdate={AuthLayout()} />
       <Route path="/feedback" page={FeedbackPage} name="feedback" beforeRouterUpdate={AuthLayout()} />
       <Route path="/code-translator" page={CodeTranslatorPage} name="codeTranslator" beforeRouterUpdate={AuthLayout()} />
       <Route path="/" page={HomePage} name="Homepage" />
+      <Route path="/forgot-password" page={ForgotPasswordPage} name="Forgot Password" />
+      <Route path="/reset-password" page={ResetPage} name="Reset Password" />
       <Route notfound page={NotFoundPage} />
     </Router>
   )
