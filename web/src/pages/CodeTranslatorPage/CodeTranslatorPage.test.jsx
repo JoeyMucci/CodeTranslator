@@ -607,4 +607,44 @@ describe('Error communication to user', () => {
       ).toBeInTheDocument()
     )
   })
+
+
+})
+
+describe('Tests for loading notification', () => {
+  it('renders toast for nonsense code error', async () => {
+    render(
+      <GraphQLHooksProvider
+        useMutation={jest.fn().mockReturnValue([
+          jest.fn().mockImplementation(
+            async() => {
+              await new Promise((resolve) => setTimeout(resolve, 1000))
+              return {
+                data: {
+                  runTranslationMute: { rescode: 'ERROR', error: 'wrong lang' },
+            },
+          }
+            }
+          ),
+          {},
+        ])}
+        useQuery={jest.fn().mockReturnValue({ data: {} })}
+      >
+        <CodeTranslatorPage />
+      </GraphQLHooksProvider>
+    )
+
+    const translateButton = screen.getByRole('button', { name: 'Translate' })
+
+    fireEvent.change(screen.getByTestId('InputBoxTestId'), {
+      target: { value: 'int main() {printf("geegee")\n' },
+    })
+
+    await waitFor(() => fireEvent.click(translateButton))
+
+    await waitFor(() =>
+      expect(
+        screen.getByTestId('codeDivTestIdTwo').innerHTML).toBe('loading...')
+    )
+  })
 })

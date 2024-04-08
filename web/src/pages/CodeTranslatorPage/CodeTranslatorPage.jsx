@@ -145,7 +145,9 @@ const CodeTranslatorPage = () => {
     // } catch (error) {
     //   console.error('Translation error:', error)
     // }
+
     try {
+      setCode('loading...')
       const originalCode = rawCodeRef.current.value
       const originalLanguage = languageDropdownRef1.current.value
       const translatedLanguage = languageDropdownRef2.current.value
