@@ -11,20 +11,29 @@ const UserEditingForm = ({ onSubmit, error, loading, formMethods }) => {
   } = formMethods
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label htmlFor="name">Name</label>
+    <form onSubmit={handleSubmit(onSubmit)} >
+      <div className="flex flex-col space-y-2 mt-5 w-1/4 justify-center  rounded bg-text_box " style={{margin: 'auto'}}>
+
+      <div className=" " style={{ margin: 'auto', marginTop: '20px' }}>
+        <label htmlFor="name" style={{ marginRight: '10px' }}> Name:</label>
+        <br />
         <input
+          className="rounded"
+          placeholder=" jeremiah"
           data-testid="name"
           name="name"
           type="text"
           {...register('name', { required: true })}
         />
-        {errors.name && <p>Name is required</p>}
+        {errors.name && <p style={{ color: 'red' }}>Name is required</p>}
       </div>
-      <div>
-        <label htmlFor="email">Email</label>
+      <br></br>
+      <div className=" " style={{ margin: 'auto', marginBottom: '30px'}}>
+        <label htmlFor="email" style={{ marginRight: '10px' }}>Email: </label>
+        <br />
         <input
+          className="rounded"
+          placeholder=" jermy123@gmail.com"
           data-testid="email"
           name="email"
           type="email"
@@ -33,7 +42,9 @@ const UserEditingForm = ({ onSubmit, error, loading, formMethods }) => {
             pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
           })}
         />
-        {errors.email && <p>Please enter a valid email address</p>}
+        {errors.email && <p style={{ color: 'red' }}>Enter a valid email address</p>}
+        <br />
+      </div>
       </div>
       {/* <div>
         <label htmlFor="preferences">Preferences</label>
@@ -44,7 +55,8 @@ const UserEditingForm = ({ onSubmit, error, loading, formMethods }) => {
         />
       </div>
       {error && <p>{error.message}</p>} */}
-      <button type="submit" disabled={loading}>
+      <br></br>
+      <button type="submit" disabled={loading} className="mt-5 w-1/4 justify-center  rounded bg-sky-700 text-white hover:bg-sky-800" style={{ margin: 'auto', display: 'block' }}>
         {loading ? 'Loading...' : 'Save'}
       </button>
     </form>
