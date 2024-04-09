@@ -46,11 +46,14 @@ export const sendPasswordResetEmail = async (to, resetLink) => {
   }
 }
 
-export const requestPasswordReset = async ({ email }) => {
+export const requestPasswordReset = async (email) => {
+  if (!email) {
+    const prob = new Error('Email is Required')
+    throw prob
+  }
   const user = await db.user.findUnique({ where: { email } })
   if (!user) {
     const prob = new Error('User not found')
-    prob.code = 'unf'
     throw prob
   } else {
     const newuser = await generateResetToken(email)

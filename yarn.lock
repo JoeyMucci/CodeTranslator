@@ -16849,7 +16849,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-environment-jsdom@npm:29.7.0":
+"jest-environment-jsdom@npm:29.7.0, jest-environment-jsdom@npm:^29.7.0":
   version: 29.7.0
   resolution: "jest-environment-jsdom@npm:29.7.0"
   dependencies:
@@ -22155,6 +22155,7 @@ __metadata:
     bcryptjs: "npm:^2.4.3"
     dotenv: "npm:^16.4.5"
     highlight.js: "npm:^11.9.0"
+    jest-environment-jsdom: "npm:^29.7.0"
     openai: "npm:^4.29.2"
     postcss: "npm:^8.4.35"
     prettier-plugin-tailwindcss: "npm:0.4.1"
