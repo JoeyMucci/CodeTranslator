@@ -5,8 +5,6 @@ import { navigate } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 import { Toaster, toast } from '@redwoodjs/web/toast'
 
-import { useAuth } from 'src/auth'
-
 const Button = ({ children, extraClasses, onClick }) => (
   <div
     className={`grow rounded-xl px-11 pb-3 pt-3 ${extraClasses}`}
@@ -37,6 +35,21 @@ const LOGIN_USER = gql`
     }
   }
 `
+
+const ForgotPasswordButton = () => {
+  const handleForgotPasswordClick = () => {
+    navigate('/forgot-password') // Redirect to the password reset page
+  }
+
+  return (
+    <button
+      className="rounded-xl bg-gray-600 px-6 py-3 text-white"
+      onClick={handleForgotPasswordClick}
+    >
+      Forgot Password
+    </button>
+  )
+}
 
 const HowItWorksSection = () => {
   return (
@@ -118,6 +131,7 @@ const LoginForm = () => {
           setWrongPasswordError(false)
         }}
       />
+
       {wrongPasswordError && (
         <p className="mt-2 text-sm text-red-500">Password is incorrect</p>
       )}
@@ -299,6 +313,7 @@ const HomeForm = () => {
               </div>
               {showLoginForm ? <LoginForm /> : <RegisterForm />}
             </div>
+            <ForgotPasswordButton />
           </section>
           <HowItWorksSection />
         </div>
