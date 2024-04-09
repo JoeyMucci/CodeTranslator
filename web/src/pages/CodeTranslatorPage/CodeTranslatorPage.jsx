@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 
-// was previously running this directly in the fronted lmao
+// was previously running this directly in the fronted, imrpoved security by using GraphQL mutation
 //import { runTranslation } from 'api/src/services/gpt/gpt.js'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/default.css'
@@ -10,6 +10,8 @@ import Rater from 'web/src/components/Rater/Rater.jsx'
 import { useForm } from '@redwoodjs/forms'
 import { Metadata, useMutation } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
+
+import isFileOkay from './isFileOkay'
 
 import 'web/src/index.css'
 
@@ -68,11 +70,14 @@ const CodeTranslatorPage = () => {
 
   const onSubmit = async (data) => {
     data.score = parseInt(data.score) // Covert string to int
-    console.log('ran')
     try {
       await create({ variables: { input: data } })
     } catch (error) {
-      toast.error('Communication with GraphQL off, try again later')
+      if (error.code == 'BAD_USER_INPUT')
+        codeError('Input not recognized, please enter rating appropriately')
+      else if (error.code == 'BAD_REQUEST')
+        codeError('Request could not make it to our server, try again')
+      else codeError('Communication with GraphQL off, try again later')
       console.error(error)
     }
   }
@@ -87,10 +92,10 @@ const CodeTranslatorPage = () => {
   useEffect(() => {
     // Initialize highlight.js
     hljs.highlightAll()
-    if (languageDropdownRef2.current) {
-      console.log(languageDropdownRef2.current.value)
-      // Perform operations
-    }
+    // if (languageDropdownRef2.current) {
+    //   console.log(languageDropdownRef2.current.value)
+    //   // Perform operations
+    // }
   }, [])
 
   //
@@ -122,8 +127,11 @@ const CodeTranslatorPage = () => {
       try {
         const fileContent = await readFileContent(file)
         setInputText1(fileContent)
-        console.log('File content:', fileContent)
+        // console.log('File content:', fileContent)
       } catch (error) {
+        if (error.message == 'non code input')
+          toast.error('Please enter a code file')
+        else toast.error('File import failed')
         console.error('Error reading file:', error.message)
       }
     }
@@ -143,11 +151,12 @@ const CodeTranslatorPage = () => {
     //   console.error('Translation error:', error)
     // }
     try {
+      setCode('loading...')
       const originalCode = rawCodeRef.current.value
       const originalLanguage = languageDropdownRef1.current.value
       const translatedLanguage = languageDropdownRef2.current.value
-      if (codeRef.current.value != '')
-        codeRef.current.value = rawCodeRef.current.value
+      // if (codeRef.current.value != '')
+      //   codeRef.current.value = rawCodeRef.current.value
       const response = await createtransreq({
         variables: {
           input: {
@@ -193,8 +202,11 @@ const CodeTranslatorPage = () => {
         toast.success('Successful translation')
       }
     } catch (error) {
-      codeError('')
-      toast.error('Communication with GraphQL off, try again later')
+      if (error.code == 'BAD_USER_INPUT')
+        codeError('Input not recognized, please enter code in form of text')
+      else if (error.code == 'BAD_REQUEST')
+        codeError('Request could not make it to our server, try again')
+      else codeError('Communication with GraphQL off, try again later')
       console.error(error)
     }
   }
@@ -257,9 +269,9 @@ const CodeTranslatorPage = () => {
     // Remove the link from the document
     document.body.removeChild(link)
   }
-  //
 
   const readFileContent = (file) => {
+    if (!isFileOkay(file)) throw new Error('non code input')
     return new Promise((resolve, reject) => {
       const reader = new FileReader()
       reader.onload = (e) => {

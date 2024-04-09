@@ -32,7 +32,13 @@ const ContactPage = () => {
     try {
       await create({ variables: { input: fulldata } })
     } catch (error) {
-      toast.error('Communication with GraphQL off, try again later')
+      if (error.code == 'BAD_USER_INPUT')
+        toast.error(
+          'Input not recognized, please enter feedback in form of text'
+        )
+      else if (error.code == 'BAD_REQUEST')
+        toast.error('Request could not make it to our server, try again')
+      else toast.error('Communication with GraphQL off, try again later')
       console.error(error)
     }
   }

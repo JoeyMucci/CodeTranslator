@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt'
 
 import { db } from 'src/lib/db'
+
 export const users = () => {
   return db.user.findMany()
 }
@@ -8,6 +9,12 @@ export const users = () => {
 export const user = ({ email }) => {
   return db.user.findUnique({
     where: { email },
+  })
+}
+
+export const userByEmail = async ({ emmy }) => {
+  return db.user.findUnique({
+    where: { email: emmy },
   })
 }
 
@@ -30,7 +37,7 @@ export const updateUser = ({ email, input }) => {
   })
 }
 
-export const changePassword = async ({ email, input }) => {
+export const changePassword = async ({ id, input }) => {
   const hashedPassword = await bcrypt.hash(input.newPassword, 10)
   return db.user.update({
     data: { password: hashedPassword },

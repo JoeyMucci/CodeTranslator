@@ -11,7 +11,7 @@ export const schema = gql`
   type Query {
     users: [User!]! @skipAuth
     user(id: Int!): User @skipAuth
-    userByEmail(email: String!): User @skipAuth
+    userByEmail(emmy: String!): User @skipAuth
   }
 
   input CreateUserInput {
@@ -40,9 +40,9 @@ export const schema = gql`
   type Mutation {
     createUser(input: CreateUserInput!): User! @skipAuth
     loginUser(email: String!, password: String!): AuthPayload! @skipAuth
-    updateUser(email: String!, input: UpdateUserInput!): User! @requireAuth
-    resetPassword(email: String!, password: String!, resetToken: String!): User! @skipAuth
-    changePassword(email: String!, input: ChangePasswordInput!): User! @requireAuth
-    deleteUser(email: String!): User! @requireAuth
+    updateUser(id: Int!, input: UpdateUserInput!): User! @skipAuth
+    updateUserByEmail(email: String!, input: UpdateUserInput!): User! @skipAuth
+    changePassword(id: Int!, input: ChangePasswordInput!): User! @skipAuth
+    deleteUser(id: Int!): User! @requireAuth
   }
 `

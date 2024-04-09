@@ -30,4 +30,5 @@ describe('HomePage', () => {
     // Check if the sign up button is present
     expect(screen.getByText('Sign Up')).toBeInTheDocument()
   })
+
 })

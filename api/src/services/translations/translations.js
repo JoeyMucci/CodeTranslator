@@ -1,3 +1,4 @@
+import { cache } from 'src/lib/cache'
 import { db } from 'src/lib/db'
 
 export const translations = () => {
@@ -5,7 +6,9 @@ export const translations = () => {
 }
 
 export const myTranslations = ({ emmy }) => {
-  return db.translation.findMany({ where: { userEmail: emmy } })
+  return cache(`translations`, () => {
+    return db.translation.findMany({ where: { userEmail: emmy } })
+  })
 }
 
 export const createTranslation = ({ input }) => {

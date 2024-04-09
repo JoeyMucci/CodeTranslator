@@ -1,4 +1,15 @@
-import { isCorrectLanguageOld, isCorrectLanguage } from './gpt.js'
+import { isCorrectLanguageOld, isCorrectLanguage, cleanup } from './gpt.js'
+
+describe('comment edgecase', () => {
+  it('deals with python code being translated to a comment properly', () => {
+    const result = cleanup({
+      fromLanguage: 'C',
+      code: '```C \n/* comment comment comment */\n// comment \nprint("Hello world")\n```',
+    })
+    expect(result).not.toContain('C')
+    expect(result).not.toContain('```')
+  })
+})
 
 describe('Language detection', () => {
   it('Properly handles C code', async () => {
