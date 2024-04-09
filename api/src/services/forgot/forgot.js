@@ -46,7 +46,8 @@ export const sendPasswordResetEmail = async (to, resetLink) => {
   }
 }
 
-export const requestPasswordReset = async (email) => {
+export const requestPasswordReset = async (data) => {
+  const email = data.email
   if (!email) {
     const prob = new Error('Email is Required')
     throw prob
