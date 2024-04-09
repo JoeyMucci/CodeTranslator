@@ -11,6 +11,8 @@ import { useForm } from '@redwoodjs/forms'
 import { Metadata, useMutation } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
+import isFileOkay from './isFileOkay'
+
 import 'web/src/index.css'
 
 const CREATE_RATING = gql`
@@ -90,10 +92,10 @@ const CodeTranslatorPage = () => {
   useEffect(() => {
     // Initialize highlight.js
     hljs.highlightAll()
-    if (languageDropdownRef2.current) {
-      console.log(languageDropdownRef2.current.value)
-      // Perform operations
-    }
+    // if (languageDropdownRef2.current) {
+    //   console.log(languageDropdownRef2.current.value)
+    //   // Perform operations
+    // }
   }, [])
 
   //
@@ -125,8 +127,11 @@ const CodeTranslatorPage = () => {
       try {
         const fileContent = await readFileContent(file)
         setInputText1(fileContent)
-        console.log('File content:', fileContent)
+        // console.log('File content:', fileContent)
       } catch (error) {
+        if (error.message == 'non code input')
+          toast.error('Please enter a code file')
+        else toast.error('File import failed')
         console.error('Error reading file:', error.message)
       }
     }
@@ -264,9 +269,9 @@ const CodeTranslatorPage = () => {
     // Remove the link from the document
     document.body.removeChild(link)
   }
-  //
 
   const readFileContent = (file) => {
+    if (!isFileOkay(file)) throw new Error('non code input')
     return new Promise((resolve, reject) => {
       const reader = new FileReader()
       reader.onload = (e) => {

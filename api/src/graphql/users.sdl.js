@@ -11,7 +11,7 @@ export const schema = gql`
   type Query {
     users: [User!]! @skipAuth
     user(id: Int!): User @skipAuth
-    userByEmail(email: String!): User @skipAuth
+    userByEmail(emmy: String!): User @skipAuth
   }
 
   input CreateUserInput {
