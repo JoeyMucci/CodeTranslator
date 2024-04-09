@@ -89,7 +89,7 @@ describe('sendPasswordResetEmail', () => {
     expect(result.message).toBe('Email sent successfully')
   })
   it('throws an error if email is not provided', async () => {
-    await expect(requestPasswordReset()).rejects.toThrow('Email is Required')
+    await expect(requestPasswordReset({email: ''})).rejects.toThrow('Email is Required')
   })
 })
 // Close the database connection after all tests have finished
