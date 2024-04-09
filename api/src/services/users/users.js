@@ -12,6 +12,12 @@ export const user = ({ id }) => {
   })
 }
 
+export const userByEmail = async ({ emmy }) => {
+  return db.user.findUnique({
+    where: { email: emmy },
+  })
+}
+
 export const createUser = async ({ input }) => {
   const hashedPassword = await bcrypt.hash(input.password, 10)
   const user = await db.user.create({
