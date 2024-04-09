@@ -26,7 +26,7 @@ const ForgotPasswordPage = () => {
       await requestPasswordReset({ variables: { email } })
       toast.success('Email Sent')
     } catch (error) {
-      toast.error('Failed to send Email')
+      toast.error('Failed to send Email, ensure email is linked with account')
     }
   }
 

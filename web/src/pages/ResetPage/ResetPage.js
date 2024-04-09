@@ -58,6 +58,7 @@ const ResetPasswordPage = () => {
       const user = resetPassword({ variables: { email: email, password: newPassword, resetToken: resetToken } })
       toast.success('Password Change Successful', user.email)
     } catch (error) {
+      console.log(error.message)
       toast.error('Failed change password')
     }
   }

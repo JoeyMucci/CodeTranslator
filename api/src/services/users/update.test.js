@@ -42,12 +42,12 @@ describe('Resolver Functions', () => {
 
   describe('updateUser', () => {
     it('updates user information', async () => {
-      const input = { email: 'new@new.new' }
-      await updateUser({ id: 1, input })
+      const input = { name: 'jeffrey' }
+      await updateUser({ email: 'bob@bob.bob', input })
 
       expect(db.user.update).toHaveBeenCalledWith({
-        data: { email: 'new@new.new' },
-        where: { id: 1 },
+        data: { name: 'jeffrey' },
+        where: { email: 'bob@bob.bob' },
       })
     })
   })
