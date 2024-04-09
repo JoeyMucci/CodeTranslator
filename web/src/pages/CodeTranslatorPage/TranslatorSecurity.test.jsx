@@ -13,6 +13,10 @@ describe('Accepting and rejecting files', () => {
     const mockfile = { name: 'noncode.gif' }
     return expect(isFileOkay(mockfile)).toBe(false)
   })
+  it('rejects gif file', () => {
+    const mockfile = { name: 'noncode.mp4' }
+    return expect(isFileOkay(mockfile)).toBe(false)
+  })
   it('rejects exe file', () => {
     const mockfile = { name: 'noncode.exe' }
     return expect(isFileOkay(mockfile)).toBe(false)
