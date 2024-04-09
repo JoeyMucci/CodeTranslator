@@ -12,12 +12,6 @@ export const user = ({ email }) => {
   })
 }
 
-export const userByEmail = async ({ emmy }) => {
-  return db.user.findUnique({
-    where: { email: emmy },
-  })
-}
-
 export const createUser = async ({ input }) => {
   const hashedPassword = await bcrypt.hash(input.password, 10)
   const user = await db.user.create({
@@ -37,11 +31,18 @@ export const updateUser = ({ email, input }) => {
   })
 }
 
+export const updateUserByEmail = ({ email, input }) => {
+  return db.user.update({
+    data: input,
+    where: { email },
+  })
+}
+
 export const changePassword = async ({ id, input }) => {
   const hashedPassword = await bcrypt.hash(input.newPassword, 10)
   return db.user.update({
     data: { password: hashedPassword },
-    where: { email },
+    where: { id },
   })
 }
 
