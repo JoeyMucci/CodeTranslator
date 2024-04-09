@@ -9,6 +9,6 @@ export const schema = gql`
   }
 
   type Mutation {
-    requestPasswordReset(email: String!): User! @skipAuth
+    requestPasswordReset(email: String!): User @skipAuth
   }
 `

@@ -8,20 +8,18 @@ export const schema = gql`
     resetTokenExpiresAt: DateTime
   }
 
+  input getUserfromToken {
+    token: String!
+  }
+
   input ChangePasswordInput {
     email: String!
     password: String!
   }
 
-  mutation generateResetToken($email: String!) {
-    generateResetToken(email: $email)
-  }
-
-  mutation verifyResetToken($email: String!, $token: String!) {
-    verifyResetToken(email: $email, token: $token)
-  }
-
-  mutation resetPassword($userId: String!, $password: String!) {
-    resetPassword(userId: $userId, password: $password)
+  type Mutation {
+    generateResetToken(email: String!): User! @skipAuth
+    verifyResetToken(email: String!, token: String!): User! @skipAuth
+    resetPassword(email: String!, password: String!, resetToken: String!): User! @skipAuth
   }
 `

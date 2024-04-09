@@ -5,33 +5,21 @@ import { db } from 'src/lib/db'
 import { updateUser } from '../users/users'
 
 export const generateResetToken = async (email) => {
-  const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '1h' })
-  console.log('After being generated', token)
-  const input = { resetToken: token }
-  updateUser({ email, input })
-    .then((updatedUser) => {
-      // Handle successful update
-      console.log('User updated successfully:', updatedUser)
-      return token
+  const resetToken = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '1h' })
+  const currentTime = new Date()
+  const resetTokenExpiresAt = new Date(currentTime.getTime() + 1 * 60 * 60 * 1000)
+  try {
+    const user = await updateUser({
+      email,
+      input: {
+        resetToken,
+        resetTokenExpiresAt,
+      },
     })
-    .catch((error) => {
-      // Handle erro
-      console.error('Error updating user:', error)
-    })
-}
-
-export const requestPasswordReset = async ({ email }) => {
-  const user = await db.user.findUnique({ where: { email } })
-  if (!user) {
-    throw new Error('User not found')
-  } else {
-    console.log('IN REQUEST RESET FUNCTION')
-    const resetToken = generateResetToken(email)
-    console.log('After being called RESET TOKEN', user.resetToken) // Generate reset token
-    const resetLink = `http://localhost:8910/reset-password?token=${user.resetToken}?email=${user.email}` // Generate reset link
-    await sendPasswordResetEmail(email, resetLink) // Send password reset email
-
-    return resetToken
+    return user
+  } catch (error) {
+    console.error('Error requesting password reset:', error)
+    throw new Error('Failed to request reset')
   }
 }
 
@@ -43,19 +31,32 @@ export const sendPasswordResetEmail = async (to, resetLink) => {
   var apiInstance = new SibApiV3Sdk.TransactionalEmailsApi()
   var sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail()
 
-  console.log('BEFORE SETTING UP EMAIL')
   sendSmtpEmail.subject = 'Rosetta Code Password Reset'
   sendSmtpEmail.sender = { name: 'Rosetta Code', email: 'ne4@njit.edu' }
   sendSmtpEmail.type = 'classic'
   sendSmtpEmail.htmlContent = `${resetLink}` // Assuming text is HTML content
   sendSmtpEmail.to = [{ email: `${to}` }]
+  try {
+    const data = apiInstance.sendTransacEmail(sendSmtpEmail)
+    console.log('API called successfully. Returned data: ' + data)
+    return { success: true, message: 'Email sent successfully' }
+  } catch (error) {
+    console.error('Error sending reset email:', error)
+    throw new Error('Failed to send email')
+  }
+}
 
-  apiInstance.sendTransacEmail(sendSmtpEmail).then(
-    function (data) {
-      console.log('API called successfully. Returned data: ' + data)
-    },
-    function (error) {
-      console.error(error)
-    }
-  )
+export const requestPasswordReset = async ({ email }) => {
+  const user = await db.user.findUnique({ where: { email } })
+  if (!user) {
+    const prob = new Error('User not found')
+    prob.code = 'unf'
+    throw prob
+  } else {
+    const newuser = await generateResetToken(email)
+    const resetLink = `http://localhost:8910/reset-password?token=${newuser.resetToken}&email=${newuser.email}` // Generate reset link
+    await sendPasswordResetEmail(email, resetLink)
+
+    return newuser
+  }
 }

@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { Form, Label, Submit } from '@redwoodjs/forms'
 import { useMutation } from '@redwoodjs/web'
+import { Toaster, toast } from '@redwoodjs/web/toast'
 
 const FORGOT_USER = gql`
   mutation requestPasswordReset($email: String!) {
@@ -17,11 +18,15 @@ const ForgotPasswordPage = () => {
   const [requestPasswordReset] = useMutation(FORGOT_USER)
 
   const onSubmit = async () => {
+    if (!email) {
+      setMessage('Please enter your email')
+      return
+    }
     try {
       await requestPasswordReset({ variables: { email } })
-      setMessage('Reset instructions sent to your email')
+      toast.success('Email Sent')
     } catch (error) {
-      setMessage('Failed to send reset instructions')
+      toast.error('Failed to send Email')
     }
   }
 
@@ -30,6 +35,7 @@ const ForgotPasswordPage = () => {
       className="flex flex-col rounded-xl bg-gray-100 px-20 py-12 max-md:max-w-full max-md:px-5"
       onSubmit={onSubmit}
     >
+      <Toaster />
       <Label htmlFor="emailInput" className="mt-2 text-black">
         Email:
       </Label>
