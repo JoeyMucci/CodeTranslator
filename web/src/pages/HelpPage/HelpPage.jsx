@@ -76,17 +76,20 @@ const HelpPage = () => {
     )
   }
 
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
   return (
     <>
+    <div className={`${theme === 'light' ? 'light-theme' : theme === 'dark' ? 'dark-theme' : 'snes-theme'}`} >
       <Metadata title="Help" description="Help page" />
       {/* */}
-      <div className="min-h-screen bg-primary ">
+      <div className="min-h-screen  ">
         <Header />
         <h1>FAQ</h1>
         <hr></hr>
 
         {/*FAQ CONTAINERS*/}
-        <div className="faqs">
+        <div className="faqs ">
           {faqs.map((faq, i) => (
             <FAQ faq={faq} index={i} toggleFAQ={toggleFAQ} />
           ))}
@@ -109,7 +112,7 @@ const HelpPage = () => {
               fontSize: '16px', // Adjust as needed
               lineHeight: '1.5',
             }}
-            className="basis-1/4 rounded bg-text_box text-center hover:bg-blue-200"
+            className="basis-1/4 rounded bg-button text-center"
           >
             <a href="https://www.python.org/downloads/" aria-label="Python">
               <p>Install Python</p>
@@ -132,7 +135,7 @@ const HelpPage = () => {
               fontSize: '16px', // Adjust as needed
               lineHeight: '1.5',
             }}
-            className="basis-1/4 rounded bg-text_box text-center hover:bg-blue-200"
+            className="basis-1/4 rounded bg-button text-center"
           >
             <a
               href="https://www.java.com/en/download/help/download_options.html"
@@ -158,7 +161,7 @@ const HelpPage = () => {
               fontSize: '16px', // Adjust as needed
               lineHeight: '1.5', // Adjust as needed
             }}
-            className="basis-1/4 rounded bg-text_box text-center hover:bg-blue-200"
+            className="basis-1/4 rounded bg-button text-center"
           >
             <a
               href="https://code.visualstudio.com/docs/cpp/config-mingw"
@@ -182,7 +185,7 @@ const HelpPage = () => {
               height: '205px', // Height for approximately 20 row
               fontSize: '16px', // Adjust as needed
             }}
-            className="basis-1/4 rounded bg-text_box text-center hover:bg-blue-200"
+            className="basis-1/4 rounded bg-button text-center"
           >
             <a href="https://www.w3schools.com/php/" aria-label="php">
               <p>PHP tutorial</p>
@@ -198,6 +201,7 @@ const HelpPage = () => {
         </div>
         <br></br>
         <br></br>
+      </div>
       </div>
     </>
   )

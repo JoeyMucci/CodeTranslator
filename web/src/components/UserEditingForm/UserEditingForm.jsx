@@ -1,7 +1,5 @@
 // web/src/components/UserEditingForm/UserEditingForm.jsx
-import React from 'react'
-
-// import { useForm } from '@redwoodjs/forms'
+import React, { useState, useEffect} from 'react';
 
 const UserEditingForm = ({ onSubmit, error, loading, formMethods }) => {
   const {
@@ -10,7 +8,10 @@ const UserEditingForm = ({ onSubmit, error, loading, formMethods }) => {
     formState: { errors },
   } = formMethods
 
+
+
   return (
+
     <form onSubmit={handleSubmit(onSubmit)} >
       <div className="flex flex-col space-y-2 mt-5 w-1/4 justify-center  rounded bg-text_box " style={{margin: 'auto'}}>
 
@@ -18,7 +19,7 @@ const UserEditingForm = ({ onSubmit, error, loading, formMethods }) => {
         <label htmlFor="name" style={{ marginRight: '10px' }}> Name:</label>
         <br />
         <input
-          className="rounded"
+          className="rounded text-black"
           placeholder=" jeremiah"
           data-testid="name"
           name="name"
@@ -32,7 +33,7 @@ const UserEditingForm = ({ onSubmit, error, loading, formMethods }) => {
         <label htmlFor="email" style={{ marginRight: '10px' }}>Email: </label>
         <br />
         <input
-          className="rounded"
+          className="rounded text-black"
           placeholder=" jermy123@gmail.com"
           data-testid="email"
           name="email"
@@ -56,10 +57,14 @@ const UserEditingForm = ({ onSubmit, error, loading, formMethods }) => {
       </div>
       {error && <p>{error.message}</p>} */}
       <br></br>
-      <button type="submit" disabled={loading} className="mt-5 w-1/4 justify-center  rounded bg-sky-700 text-white hover:bg-sky-800" style={{ margin: 'auto', display: 'block' }}>
+      <button type="submit" disabled={loading} className="mt-5 w-1/4 justify-center  rounded bg-button text-white " style={{ margin: 'auto', display: 'block' }}>
         {loading ? 'Loading...' : 'Save'}
       </button>
+
+
     </form>
+
+
   )
 }
 

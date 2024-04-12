@@ -162,9 +162,10 @@ const Record = ({
 
               <div className = "TOTHERIGHT flex flex-row m-1" style={{ marginLeft: 'auto' }}>
                 <button
-                  className=" DOWNLOADBUTTON basis-1/8 w-8  items-center rounded text-white hover:bg-gray-800"
+                  className=" DOWNLOADBUTTON basis-1/8 w-8  items-center rounded bg-button"
                   onClick={() => handleDownloadClick("input")}
                   aria-label="Download"
+                  style={{ width: '40px' }}
                 >
                   <img
                     src="https://img.icons8.com/material-rounded/64/FFFFFF/download--v1.png"
@@ -174,9 +175,10 @@ const Record = ({
                 </button>
                 <div style={{ width: '20px' }}></div>
                 <button
-                  className="COPYBUTTON basis-1/8 w-8 rounded text-center text-white hover:bg-gray-800"
+                  className="COPYBUTTON basis-1/8 w-8 rounded text-center bg-button"
                   onClick={() => handleCopyClick("input")}
                   aria-label="Copy"
+                  style={{ width: '40px' }}
                 >
                   {' '}
                   <img
@@ -187,7 +189,7 @@ const Record = ({
                 </button>
               </div>
             </div>
-        <div className="originalCode rounded bg-text_box p-5 hover:bg-blue-300" style={{ overflow: isTranslatedCodeExpanded ? 'auto' : 'hidden', width: '600px',  height: isOriginalCodeExpanded ? 'auto' : '150px', cursor: 'pointer'}} onClick={toggleOriginalCode}>
+        <div className="originalCode rounded bg-dropdown p-5 " style={{ overflow: isTranslatedCodeExpanded ? 'auto' : 'hidden', width: '600px',  height: isOriginalCodeExpanded ? 'auto' : '150px', cursor: 'pointer'}} onClick={toggleOriginalCode}>
 
           <pre ref={originalCodeRef} style={{ whiteSpace: 'pre-wrap', background: 'transparent', wordWrap: 'break-word' }}>
             <code>
@@ -195,7 +197,7 @@ const Record = ({
             </code>
           </pre>
         </div>
-        <p className="text-white">Created on {formatDateTime(createdAt)}</p>
+        <p >Created on {formatDateTime(createdAt)}</p>
         </div>
         <div className="flex flex-col justify-center items-center">
           <img
@@ -211,9 +213,10 @@ const Record = ({
               <h2 className="centertext">{translatedLanguage}</h2>
               <div className = "TOTHERIGHT flex flex-row m-1" style={{ marginLeft: 'auto' }}>
                 <button
-                  className=" DOWNLOADBUTTON basis-1/8 w-8  items-center rounded text-white hover:bg-gray-800"
+                  className=" DOWNLOADBUTTON basis-1/8 w-8  items-center rounded bg-button"
                   onClick={() => handleDownloadClick("output")}
                   aria-label="Download"
+                  style={{ width: '40px' }}
                 >
                   <img
                     src="https://img.icons8.com/material-rounded/64/FFFFFF/download--v1.png"
@@ -223,9 +226,10 @@ const Record = ({
                 </button>
                 <div style={{ width: '20px' }}></div>
                 <button
-                  className="COPYBUTTON basis-1/8 w-8 rounded text-center text-white hover:bg-gray-800"
+                  className="COPYBUTTON basis-1/8 w-8 rounded text-center bg-button"
                   onClick={() => handleCopyClick("output")}
                   aria-label="Copy"
+                  style={{ width: '40px' }}
                 >
                   {' '}
                   <img
@@ -236,7 +240,7 @@ const Record = ({
                 </button>
               </div>
             </div>
-        <div className="translatedCode rounded bg-text_box p-5 hover:bg-blue-300" style={{ overflow: isTranslatedCodeExpanded ? 'auto' : 'hidden',  width: '600px',  height: isOriginalCodeExpanded ? 'auto' : '150px', cursor: 'pointer'}} onClick={toggleTranslatedCode}>
+        <div className="translatedCode rounded bg-dropdown p-5 " style={{ overflow: isTranslatedCodeExpanded ? 'auto' : 'hidden',  width: '600px',  height: isOriginalCodeExpanded ? 'auto' : '150px', cursor: 'pointer'}} onClick={toggleTranslatedCode}>
 
           <pre ref={translatedCodeRef} style={{ whiteSpace: 'pre-wrap', background: 'transparent', wordWrap: 'break-word' }}>
             <code>

@@ -19,14 +19,14 @@ const FeedbackForm = ({ onSubmit, error, loading, formMethods }) => {
         formMethods={formMethods}
       >
         <FormError error={error} wrapperClassName="form-error" />
-        <h1 className="text">Feedback Form</h1>
+        <h1>Feedback Form</h1>
         <div className="form-header">
           <div className="form-group">
-            <Label name="subject" className="text">
+            <Label name="subject">
               Subject:
             </Label>
             <TextField
-              className="box"
+              className="box bg-text_box"
               name="subject"
               placeholder="History Page"
               validation={{ required: true }}
@@ -36,11 +36,11 @@ const FeedbackForm = ({ onSubmit, error, loading, formMethods }) => {
           </div>
 
           <div className="form-group">
-            <Label name="b_email" className="text">
+            <Label name="b_email">
               SpareEmail:
             </Label>
             <TextField
-              className="box"
+              className="box bg-text_box"
               name="b_email"
               placeholder="john.smith@gmail.com"
               validation={{
@@ -58,7 +58,7 @@ const FeedbackForm = ({ onSubmit, error, loading, formMethods }) => {
         <br></br>
         <div className="reg-flex">
           <TextAreaField
-            className="box"
+            className="box bg-text_box"
             name="message"
             placeholder="Please submit any issue or feedback here. We like to gain information on how we can improve our product"
             rows="20"
@@ -69,7 +69,7 @@ const FeedbackForm = ({ onSubmit, error, loading, formMethods }) => {
           <FieldError name="message" className="error" />
         </div>
         <br></br>
-        <Submit className="submitbox" disabled={loading}>
+        <Submit className="submitbox bg-button" disabled={loading}>
           Submit
         </Submit>
       </Form>

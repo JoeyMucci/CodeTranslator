@@ -137,6 +137,10 @@ const CodeTranslatorPage = () => {
     }
   }
 
+  /*theme handler */
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+  /* */
+
   const handleTranslateSubmission = () => {
     translateCode()
   }
@@ -331,9 +335,12 @@ const CodeTranslatorPage = () => {
   // }
   // }
 
+
+
   return (
     <>
-      <div className="min-h-screen bg-primary">
+    <div className={`${theme === 'light' ? 'light-theme' : theme === 'dark' ? 'dark-theme' : 'snes-theme'}`} style={{height: '100vh'}}>
+      <div className="min-h-screen ">
         <Metadata title="CodeTranslator" description="CodeTranslator page" />
         <div className="flex w-full justify-center ">
           <img
@@ -347,7 +354,7 @@ const CodeTranslatorPage = () => {
           {/* Input Box */}
 
           <div className="flex basis-1/4 flex-col ">
-            <label htmlFor="language" className="text-white">
+            <label htmlFor="language" >
               Choose a coding language:
             </label>
             <div className="flex flex-row justify-between">
@@ -355,7 +362,7 @@ const CodeTranslatorPage = () => {
                 ref={languageDropdownRef1}
                 name="language"
                 id="language"
-                className="mt-1 h-7 w-20 basis-3/4 rounded bg-text_box text-center hover:bg-blue-200 "
+                className="mt-1 h-7 w-20 basis-3/4 rounded bg-dropdown text-center  "
               >
                 <option value="C">C</option>
                 <option value="C++">C++</option>
@@ -376,7 +383,7 @@ const CodeTranslatorPage = () => {
               />
 
               <button
-                className=" basis-1/8 w-8 rounded text-white hover:bg-gray-800 "
+                className=" basis-1/8 w-8 rounded bg-button"
                 aria-label="add file"
                 onClick={handleButtonClick}
               >
@@ -401,7 +408,7 @@ const CodeTranslatorPage = () => {
             />
 
             <button
-              className="mt-5 w-1/2 justify-center  rounded bg-sky-700 text-white hover:bg-sky-800 "
+              className="mt-5 w-1/2 justify-center  rounded bg-button text-white  "
               onClick={handleTranslateSubmission}
               aria-label="Translate"
             >
@@ -411,7 +418,7 @@ const CodeTranslatorPage = () => {
 
           {/* Output Box */}
           <div className="flex basis-1/4 flex-col ">
-            <label htmlFor="language" className="text-white">
+            <label htmlFor="language" >
               Choose a coding language to translate to:
             </label>
             <div className="flex flex-row justify-between">
@@ -419,7 +426,7 @@ const CodeTranslatorPage = () => {
                 ref={languageDropdownRef2}
                 name="language"
                 id="language"
-                className="mt-1 h-7 w-20 basis-3/4 rounded bg-text_box text-center hover:bg-blue-200 "
+                className="mt-1 h-7 w-20 basis-3/4 rounded bg-dropdown text-center "
               >
                 <option value="C">C</option>
                 <option value="C++">C++</option>
@@ -433,7 +440,7 @@ const CodeTranslatorPage = () => {
               </select>
 
               <button
-                className=" basis-1/8 w-8 rounded text-center text-white hover:bg-gray-800"
+                className=" basis-1/8 w-8 rounded text-center bg-button"
                 onClick={handleCopyClick}
                 aria-label="Copy"
               >
@@ -445,14 +452,16 @@ const CodeTranslatorPage = () => {
                 />
               </button>
               <button
-                className=" basis-1/8 w-8  items-center rounded text-white hover:bg-gray-800"
+                className=" basis-1/8 w-8  items-center justify-center rounded  bg-button"
                 onClick={handleDownloadClick}
                 aria-label="Download"
+
               >
                 <img
                   src="https://img.icons8.com/material-rounded/64/FFFFFF/download--v1.png"
                   alt="copy"
                   border="0"
+
                 />
               </button>
             </div>
@@ -488,6 +497,7 @@ const CodeTranslatorPage = () => {
             </div>
             <Toaster />
             <Rater
+              className={`${theme === 'light' ? 'light-theme' : theme === 'dark' ? 'dark-theme' : 'snes-theme'}`}
               onSubmit={onSubmit}
               error={error}
               loading={loading}
@@ -495,6 +505,7 @@ const CodeTranslatorPage = () => {
             />
           </div>
         </div>
+      </div>
       </div>
     </>
   )

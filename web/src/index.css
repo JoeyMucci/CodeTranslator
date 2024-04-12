@@ -5,11 +5,143 @@
 @tailwind components;
 @tailwind utilities;
 
+/*POTENTIAL THEMING*/
+
+
+
+.light-theme {
+  background-color: #0D1F2D;
+  color: #e8e8e8;
+}
+
+.dark-theme {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.snes-theme {
+  background: #bfbec2;
+  color: #4b5563;
+}
+
+.snes-theme ::placeholder {
+  color: #6e7d91;
+}
+
+
+
+.light-theme html {
+  background-color: #8BA7BC;
+}
+
+.light-theme .bg-text_box {
+  background-color: #8BA7BC; /* Light theme background color */
+  color: #212020;
+}
+
+.light-theme .bg-button {
+  background-color: #0369a1; /* Light theme background color */
+}
+
+.light-theme .bg-button text {
+  color: white; /* Light theme background color */
+}
+
+.light-theme .bg-button:hover {
+  background-color: #065eab; /* Light theme button background color on hover */
+}
+
+.light-theme .navbar {
+  background-color: #333; /* Light theme navbar background color */
+}
+
+.light-theme html {
+  background-color: #333;
+}
+
+.light-theme ::placeholder {
+  color: #4a4848; /* Dark theme placeholder text color */
+}
+
+.light-theme .bg-dropdown {
+  background-color: #8BA7BC; /* Dark theme background color */
+  color: #212020;
+}
+.light-theme .bg-dropdown:hover {
+  background-color: #afd3ed; /* Dark theme background color */
+}
+
+
+.dark-theme .bg-text_box {
+  background-color: #3c3c3c; /* Dark theme background color */
+}
+
+.dark-theme .bg-dropdown {
+  background-color: #3c3c3c; /* Dark theme background color */
+}
+.dark-theme .bg-dropdown:hover {
+  background-color: #616161; /* Dark theme background color */
+}
+
+.dark-theme .bg-button {
+  background-color: #b7976a; /* Dark theme background color */
+}
+
+.dark-theme .bg-button:hover {
+  background-color: #e8c28e; /* Dark theme button background color on hover */
+}
+
+.dark-theme .navbar {
+  background-color: #222; /* Dark theme navbar background color */
+}
+
+
+
+
+.snes-theme .bg-text_box {
+  background-color: #b5b0c2; /* Colorful theme background color */
+}
+
+.snes-theme .bg-button {
+  background-color: #553d94; /* Colorful theme background color */
+  color: #bfbec2;
+}
+
+.snes-theme .bg-button:hover {
+  background-color: #251b42; /* Colorful theme button background color on hover */
+}
+
+.snes-theme .navbar {
+  background-color: #444; /* Colorful theme navbar background color */
+}
+
+.snes-theme .bg-dropdown {
+  background-color: #b5b0c2; /* Dark theme background color */
+  color: #212020;
+}
+.snes-theme .bg-dropdown:hover {
+  background-color: #cbc5db; /* Dark theme background color */
+}
+
+
+
+
+.dark-theme ::placeholder {
+  color: #6e6d6d; /* Dark theme placeholder text color */
+}
+
+
+/*******************/
+
+
 .custom-syntax-highlighter .react-syntax-highlighter {
   background-color: transparent !important; /* Remove background */
   box-shadow: none !important; /* Remove shadow if any */
   border: none !important; /* Remove border */
 }
+
+
+
 
 .navbar {
   overflow: hidden;
@@ -103,18 +235,18 @@
 }
 .text {
   font-family: "Lucida Console", "Courier New", monospace;
-  color: white;
+
   font-size: 32px;
 }
 .centertext {
   font-family: "Lucida Console", "Courier New", monospace;
-  color: white;
+
   font-size: 32px;
   text-align: center
 }
 .smalltext {
   font-family: "Lucida Console", "Courier New", monospace;
-  color: white;
+
   font-size: 16px;
 }
 .box {
@@ -181,7 +313,7 @@ header {
 }
 
 header h1 {
-  color: #EEE;
+
   font-size: 48px;
   font-weight: 700;
   text-transform: uppercase;
@@ -189,7 +321,7 @@ header h1 {
 }
 
 h1 {
-  color: #EEE;
+
   font-size: 48px;
   font-weight: 700;
   text-transform: uppercase;
@@ -215,7 +347,6 @@ hr {
 .faqs .faq {
   margin: 15px;
   padding: 15px;
-  background-color: #8BA7BC ;
   border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
 }

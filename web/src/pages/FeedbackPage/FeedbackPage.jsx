@@ -1,5 +1,5 @@
 import FeedbackForm from 'web/src/components/FeedbackForm/FeedbackForm.jsx'
-
+import React, {useState, useEffect} from 'react';
 import { useForm } from '@redwoodjs/forms'
 import { MetaTags, useMutation } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
@@ -42,8 +42,12 @@ const ContactPage = () => {
       console.error(error)
     }
   }
+
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
   return (
     <>
+    <div className={`${theme === 'light' ? 'light-theme' : theme === 'dark' ? 'dark-theme' : 'snes-theme'}`} style={{height: '100vh'}}>
       <MetaTags title="Contact" description="Contact page" />
       <Toaster />
       <FeedbackForm
@@ -52,6 +56,7 @@ const ContactPage = () => {
         loading={loading}
         formMethods={formMethods}
       />
+      </div>
     </>
   )
 }
