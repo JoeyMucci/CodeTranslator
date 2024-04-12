@@ -5,6 +5,10 @@
 @tailwind components;
 @tailwind utilities;
 
+meter::-webkit-meter-optimum-value {
+  background: gold;
+}
+
 .custom-syntax-highlighter .react-syntax-highlighter {
   background-color: transparent !important; /* Remove background */
   box-shadow: none !important; /* Remove shadow if any */

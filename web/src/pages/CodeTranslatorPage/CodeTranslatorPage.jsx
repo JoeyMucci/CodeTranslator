@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/default.css'
 import Rater from 'web/src/components/Rater/Rater.jsx'
+import StarDataCell from 'web/src/components/StarDataCell/StarDataCell.jsx'
 
 //import { Link, routes } from '@redwoodjs/router'
 import { useForm } from '@redwoodjs/forms'
@@ -487,12 +488,15 @@ const CodeTranslatorPage = () => {
               </pre>
             </div>
             <Toaster />
-            <Rater
-              onSubmit={onSubmit}
-              error={error}
-              loading={loading}
-              formMethods={formMethods}
-            />
+            <div className="flex flex-row space-x-5">
+              <Rater
+                onSubmit={onSubmit}
+                error={error}
+                loading={loading}
+                formMethods={formMethods}
+              />
+              <StarDataCell />
+            </div>
           </div>
         </div>
       </div>

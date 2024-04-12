@@ -16,6 +16,17 @@ export const createRating = ({ input }) => {
   })
 }
 
+// Fetches avg and count, empty yields {avg: null, count: 0}
+export const getAverageRating = async () => {
+  const count = await db.rating.count()
+  const aggregations = await db.rating.aggregate({
+    _avg: {
+      score: true,
+    },
+  })
+  return { avg: aggregations._avg.score, count: count }
+}
+
 // export const updateRating = ({ id, input }) => {
 //   return db.rating.update({
 //     data: input,

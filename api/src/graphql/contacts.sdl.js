@@ -1,20 +1,30 @@
 export const schema = gql`
   type Contact {
     id: Int!
-    email: String!
+    userEmail: String!
     subject: String!
     backupEmail: String
     message: String!
     createdAt: DateTime!
   }
 
+  type ContactDisplay {
+    id: Int!
+    subject: String!
+    message: String!
+    name: String
+    createdAt: DateTime!
+    user: User
+  }
+
   type Query {
     contacts: [Contact!]! @skipAuth
+    someContacts: [ContactDisplay!]! @skipAuth
     contact(id: Int!): Contact @skipAuth
   }
 
   input CreateContactInput {
-    email: String!
+    userEmail: String!
     subject: String!
     backupEmail: String
     message: String!
@@ -22,7 +32,7 @@ export const schema = gql`
 
   input UpdateContactInput {
     name: String
-    email: String
+    userEmail: String
     message: String
   }
 

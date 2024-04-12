@@ -5,9 +5,15 @@ export const schema = gql`
     createdAt: DateTime!
   }
 
+  type AverageData {
+    avg: Float
+    count: Int!
+  }
+
   type Query {
     ratings: [Rating!]! @skipAuth
     rating(id: Int!): Rating @skipAuth
+    getAverageRating: AverageData @skipAuth
   }
 
   input CreateRatingInput {
