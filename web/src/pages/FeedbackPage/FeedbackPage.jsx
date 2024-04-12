@@ -47,7 +47,7 @@ const ContactPage = () => {
 
   return (
     <>
-    <div className={`${theme === 'light' ? 'light-theme' : theme === 'dark' ? 'dark-theme' : 'snes-theme'}`} style={{height: '100vh'}}>
+    <div className={`  ${theme === 'light' ? 'light-theme' : theme === 'dark' ? 'dark-theme' : theme === 'snes' ? 'snes-theme' : theme === 'our' ? 'our-theme' : theme === 'terminal' ? 'terminal-theme' : theme === 'dmg' ? 'dmg-theme' : theme === 'nautilus' ? 'nautilus-theme' : theme === 'copper' ? 'copper-theme' : 'beach-theme'}`} style={{height: '100vh'}}>
       <MetaTags title="Contact" description="Contact page" />
       <Toaster />
       <FeedbackForm

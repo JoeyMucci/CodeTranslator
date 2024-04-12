@@ -24,12 +24,39 @@
   color: #4b5563;
 }
 
-.snes-theme ::placeholder {
-  color: #6e7d91;
+.our-theme {
+  background: #ce1226;
+  color: white;
+}
+
+.terminal-theme {
+  background-color: #191a1b;
+  color: white;
+}
+
+.dmg-theme {
+  background-color: #dadbdc;
+  color: #3846b1;
+}
+
+.nautilus-theme{
+  background-color: #132237;
+  color: #1cbaac;
+}
+
+.copper-theme{
+  background-color: #442f29;
+  color: #7ebab5;
+}
+
+.beach-theme {
+  background-color: #ffeead;
+  color: #7b9077;
 }
 
 
 
+/*LIGHT(DEFAULT) THEME*/
 .light-theme html {
   background-color: #8BA7BC;
 }
@@ -71,65 +98,402 @@
   background-color: #afd3ed; /* Dark theme background color */
 }
 
-
+/*DARK(SPADE) THEME*/
 .dark-theme .bg-text_box {
-  background-color: #3c3c3c; /* Dark theme background color */
+  background-color: #3c3c3c;
 }
 
 .dark-theme .bg-dropdown {
-  background-color: #3c3c3c; /* Dark theme background color */
+  background-color: #3c3c3c;
 }
 .dark-theme .bg-dropdown:hover {
-  background-color: #616161; /* Dark theme background color */
+  background-color: #616161;
 }
 
 .dark-theme .bg-button {
-  background-color: #b7976a; /* Dark theme background color */
+  background-color: #b7976a;
 }
 
 .dark-theme .bg-button:hover {
-  background-color: #e8c28e; /* Dark theme button background color on hover */
+  background-color: #e8c28e;
 }
 
 .dark-theme .navbar {
-  background-color: #222; /* Dark theme navbar background color */
+  background-color: #222;
 }
 
 
 
-
+/*SNES THEME*/
 .snes-theme .bg-text_box {
-  background-color: #b5b0c2; /* Colorful theme background color */
+  background-color: #b5b0c2;
 }
 
 .snes-theme .bg-button {
-  background-color: #553d94; /* Colorful theme background color */
+  background-color: #553d94;
   color: #bfbec2;
 }
 
 .snes-theme .bg-button:hover {
-  background-color: #251b42; /* Colorful theme button background color on hover */
+  background-color: #251b42;
 }
 
 .snes-theme .navbar {
-  background-color: #444; /* Colorful theme navbar background color */
+  background-color: #444;
 }
 
 .snes-theme .bg-dropdown {
-  background-color: #b5b0c2; /* Dark theme background color */
+  background-color: #b5b0c2;
   color: #212020;
 }
 .snes-theme .bg-dropdown:hover {
-  background-color: #cbc5db; /* Dark theme background color */
+  background-color: #cbc5db;
 }
 
+.snes-theme ::placeholder {
+  color: #6e7d91;
+}
+
+
+/*OUR THEME*/
+.our-theme .bg-text_box {
+  background-color: #9f1020;
+}
+
+.our-theme .bg-button {
+  background-color: #fcd116;
+  color: #ce1226;
+}
+
+.our-theme .bg-button:hover {
+  background-color: #ffffff
+}
+
+.our-theme .navbar {
+  background-color: #444;
+}
+
+.our-theme .bg-dropdown {
+  background-color: #9f1020;
+  color: #ffffff
+}
+.our-theme .bg-dropdown:hover {
+  background-color: #c41427;
+}
+
+.our-theme ::placeholder {
+  color: #9e9b9b;
+}
+
+
+/*terminal THEME*/
+.terminal-theme .bg-text_box {
+  background-color: #141516;
+}
+
+.terminal-theme .bg-button {
+  background-color: #79a617;
+  color: #191a1b;
+}
+
+.terminal-theme .bg-button:hover {
+  background-color: #e7eae0
+}
+
+.terminal-theme .navbar {
+  background-color: #444;
+}
+
+.terminal-theme .bg-dropdown {
+  background-color: #141516;
+  color: #ffffff
+}
+.terminal-theme .bg-dropdown:hover {
+  background-color: #48494b;
+}
+
+.terminal-theme ::placeholder {
+  color: #a5a7a1;
+}
+
+
+/*dmg THEME*/
+.dmg-theme .bg-text_box {
+  background-color: #bec1d2;
+  color: #414141;
+}
+
+.dmg-theme .bg-button {
+  background-color: #ae185e;
+  color: #d3bbc6;
+}
+
+.dmg-theme .bg-button:hover {
+  background-color: #414141
+}
+
+.dmg-theme .navbar {
+  background-color: #444;
+}
+
+.dmg-theme .bg-dropdown {
+  background-color: #bec1d2;
+  color: #414141;
+}
+.dmg-theme .bg-dropdown:hover {
+  background-color:#d5d9eb;
+
+}
+
+.dmg-theme ::placeholder {
+  color: #a5a7a1;
+}
+
+
+/*nautilus THEME*/
+.nautilus-theme .bg-text_box {
+  background-color: #0e1a29;
+  color: #1ab3a5;
+}
+
+.nautilus-theme .bg-button {
+  background-color: #ebb723;
+  color: #132237;
+}
+
+.nautilus-theme .bg-button:hover {
+  background-color: #1ab3a5;
+}
+
+.nautilus-theme .navbar {
+  background-color: #444;
+}
+
+.nautilus-theme .bg-dropdown {
+  background-color: #0e1a29;
+  color: #1ab3a5;
+}
+.nautilus-theme .bg-dropdown:hover {
+  background-color: #1ab3a5;
+  color: #132237;
+}
+
+.nautilus-theme ::placeholder {
+  color: #a5a7a1;
+}
+
+
+/*beach THEME*/
+.beach-theme .bg-text_box {
+  background-color: #f7dc8f;
+  color: #7a8c71;
+}
+
+.beach-theme .bg-button {
+  background-color: #96ceb4;
+  color:#ffeead;
+}
+
+.beach-theme .bg-button:hover {
+  background-color: #7a8c71;
+}
+
+.beach-theme .navbar {
+  background-color: #444;
+}
+
+.beach-theme .bg-dropdown {
+  background-color: #f7dc8f;
+  color: #7a8c71;
+}
+.beach-theme .bg-dropdown:hover {
+  background-color:  #96ceb4;
+  color: #7b9077;
+}
+
+.beach-theme ::placeholder {
+  color: #a5a7a1;
+}
+
+
+/*copper THEME*/
+.copper-theme .bg-text_box {
+  background-color: #50362e;
+  color: #e7e0de;
+}
+
+.copper-theme .bg-button {
+  background-color: #b46a55;
+  color: #442f29;
+}
+
+.copper-theme .bg-button:hover {
+  background-color: #e7e0de;
+}
+
+.copper-theme .navbar {
+  background-color: #444;
+}
+
+.copper-theme .bg-dropdown {
+  background-color: #50362e;
+  color: #e7e0de;
+}
+.copper-theme .bg-dropdown:hover {
+  background-color:  #e7e0de;
+  color: #442f29;
+}
+
+.copper-theme ::placeholder {
+  color: #a5a7a1;
+}
 
 
 
 .dark-theme ::placeholder {
-  color: #6e6d6d; /* Dark theme placeholder text color */
+  color: #6e6d6d;
 }
 
+
+/*POTENTIAL BUTTON HOVERS*/
+
+.button-outline {
+  outline: 2px solid #021163;
+}
+
+.button-container {
+  position: relative;
+  display: inline-block;
+}
+
+.theme-button {
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  position: relative;
+}
+
+/* FOR SPHERES */
+.theme-button::before,
+.theme-button::after,
+.theme-button::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  bottom: 15px; /* Pos in the button */
+}
+
+/* Specific styles for dif themes */
+
+.light-theme:hover::before {
+  left: 50%;
+  transform: translateX(-450%);
+  background-color: #8ba7bc;
+}
+
+.light-theme:hover::after {
+  left: 50%;
+  transform: translateX(350%);
+  background-color: #ffffff;
+}
+/***/
+.dark-theme:hover::before {
+  left: 50%;
+  transform: translateX(-450%);
+  background-color: #b7976a;
+}
+
+.dark-theme:hover::after {
+  left: 50%;
+  transform: translateX(350%);
+  background-color: #ffffff;
+}
+/***/
+.snes-theme:hover::before {
+  left: 50%;
+  transform: translateX(-450%);
+  background-color: #b5b0c2;
+}
+
+.snes-theme:hover::after {
+  left: 50%;
+  transform: translateX(350%);
+  background-color: #4b5563;
+}
+/***/
+.terminal-theme:hover::before {
+  left: 50%;
+  transform: translateX(-450%);
+  background-color: #79a617;
+}
+
+.terminal-theme:hover::after {
+  left: 50%;
+  transform: translateX(350%);
+  background-color: #ffffff;
+}
+/***/
+.our-theme:hover::before {
+  left: 50%;
+  transform: translateX(-450%);
+  background-color: #9f1020;
+}
+
+.our-theme:hover::after {
+  left: 50%;
+  transform: translateX(350%);
+  background-color: #ffffff;
+}
+/***/
+.dmg-theme:hover::before {
+  left: 50%;
+  transform: translateX(-450%);
+  background-color: #bec1d2;
+}
+
+.dmg-theme:hover::after {
+  left: 50%;
+  transform: translateX(350%);
+  background-color: #3846b1;
+}
+/***/
+.nautilus-theme:hover::before {
+  left: 50%;
+  transform: translateX(-450%);
+  background-color: #0e1a29;
+}
+
+.nautilus-theme:hover::after {
+  left: 50%;
+  transform: translateX(350%);
+  background-color: #1cbaac;
+}
+/***/
+.copper-theme:hover::before {
+  left: 50%;
+  transform: translateX(-450%);
+  background-color: #50362e;
+}
+
+.copper-theme:hover::after {
+  left: 50%;
+  transform: translateX(350%);
+  background-color: #7ebab5;
+}
+/***/
+.beach-theme:hover::before {
+  left: 50%;
+  transform: translateX(-450%);
+  background-color: #f7dc8f;
+}
+
+.beach-theme:hover::after {
+  left: 50%;
+  transform: translateX(350%);
+  background-color: #83b5bc;
+}
 
 /*******************/
 

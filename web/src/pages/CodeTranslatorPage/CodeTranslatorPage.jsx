@@ -339,7 +339,7 @@ const CodeTranslatorPage = () => {
 
   return (
     <>
-    <div className={`${theme === 'light' ? 'light-theme' : theme === 'dark' ? 'dark-theme' : 'snes-theme'}`} style={{height: '100vh'}}>
+    <div className={`  ${theme === 'light' ? 'light-theme' : theme === 'dark' ? 'dark-theme' : theme === 'snes' ? 'snes-theme' : theme === 'our' ? 'our-theme' : theme === 'terminal' ? 'terminal-theme' : theme === 'dmg' ? 'dmg-theme' : theme === 'nautilus' ? 'nautilus-theme' : theme === 'copper' ? 'copper-theme' : 'beach-theme'}`}>
       <div className="min-h-screen ">
         <Metadata title="CodeTranslator" description="CodeTranslator page" />
         <div className="flex w-full justify-center ">
@@ -497,7 +497,7 @@ const CodeTranslatorPage = () => {
             </div>
             <Toaster />
             <Rater
-              className={`${theme === 'light' ? 'light-theme' : theme === 'dark' ? 'dark-theme' : 'snes-theme'}`}
+              className={`  ${theme === 'light' ? 'light-theme' : theme === 'dark' ? 'dark-theme' : theme === 'snes' ? 'snes-theme' : theme === 'our' ? 'our-theme' : theme === 'terminal' ? 'terminal-theme' : theme === 'dmg' ? 'dmg-theme' : theme === 'nautilus' ? 'nautilus-theme' : theme === 'copper' ? 'copper-theme' : 'beach-theme'}`}
               onSubmit={onSubmit}
               error={error}
               loading={loading}
