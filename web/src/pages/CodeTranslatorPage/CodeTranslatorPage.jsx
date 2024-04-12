@@ -338,7 +338,7 @@ const CodeTranslatorPage = () => {
         <Metadata title="CodeTranslator" description="CodeTranslator page" />
         <div className="flex w-full justify-center ">
           <img
-            src="images/Rosetta_Code.png"
+            src="public/Rosetta_Code.png"
             alt="rosetta code"
             className="mt-20"
           />
