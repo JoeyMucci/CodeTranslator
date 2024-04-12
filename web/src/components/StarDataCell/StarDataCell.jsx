@@ -21,7 +21,6 @@ export const Success = ({ starData }) => {
   const val = starData.count > 0 ? Math.round(starData.avg * 100) / 100 : 0
   const message =
     starData.count > 0 ? val + '(' + starData.count + ')' : '0 ratings'
-  if (message == '3.33(3)') console.log('bruh')
   return (
     <div className="inline">
       <p className="smalltext">Summary</p>

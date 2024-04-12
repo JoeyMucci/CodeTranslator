@@ -24,6 +24,9 @@ else
   message = (
     <>
       Your current email is <strong>{localStorage.getItem('userEmail')}</strong>
+      <br></br>
+      If you select a name it will be visible to other users on the feedback
+      page
     </>
   )
 const UserEditingPage = () => {

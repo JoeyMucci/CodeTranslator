@@ -1,4 +1,5 @@
 import FeedbackForm from 'web/src/components/FeedbackForm/FeedbackForm.jsx'
+import FeedbacksCell from 'web/src/components/FeedbacksCell/FeedbacksCell.jsx'
 
 import { useForm } from '@redwoodjs/forms'
 import { MetaTags, useMutation } from '@redwoodjs/web'
@@ -24,7 +25,7 @@ const ContactPage = () => {
 
   const onSubmit = async (partialdata) => {
     const fulldata = {
-      email: localStorage.getItem('userEmail'),
+      userEmail: localStorage.getItem('userEmail'),
       subject: partialdata.subject,
       backupEmail: partialdata.b_email,
       message: partialdata.message,
@@ -52,6 +53,7 @@ const ContactPage = () => {
         loading={loading}
         formMethods={formMethods}
       />
+      <FeedbacksCell></FeedbacksCell>
     </>
   )
 }

@@ -525,8 +525,8 @@ const toolong = `aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
 describe('Actual translation', () => {
   it('consistent translation of simple code', async () => {
-    const newcode = await runTranslation({ fromLanguage: 'Python', toLanguage: 'C', code: 'print("hello world")' }) // Translate code
-    const oldcode = await runTranslation({ fromLanguage: 'C', toLanguage: 'Python', code: newcode }) // Reverse translation
+    const newcode = await runTranslation({ fromLanguage: 'Python', toLanguage: 'Java', code: 'print("hello world")' }) // Translate code
+    const oldcode = await runTranslation({ fromLanguage: 'Java', toLanguage: 'Python', code: newcode }) // Reverse translation
     expect(oldcode).toContain('print("hello world")') // Check that the retranslated code contains starting code
   }, 100000)
 
