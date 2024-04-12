@@ -47,5 +47,5 @@
     "../.redwood/types/includes/web-*",
     "../types",
     "./types"
-  ]
+, "src/public"  ]
 }

@@ -117,7 +117,7 @@ const HelpPage = () => {
 
               <img
                 className="justify-center"
-                src="images/Python_logo_51.svg.png"
+                src="public/Python_logo_51.svg.png"
                 alt="Python"
                 style={{ width: '150px', margin: 'auto' }}
               />
@@ -142,7 +142,7 @@ const HelpPage = () => {
               <br />
               <img
                 className="justify-center"
-                src="images/Java-Logo 1.png"
+                src="public/Java-Logo 1.png"
                 alt="Java"
                 style={{ width: '150px', margin: 'auto' }}
               />
@@ -168,7 +168,7 @@ const HelpPage = () => {
               <br></br>
               <img
                 className="justify-center"
-                src="images/C_Logo.png"
+                src="public/C_Logo.png"
                 alt="C"
                 style={{ width: '120px', margin: 'auto' }}
               />
@@ -189,7 +189,7 @@ const HelpPage = () => {
               <br></br>
               <img
                 className="justify-center"
-                src="images/PHP-logo.svg.png"
+                src="public/PHP-logo.svg.png"
                 alt="PHP"
                 style={{ width: '230px', margin: 'auto' }}
               />
