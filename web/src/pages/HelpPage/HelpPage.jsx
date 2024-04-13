@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
 
+import c from 'web/public/C_Logo.png'
+import jv from 'web/public/Java-Logo 1.png'
+import ph from 'web/public/PHP-logo.svg.png'
+import py from 'web/public/Python_logo_51.svg.png'
 import FAQ from 'web/src/components/FAQ.jsx'
 import Header from 'web/src/components/Header.jsx'
 
@@ -117,7 +121,7 @@ const HelpPage = () => {
 
               <img
                 className="justify-center"
-                src="public/Python_logo_51.svg.png"
+                src={py}
                 alt="Python"
                 style={{ width: '150px', margin: 'auto' }}
               />
@@ -142,7 +146,7 @@ const HelpPage = () => {
               <br />
               <img
                 className="justify-center"
-                src="public/Java-Logo 1.png"
+                src={jv}
                 alt="Java"
                 style={{ width: '150px', margin: 'auto' }}
               />
@@ -168,7 +172,7 @@ const HelpPage = () => {
               <br></br>
               <img
                 className="justify-center"
-                src="public/C_Logo.png"
+                src={c}
                 alt="C"
                 style={{ width: '120px', margin: 'auto' }}
               />
@@ -189,7 +193,7 @@ const HelpPage = () => {
               <br></br>
               <img
                 className="justify-center"
-                src="public/PHP-logo.svg.png"
+                src={ph}
                 alt="PHP"
                 style={{ width: '230px', margin: 'auto' }}
               />
