@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 //import { runTranslation } from 'api/src/services/gpt/gpt.js'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/default.css'
+import rc from 'web/public/Rosetta_Code.png'
 import Rater from 'web/src/components/Rater/Rater.jsx'
 import StarDataCell from 'web/src/components/StarDataCell/StarDataCell.jsx'
 
@@ -337,11 +338,7 @@ const CodeTranslatorPage = () => {
       <div className="min-h-screen bg-primary">
         <Metadata title="CodeTranslator" description="CodeTranslator page" />
         <div className="flex w-full justify-center ">
-          <img
-            src="public/Rosetta_Code.png"
-            alt="rosetta code"
-            className="mt-20"
-          />
+          <img src={rc} alt="rosetta code" className="mt-20" />
         </div>
 
         <div className="flex flex-row justify-center space-x-20 pt-10">
