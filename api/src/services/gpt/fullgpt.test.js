@@ -569,7 +569,7 @@ describe('Actual Optimization', () => {
     }).rejects.toThrow('Wrong language')
   }, 100000)
   it('throws error when given nonsense', async () => {
-    const nonsense = 'El rápido zorro marrón salta sobre el perro perezoso.'
+    const nonsense = 'Apple Banana Cucumber Daisy Elephant.'
     return expect(async () => {
       await runTranslation({ fromLanguage: 'SQL', toLanguage: 'SQL', code: nonsense })
     }).rejects.toThrow('Invalid input')

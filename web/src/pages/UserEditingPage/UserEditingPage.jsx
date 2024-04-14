@@ -4,6 +4,7 @@
 import UserEditingForm from 'web/src/components/UserEditingForm/UserEditingForm.jsx'
 
 import { useForm } from '@redwoodjs/forms'
+import { navigate } from '@redwoodjs/router'
 import { MetaTags, useMutation } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
@@ -17,16 +18,29 @@ export const UPDATE_USER = gql`
   }
 `
 
+export const DELETE_USER = gql`
+  mutation DeleteUserMutation($email: String!) {
+    deleteUserByEmail(email: $email) {
+      email
+    }
+  }
+`
+
 let message = ''
 if (localStorage.getItem('userName') == 'null')
-  message = 'You do not have a preferred name yet'
+  message = (
+    <>
+      You do not have a preferred name yet
+      <br></br>
+      Any name you select may be visible to other users
+    </>
+  )
 else
   message = (
     <>
       Your current email is <strong>{localStorage.getItem('userEmail')}</strong>
       <br></br>
-      If you select a name it will be visible to other users on the feedback
-      page
+      Any name you select may be visible to other users
     </>
   )
 const UserEditingPage = () => {
@@ -41,13 +55,34 @@ const UserEditingPage = () => {
     },
   })
 
+  const [deleteUser, { loadingdelete, errordelete }] = useMutation(
+    DELETE_USER,
+    {
+      onCompleted: async () => {
+        toast.success('Your profile is deleted! Hang tight')
+        await new Promise((resolve) => setTimeout(resolve, 2000))
+        localStorage.clear()
+        location.reload()
+        navigate('/')
+      },
+    }
+  )
+
   const onSubmit = async (data) => {
     try {
+      const realData = {
+        name: data.name == '' ? localStorage.getItem('userName') : data.name,
+        email:
+          data.email == '' ? localStorage.getItem('userEmail') : data.email,
+      }
       await updateUser({
-        variables: { email: localStorage.getItem('userEmail'), input: data },
+        variables: {
+          email: localStorage.getItem('userEmail'),
+          input: realData,
+        },
       })
-      localStorage.setItem('userEmail', data.email)
-      localStorage.setItem('userName', data.name)
+      localStorage.setItem('userEmail', realData.email)
+      localStorage.setItem('userName', realData.name)
       toast.success('Your profile is updated! Hang tight!')
     } catch (error) {
       if (
@@ -60,6 +95,20 @@ const UserEditingPage = () => {
         toast.error('Email is already registered')
       else toast.error('Update user info failed')
     }
+  }
+
+  const onClick = async () => {
+    var isConfirm = confirm(
+      'Are you sure you want to delete your account? All feedback submissions and translation history will be lost.'
+    )
+    if (isConfirm)
+      try {
+        await deleteUser({
+          variables: { email: localStorage.getItem('userEmail') },
+        })
+      } catch (error) {
+        toast.error('Failed to delete account, try again later')
+      }
   }
 
   return (
@@ -89,6 +138,17 @@ const UserEditingPage = () => {
         loading={loading}
         formMethods={formMethods}
       />
+      <br></br>
+      <br></br>
+      <br></br>
+      <button
+        onClick={onClick}
+        className="mt-5 w-1/4 justify-center  rounded bg-sky-700 text-white hover:bg-sky-800"
+        style={{ margin: 'auto', display: 'block' }}
+        aria-label="Delete"
+      >
+        DELETE ACCOUNT
+      </button>
     </>
   )
 }

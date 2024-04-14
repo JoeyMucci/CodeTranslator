@@ -27,7 +27,7 @@
       const userName = localStorage.getItem('userName');
       const userEmail = localStorage.getItem('userEmail');
       document.getElementById('usernamePlaceholder').innerText = userEmail;
-      if (userName != 'null') {
+      if (userName && userName != 'null' && userName != '') {
         usernamePlaceholder.innerText = userName;
       }
       else if (userEmail) {

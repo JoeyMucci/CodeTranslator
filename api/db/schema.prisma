@@ -15,7 +15,7 @@ model Contact {
   backupEmail String
   message     String
   createdAt   DateTime @default(now())
-  user        User     @relation(fields: [userEmail], references: [email])
+  user        User     @relation(fields: [userEmail], references: [email], onDelete: Cascade)
 }
 
 model Rating {
@@ -44,7 +44,7 @@ model Translation {
   originalLanguage   String
   translatedLanguage String
   createdAt          DateTime @default(now())
-  user               User     @relation(fields: [userEmail], references: [email])
+  user               User     @relation(fields: [userEmail], references: [email], onDelete: Cascade)
 }
 
 model blacklisted_tokens {
