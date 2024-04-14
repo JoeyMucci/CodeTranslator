@@ -58,7 +58,7 @@ export const requestPasswordReset = async (data) => {
     throw prob
   } else {
     const newuser = await generateResetToken(email)
-    const resetLink = `http://localhost:8910/reset-password?token=${newuser.resetToken}&email=${newuser.email}` // Generate reset link
+    const resetLink = `http://rosettacode.netlify.app/reset-password?token=${newuser.resetToken}&email=${newuser.email}` // Generate reset link
     await sendPasswordResetEmail(email, resetLink)
 
     return newuser

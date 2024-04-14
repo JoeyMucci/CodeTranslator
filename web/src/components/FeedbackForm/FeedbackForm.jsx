@@ -22,8 +22,8 @@ const FeedbackForm = ({ onSubmit, error, loading, formMethods }) => {
         <h1 className="text">Feedback Form</h1>
         <div className="form-header">
           <div className="form-group">
-            <Label name="subject" className="text">
-              Subject:
+            <Label name="subject" className="smalltext">
+              Subject*:
             </Label>
             <TextField
               className="box"
@@ -36,8 +36,8 @@ const FeedbackForm = ({ onSubmit, error, loading, formMethods }) => {
           </div>
 
           <div className="form-group">
-            <Label name="b_email" className="text">
-              SpareEmail:
+            <Label name="b_email" className="smalltext">
+              Second Email:
             </Label>
             <TextField
               className="box"

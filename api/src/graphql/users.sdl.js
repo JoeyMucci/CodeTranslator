@@ -44,6 +44,7 @@ export const schema = gql`
     resetPassword(email: String!, password: String!, resetToken: String!): User! @skipAuth
     updateUserByEmail(email: String!, input: UpdateUserInput!): User! @skipAuth
     changePassword(id: Int!, input: ChangePasswordInput!): User! @skipAuth
-    deleteUser(id: Int!): User! @requireAuth
+    deleteUser(id: Int!): User! @skipAuth
+    deleteUserByEmail(email: String!): User! @skipAuth
   }
 `

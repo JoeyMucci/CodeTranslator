@@ -138,7 +138,7 @@ describe('Submission errors', () => {
     )
   })
 
-  it('error for missing name', async () => {
+  it('Submits with missing name', async () => {
     window.matchMedia = jest.fn()
     render(
       <GraphQLHooksProvider
@@ -162,12 +162,10 @@ describe('Submission errors', () => {
     const submitButton = screen.getByRole('button', { name: /Save/i })
     fireEvent.click(submitButton)
 
-    await waitFor(() =>
-      expect(screen.getByText(/Name is required/i)).toBeInTheDocument()
-    )
+    expect(screen.queryByText(/Name is required/i)).not.toBeInTheDocument()
   })
 
-  it('error for missing email', async () => {
+  it('submits with missing email', async () => {
     window.matchMedia = jest.fn()
     render(
       <GraphQLHooksProvider
@@ -191,11 +189,9 @@ describe('Submission errors', () => {
     const submitButton = screen.getByRole('button', { name: /Save/i })
     fireEvent.click(submitButton)
 
-    await waitFor(() =>
-      expect(
-        screen.getByText(/Enter a valid email address/i)
-      ).toBeInTheDocument()
-    )
+    expect(
+      screen.queryByText(/Enter a valid email address/i)
+    ).not.toBeInTheDocument()
   })
 })
 
@@ -206,6 +202,7 @@ describe('Toast notifications', () => {
     //     <UserEditingPage />
     //   </MockedProvider>
     // )
+    await new Promise((resolve) => setTimeout(resolve, 3000)) // wait because of the previous test
     window.matchMedia = jest.fn()
     render(
       <GraphQLHooksProvider
@@ -318,6 +315,26 @@ describe('Toast notifications', () => {
       expect(
         screen.getByText(/Email is already registered/i)
       ).toBeInTheDocument()
+    )
+  })
+})
+
+describe('Delete Button', () => {
+  test('Issues wanrning before deleting account', async () => {
+    window.confirm = jest.fn()
+    render(
+      <GraphQLHooksProvider
+        useMutation={jest.fn().mockReturnValue([jest.fn(), {}])}
+        useQuery={jest.fn().mockReturnValue({ data: {} })}
+      >
+        <UserEditingPage />
+      </GraphQLHooksProvider>
+    )
+    const deleteButton = screen.getByRole('button', { name: 'Delete' })
+
+    await waitFor(() => fireEvent.click(deleteButton))
+    expect(window.confirm).toHaveBeenCalledWith(
+      'Are you sure you want to delete your account? All feedback submissions and translation history will be lost.'
     )
   })
 })

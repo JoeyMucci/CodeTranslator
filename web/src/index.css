@@ -87,7 +87,7 @@ meter::-webkit-meter-optimum-value {
 .form-header {
   display: flex;
   flex-direction: row;
-  gap: 100px;
+  gap: 175px;
 }
 .form-group {
   display: flex;
