@@ -33,7 +33,7 @@ import UserEditingPage from './UserEditingPage'
 //   },
 // ]
 
-describe('Submission errors', () => {
+describe('Submission errors info', () => {
   it('error for incorrect email one when all info is present', async () => {
     window.matchMedia = jest.fn()
     render(
@@ -195,7 +195,7 @@ describe('Submission errors', () => {
   })
 })
 
-describe('Toast notifications', () => {
+describe('Toast notifications info', () => {
   test('displays submit toast', async () => {
     // const { getByLabelText, getByText, getByRole } = render(
     //   <MockedProvider mocks={mocks} addTypename={false}>
@@ -264,7 +264,7 @@ describe('Toast notifications', () => {
     fireEvent.change(emailInput, { target: { value: 'john.doe@example.com' } })
 
     const submitButton = screen.getByRole('button', { name: /Save/i })
-    fireEvent.click(submitButton)
+    await waitFor(() => fireEvent.click(submitButton))
 
     await waitFor(() =>
       expect(screen.getByText(/Update user info failed/i)).toBeInTheDocument()
@@ -309,7 +309,7 @@ describe('Toast notifications', () => {
     fireEvent.change(emailInput, { target: { value: 'a@a.a.aaa' } }) // data does not matter because of mock
 
     const submitButton = screen.getByRole('button', { name: /Save/i })
-    fireEvent.click(submitButton)
+    await waitFor(() => fireEvent.click(submitButton))
 
     await waitFor(() =>
       expect(
@@ -319,8 +319,261 @@ describe('Toast notifications', () => {
   })
 })
 
+describe('Submission errors password', () => {
+  test('Does not submit with missing old password', async () => {
+    render(
+      <GraphQLHooksProvider
+        useMutation={jest.fn().mockReturnValue([jest.fn(), {}])}
+        useQuery={jest.fn().mockReturnValue({ data: {} })}
+      >
+        <UserEditingPage />
+      </GraphQLHooksProvider>
+    )
+
+    // const oldInput = screen.getByTestId('oldpassword')
+    // fireEvent.change(oldInput, { target: { value: 'PeanutButter10' } })
+
+    const newInput = screen.getByTestId('newpassword')
+    fireEvent.change(newInput, { target: { value: 'PeanutButter11' } })
+
+    const confirmInput = screen.getByTestId('confirmpassword')
+    fireEvent.change(confirmInput, { target: { value: 'PeanutButter11' } })
+
+    const submitButton = screen.getByRole('button', { name: /Change/i })
+    await waitFor(() => fireEvent.click(submitButton))
+
+    await waitFor(() =>
+      expect(screen.getByText(/Old password is required/i)).toBeInTheDocument()
+    )
+  })
+
+  test('Does not submit with missing new password', async () => {
+    render(
+      <GraphQLHooksProvider
+        useMutation={jest.fn().mockReturnValue([jest.fn(), {}])}
+        useQuery={jest.fn().mockReturnValue({ data: {} })}
+      >
+        <UserEditingPage />
+      </GraphQLHooksProvider>
+    )
+
+    const oldInput = screen.getByTestId('oldpassword')
+    fireEvent.change(oldInput, { target: { value: 'PeanutButter10' } })
+
+    // const newInput = screen.getByTestId('newpassword')
+    // fireEvent.change(newInput, { target: { value: 'PeanutButter11' } })
+
+    const confirmInput = screen.getByTestId('confirmpassword')
+    fireEvent.change(confirmInput, { target: { value: 'PeanutButter11' } })
+
+    const submitButton = screen.getByRole('button', { name: /Change/i })
+    fireEvent.click(submitButton)
+
+    await waitFor(() => fireEvent.click(submitButton))
+
+    await waitFor(() =>
+      expect(screen.getByText(/New password is required/i)).toBeInTheDocument()
+    )
+  })
+
+  test('Does not submit with missing confirm password', async () => {
+    render(
+      <GraphQLHooksProvider
+        useMutation={jest.fn().mockReturnValue([jest.fn(), {}])}
+        useQuery={jest.fn().mockReturnValue({ data: {} })}
+      >
+        <UserEditingPage />
+      </GraphQLHooksProvider>
+    )
+
+    const oldInput = screen.getByTestId('oldpassword')
+    fireEvent.change(oldInput, { target: { value: 'PeanutButter10' } })
+
+    const newInput = screen.getByTestId('newpassword')
+    fireEvent.change(newInput, { target: { value: 'PeanutButter11' } })
+
+    // const confirmInput = screen.getByTestId('confirmpassword')
+    // fireEvent.change(confirmInput, { target: { value: 'PeanutButter11' } })
+
+    const submitButton = screen.getByRole('button', { name: /Change/i })
+    fireEvent.click(submitButton)
+
+    await waitFor(() => fireEvent.click(submitButton))
+
+    await waitFor(() =>
+      expect(
+        screen.getByText(/Confirm password is required/i)
+      ).toBeInTheDocument()
+    )
+  })
+})
+
+describe('Toast notifications password', () => {
+  test('Displays submit toast', async () => {
+    render(
+      <GraphQLHooksProvider
+        useMutation={jest.fn().mockReturnValue([
+          jest.fn().mockReturnValue({
+            data: {
+              changePassword: { email: 'blah@blah.co' },
+            },
+          }),
+          {},
+        ])}
+        useQuery={jest.fn().mockReturnValue({ data: {} })}
+      >
+        <UserEditingPage />
+      </GraphQLHooksProvider>
+    )
+
+    const oldInput = screen.getByTestId('oldpassword')
+    fireEvent.change(oldInput, { target: { value: 'PeanutButter10' } })
+
+    const newInput = screen.getByTestId('newpassword')
+    fireEvent.change(newInput, { target: { value: 'PeanutButter11' } })
+
+    const confirmInput = screen.getByTestId('confirmpassword')
+    fireEvent.change(confirmInput, { target: { value: 'PeanutButter11' } })
+
+    const submitButton = screen.getByRole('button', { name: /Change/i })
+    fireEvent.click(submitButton)
+
+    await waitFor(() =>
+      expect(screen.getByText(/Password changed!/i)).toBeInTheDocument()
+    )
+  })
+
+  test('Displays reject toast', async () => {
+    render(
+      <GraphQLHooksProvider
+        useMutation={jest.fn().mockReturnValue([
+          jest.fn().mockImplementation(async () => {
+            throw new Error('Bruh Two')
+          }),
+          {},
+        ])}
+        useQuery={jest.fn().mockReturnValue({ data: {} })}
+      >
+        <UserEditingPage />
+      </GraphQLHooksProvider>
+    )
+
+    const oldInput = screen.getByTestId('oldpassword')
+    fireEvent.change(oldInput, { target: { value: 'PeanutButter10' } })
+
+    const newInput = screen.getByTestId('newpassword')
+    fireEvent.change(newInput, { target: { value: 'PeanutButter11' } })
+
+    const confirmInput = screen.getByTestId('confirmpassword')
+    fireEvent.change(confirmInput, { target: { value: 'PeanutButter11' } })
+
+    const submitButton = screen.getByRole('button', { name: /Change/i })
+    await waitFor(() => fireEvent.click(submitButton))
+
+    await waitFor(() =>
+      expect(screen.getByText(/Change password failed/i)).toBeInTheDocument()
+    )
+  })
+
+  test('Displays wrong password toast', async () => {
+    render(
+      <GraphQLHooksProvider
+        useMutation={jest.fn().mockReturnValue([
+          jest.fn().mockImplementation(async () => {
+            const bruh = new Error('Bruh Two')
+            bruh.graphQLErrors = {
+              0: {
+                extensions: {
+                  originalError: {
+                    message: 'Invalid password',
+                  },
+                },
+              },
+            }
+            throw bruh
+          }),
+          {},
+        ])}
+        useQuery={jest.fn().mockReturnValue({ data: {} })}
+      >
+        <UserEditingPage />
+      </GraphQLHooksProvider>
+    )
+
+    const oldInput = screen.getByTestId('oldpassword')
+    fireEvent.change(oldInput, { target: { value: 'PeanutButter10' } })
+
+    const newInput = screen.getByTestId('newpassword')
+    fireEvent.change(newInput, { target: { value: 'PeanutButter11' } })
+
+    const confirmInput = screen.getByTestId('confirmpassword')
+    fireEvent.change(confirmInput, { target: { value: 'PeanutButter11' } })
+
+    const submitButton = screen.getByRole('button', { name: /Change/i })
+    await waitFor(() => fireEvent.click(submitButton))
+
+    await waitFor(() =>
+      expect(screen.getByText(/Incorrect Password/i)).toBeInTheDocument()
+    )
+  })
+
+  test('Displays too weak toast', async () => {
+    render(
+      <GraphQLHooksProvider
+        useMutation={jest.fn().mockReturnValue([jest.fn(), {}])}
+        useQuery={jest.fn().mockReturnValue({ data: {} })}
+      >
+        <UserEditingPage />
+      </GraphQLHooksProvider>
+    )
+
+    const oldInput = screen.getByTestId('oldpassword')
+    fireEvent.change(oldInput, { target: { value: 'PeanutButter10' } })
+
+    const newInput = screen.getByTestId('newpassword')
+    fireEvent.change(newInput, { target: { value: 'PeanutButter' } })
+
+    const confirmInput = screen.getByTestId('confirmpassword')
+    fireEvent.change(confirmInput, { target: { value: 'PeanutButter' } })
+
+    const submitButton = screen.getByRole('button', { name: /Change/i })
+    await waitFor(() => fireEvent.click(submitButton))
+
+    await waitFor(() =>
+      expect(screen.getByText(/Password is too weak/i)).toBeInTheDocument()
+    )
+  })
+
+  test('Displays nonmatch toast', async () => {
+    render(
+      <GraphQLHooksProvider
+        useMutation={jest.fn().mockReturnValue([jest.fn(), {}])}
+        useQuery={jest.fn().mockReturnValue({ data: {} })}
+      >
+        <UserEditingPage />
+      </GraphQLHooksProvider>
+    )
+
+    const oldInput = screen.getByTestId('oldpassword')
+    fireEvent.change(oldInput, { target: { value: 'PeanutButter10' } })
+
+    const newInput = screen.getByTestId('newpassword')
+    fireEvent.change(newInput, { target: { value: 'PeanutButter' } })
+
+    const confirmInput = screen.getByTestId('confirmpassword')
+    fireEvent.change(confirmInput, { target: { value: 'ButterPeanut' } })
+
+    const submitButton = screen.getByRole('button', { name: /Change/i })
+    await waitFor(() => fireEvent.click(submitButton))
+
+    await waitFor(() =>
+      expect(screen.getByText(/Passwords do not match/i)).toBeInTheDocument()
+    )
+  })
+})
+
 describe('Delete Button', () => {
-  test('Issues wanrning before deleting account', async () => {
+  test('Issues warning before deleting account', async () => {
     window.confirm = jest.fn()
     render(
       <GraphQLHooksProvider

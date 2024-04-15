@@ -58,7 +58,7 @@ const ResetPasswordPage = () => {
       const user = resetPassword({ variables: { email: email, password: newPassword, resetToken: resetToken } })
       toast.success('Password Change Successful', user.email)
     } catch (error) {
-      console.log(error.message)
+      console.log(error)
       toast.error('Failed change password')
     }
   }
@@ -76,6 +76,7 @@ const ResetPasswordPage = () => {
         id="passwordInput"
         className="mt-2 w-full max-w-full items-start justify-center rounded-xl bg-gray-200 py-3 pl-3 pr-16 text-gray-800 md:w-[381px]"
         placeholder="New Password"
+        type="password"
         value={newPassword}
         onChange={(e) => setPassword(e.target.value)}
       />
@@ -86,6 +87,7 @@ const ResetPasswordPage = () => {
         id="confirmpasswordInput"
         className="mt-2 w-full max-w-full items-start justify-center rounded-xl bg-gray-200 py-3 pl-3 pr-16 text-gray-800 md:w-[381px]"
         placeholder="Confirm Password"
+        type="password"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
       />

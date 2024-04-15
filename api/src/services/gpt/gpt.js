@@ -201,9 +201,9 @@ export const runTranslationHelper = async ({ fromLanguage, toLanguage, code, ope
   let trans = ''
   let opt = ''
   try {
-    let toLang = toLanguage
-    if (fromLanguage == toLanguage) toLang = fromLanguage == 'Python' ? 'Java' : 'Python'
-    trans = await doTranslation({ fromLanguage: fromLanguage, toLanguage: toLang, code: code, openai: openai })
+    let fromLang = fromLanguage
+    if (fromLanguage == toLanguage) fromLang = fromLanguage == 'Java' ? 'Python' : 'Java'
+    trans = await doTranslation({ fromLanguage: fromLang, toLanguage: toLanguage, code: code, openai: openai })
   } catch (e) {
     let message = ''
     if (e.code == 'rate_limit_exceeded') message = 'Rate Limit Hit'

@@ -41,6 +41,7 @@ export const schema = gql`
     createUser(input: CreateUserInput!): User! @skipAuth
     loginUser(email: String!, password: String!): AuthPayload! @skipAuth
     updateUser(id: Int!, input: UpdateUserInput!): User! @skipAuth
+    changePasswordNew(email: String!, oldPassword: String!, newPassword: String!): User! @skipAuth
     resetPassword(email: String!, password: String!, resetToken: String!): User! @skipAuth
     updateUserByEmail(email: String!, input: UpdateUserInput!): User! @skipAuth
     changePassword(id: Int!, input: ChangePasswordInput!): User! @skipAuth
