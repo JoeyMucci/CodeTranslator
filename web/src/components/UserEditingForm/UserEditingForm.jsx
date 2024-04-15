@@ -64,7 +64,6 @@ const UserEditingForm = ({ onSubmit, error, loading, formMethods }) => {
         />
       </div>
       {error && <p>{error.message}</p>} */}
-      <br></br>
       <button
         type="submit"
         disabled={loading}
