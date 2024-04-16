@@ -80,6 +80,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState('')
   const [loginUser] = useMutation(LOGIN_USER)
   const [wrongPasswordError, setWrongPasswordError] = useState(false)
+  const [wrongEmailError, setWrongEmailError] = useState(false)
 
   //const logIn = useAuth()
 
@@ -92,20 +93,36 @@ const LoginForm = () => {
       navigate('/code-translator')
       location.reload()
     } catch (error) {
-      if (error.message.includes('500'))
+      // if (error.message.includes('500'))
+      //   toast.error('Cannot authenticate with our API, please wait')
+      // else toast.error('Login Failed')
+      // setWrongPasswordError(error.message)
+      if (
+        error.graphQLErrors &&
+        error.graphQLErrors[0] &&
+        error.graphQLErrors[0].extensions.originalError.message.includes(
+          'Invalid password'
+        )
+      )
+        setWrongPasswordError(error.message)
+      else if (
+        error.graphQLErrors &&
+        error.graphQLErrors[0] &&
+        error.graphQLErrors[0].extensions.originalError.message.includes(
+          'User not found'
+        )
+      )
+        setWrongEmailError(error.message)
+      else if (error.message.includes('500'))
         toast.error('Cannot authenticate with our API, please wait')
       else toast.error('Login Failed')
-      setWrongPasswordError(error.message)
     }
   }
 
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light')
 
   return (
-
-
     <Form
-
       className={` flex flex-col rounded-xl bg-gray-100 px-20 py-12 max-md:max-w-full max-md:px-5 `}
       onSubmit={handleSubmit}
     >
@@ -119,8 +136,14 @@ const LoginForm = () => {
         placeholder="Example.email@njit.edu"
         aria-label="Enter your email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(e) => {
+          setEmail(e.target.value)
+          setWrongEmailError(false)
+        }}
       />
+      {wrongEmailError && (
+        <p className="mt-2 text-sm text-red-500">Email is incorrect</p>
+      )}
       <Label htmlFor="passwordInput" className="mt-6 text-black max-md:mt-2">
         Password:
       </Label>
@@ -140,7 +163,10 @@ const LoginForm = () => {
       {wrongPasswordError && (
         <p className="mt-2 text-sm text-red-500">Password is incorrect</p>
       )}
-      <Submit className="mb-6 mt-16 w-full max-w-full items-center justify-center rounded-2xl border border-solid border-black bg-blue-500 px-16 py-2.5 text-white shadow-sm md:w-[381px]">
+      <Submit
+        data-testid="login"
+        className="mb-6 mt-16 w-full max-w-full items-center justify-center rounded-2xl border border-solid border-black bg-blue-500 px-16 py-2.5 text-white shadow-sm md:w-[381px]"
+      >
         Login
       </Submit>
     </Form>

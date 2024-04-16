@@ -68,5 +68,69 @@ describe('Registration Form', () => {
     })
   })
 
-  // Add more test cases for other scenarios...
+  test('Email already registered', async () => {
+    window.matchMedia = jest.fn()
+    const { getByLabelText, getByText } = render(
+      <GraphQLHooksProvider
+        useMutation={jest.fn().mockReturnValue([
+          jest.fn().mockImplementation(async () => {
+            const bruh = new Error('ApolloError')
+            throw bruh
+          }),
+          {},
+        ])}
+        useQuery={jest.fn().mockReturnValue({ data: {} })}
+      >
+        <RegisterForm />
+      </GraphQLHooksProvider>
+    )
+    const signupButton = getByText('Sign Up')
+    fireEvent.click(signupButton)
+    const emailInput = getByLabelText('Email:')
+    const passwordInput = getByLabelText('Password:')
+    const confirmPasswordInput = getByLabelText('Confirm Password:')
+    const submitButton = getByText('Submit')
+
+    fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
+    fireEvent.change(passwordInput, { target: { value: 'securesecure5' } })
+    fireEvent.change(confirmPasswordInput, {
+      target: { value: 'securesecure5' },
+    })
+    fireEvent.click(submitButton)
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('Email is already registered.')
+      ).toBeInTheDocument()
+    })
+  })
+
+  test('Renders success toast', async () => {
+    window.matchMedia = jest.fn()
+    const { getByLabelText, getByText } = render(
+      <GraphQLHooksProvider
+        useMutation={jest.fn().mockReturnValue([jest.fn(), {}])}
+        useQuery={jest.fn().mockReturnValue({ data: {} })}
+      >
+        <RegisterForm />
+      </GraphQLHooksProvider>
+    )
+    const signupButton = getByText('Sign Up')
+    fireEvent.click(signupButton)
+    const emailInput = getByLabelText('Email:')
+    const passwordInput = getByLabelText('Password:')
+    const confirmPasswordInput = getByLabelText('Confirm Password:')
+    const submitButton = getByText('Submit')
+
+    fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
+    fireEvent.change(passwordInput, { target: { value: 'securesecure5' } })
+    fireEvent.change(confirmPasswordInput, {
+      target: { value: 'securesecure5' },
+    })
+    fireEvent.click(submitButton)
+
+    await waitFor(() =>
+      expect(screen.getByText(/Register Successful/i)).toBeInTheDocument()
+    )
+  })
 })

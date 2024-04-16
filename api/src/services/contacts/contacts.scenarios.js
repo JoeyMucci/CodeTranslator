@@ -16,6 +16,7 @@ export const standard = defineScenario({
             roles: 'fo',
           },
         },
+        createdAt: '1999-05-04T10:09:36.210Z',
       },
     },
     two: {
@@ -34,6 +35,7 @@ export const standard = defineScenario({
             roles: 'fo',
           },
         },
+        createdAt: '2024-04-07T01:29:31.210Z',
       },
     },
   },

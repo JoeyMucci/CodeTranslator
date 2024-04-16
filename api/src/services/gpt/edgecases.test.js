@@ -6,8 +6,8 @@ describe('comment edgecase', () => {
       fromLanguage: 'C',
       code: '```C \n/* comment comment comment */\n// comment \nprint("Hello world")\n```',
     })
-    expect(result).not.toContain('C')
     expect(result).not.toContain('```')
+    expect(result).not.toContain('C')
   })
 })
 

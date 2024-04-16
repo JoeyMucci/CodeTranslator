@@ -2,6 +2,7 @@ import {
   ratings,
   rating,
   createRating,
+  getAverageRating,
   // updateRating,
   // deleteRating,
 } from './ratings'
@@ -25,6 +26,12 @@ describe('ratings', () => {
     })
 
     expect(result.score).toEqual(2)
+  })
+
+  scenario('averages correctly', async () => {
+    const result = await getAverageRating()
+    expect(result.avg).toBe(3)
+    expect(result.count).toBe(2)
   })
 
   //   scenario('updates a rating', async (scenario) => {
