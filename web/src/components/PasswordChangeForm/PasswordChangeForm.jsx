@@ -74,7 +74,7 @@ const UserEditingForm = ({ onSubmit, error, loading, formMethods }) => {
       <button
         type="submit"
         disabled={loading}
-        className="mt-5 w-1/4 justify-center  rounded bg-sky-700 text-white hover:bg-sky-800"
+        className="mt-5 w-1/4 justify-center  rounded bg-button"
         style={{ margin: 'auto', display: 'block' }}
       >
         {loading ? 'Loading...' : 'Change'}

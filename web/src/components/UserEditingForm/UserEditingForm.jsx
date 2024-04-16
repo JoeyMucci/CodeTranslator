@@ -56,7 +56,7 @@ const UserEditingForm = ({ onSubmit, error, loading, formMethods }) => {
         />
       </div>
       {error && <p>{error.message}</p>} */}
-      <br></br>
+
       <button type="submit" disabled={loading} className="mt-5 w-1/4 justify-center  rounded bg-button text-white " style={{ margin: 'auto', display: 'block' }}>
         {loading ? 'Loading...' : 'Save'}
       </button>

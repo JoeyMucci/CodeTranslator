@@ -187,7 +187,7 @@ const UserEditingPage = () => {
 
   return (
     <>
-    <div className={`  ${theme === 'light' ? 'light-theme' : theme === 'dark' ? 'dark-theme' : theme === 'snes' ? 'snes-theme' : theme === 'our' ? 'our-theme' : theme === 'terminal' ? 'terminal-theme' : theme === 'dmg' ? 'dmg-theme' : theme === 'nautilus' ? 'nautilus-theme' : theme === 'copper' ? 'copper-theme' : 'beach-theme'}`} style={{height: '100vh' }}>
+    <div className={`  ${theme === 'light' ? 'light-theme' : theme === 'dark' ? 'dark-theme' : theme === 'snes' ? 'snes-theme' : theme === 'our' ? 'our-theme' : theme === 'terminal' ? 'terminal-theme' : theme === 'dmg' ? 'dmg-theme' : theme === 'nautilus' ? 'nautilus-theme' : theme === 'copper' ? 'copper-theme' : 'beach-theme'}`} >
       <MetaTags title="Edit Profile" description="Edit your profile" />
       <br></br>
       <br></br>
@@ -209,10 +209,10 @@ const UserEditingPage = () => {
 
       <Toaster />
       <UserEditingForm className={`  ${theme === 'light' ? 'light-theme' : theme === 'dark' ? 'dark-theme' : theme === 'snes' ? 'snes-theme' : theme === 'our' ? 'our-theme' : theme === 'terminal' ? 'terminal-theme' : theme === 'dmg' ? 'dmg-theme' : theme === 'nautilus' ? 'nautilus-theme' : theme === 'copper' ? 'copper-theme' : 'beach-theme'}`}
-        onSubmit={onSubmit}
+        onSubmit={onSubmitInfo}
         error={error}
         loading={loading}
-        formMethods={formMethods}
+        formMethods={formMethodsInfo}
         data-testid="UserEditingForm"
         role='UserForm'
       />
@@ -224,21 +224,9 @@ const UserEditingPage = () => {
         loading={loadingpassword}
         formMethods={fromMethodsPassword}
       />
-      <br></br>
-      <br></br>
-      <br></br>
-      <button
-        onClick={onClickDelete}
-        className="mt-5 w-1/4 justify-center  rounded bg-sky-700 text-white hover:bg-sky-800"
-        style={{ margin: 'auto', display: 'block' }}
-        aria-label="Delete"
-      >
-        DELETE ACCOUNT
-      </button>
 
-      <br></br>
-      <br></br>
-      <br></br>
+
+
       <br></br>
       <div
         className={`flex w-1/2 `}
@@ -346,6 +334,16 @@ const UserEditingPage = () => {
 
 
         </div>
+
+      <br></br>
+      <button
+        onClick={onClickDelete}
+        className="mt-5 w-1/4 justify-center  rounded bg-button"
+        style={{ margin: 'auto', display: 'block' }}
+        aria-label="Delete"
+      >
+        DELETE ACCOUNT
+      </button>
         <br></br>
         <br></br>
         </div>

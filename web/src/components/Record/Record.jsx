@@ -239,6 +239,7 @@ const Record = ({
           </pre>
         </div>
       </div>
+      </div>
     </>
   )
 }
