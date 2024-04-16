@@ -130,6 +130,7 @@ const UserEditingPage = () => {
       toast.success('Your profile is updated! Hang tight!')
     } catch (error) {
       console.log(error)
+      console.log(error.graphQLErrors[0])
       if (
         error.graphQLErrors &&
         error.graphQLErrors[0] &&
@@ -161,6 +162,7 @@ const UserEditingPage = () => {
       }
     } catch (error) {
       console.log(error)
+      console.log(error.graphQLErrors[0])
       if (
         error.graphQLErrors &&
         error.graphQLErrors[0] &&
