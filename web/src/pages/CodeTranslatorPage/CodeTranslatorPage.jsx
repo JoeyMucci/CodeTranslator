@@ -4,7 +4,9 @@ import React, { useEffect, useRef, useState } from 'react'
 //import { runTranslation } from 'api/src/services/gpt/gpt.js'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/default.css'
+import rc from 'web/public/Rosetta_Code.png'
 import Rater from 'web/src/components/Rater/Rater.jsx'
+import StarDataCell from 'web/src/components/StarDataCell/StarDataCell.jsx'
 
 //import { Link, routes } from '@redwoodjs/router'
 import { useForm } from '@redwoodjs/forms'
@@ -343,11 +345,7 @@ const CodeTranslatorPage = () => {
       <div className="min-h-screen ">
         <Metadata title="CodeTranslator" description="CodeTranslator page" />
         <div className="flex w-full justify-center ">
-          <img
-            src="images/Rosetta_Code.png"
-            alt="rosetta code"
-            className="mt-20"
-          />
+          <img src={rc} alt="rosetta code" className="mt-20" />
         </div>
 
         <div className="flex flex-row justify-center space-x-20 pt-10">
@@ -496,13 +494,16 @@ const CodeTranslatorPage = () => {
               </pre>
             </div>
             <Toaster />
-            <Rater
-              className={`  ${theme === 'light' ? 'light-theme' : theme === 'dark' ? 'dark-theme' : theme === 'snes' ? 'snes-theme' : theme === 'our' ? 'our-theme' : theme === 'terminal' ? 'terminal-theme' : theme === 'dmg' ? 'dmg-theme' : theme === 'nautilus' ? 'nautilus-theme' : theme === 'copper' ? 'copper-theme' : 'beach-theme'}`}
-              onSubmit={onSubmit}
-              error={error}
-              loading={loading}
-              formMethods={formMethods}
-            />
+            <div className="flex flex-row space-x-5">
+              <Rater
+                className={`  ${theme === 'light' ? 'light-theme' : theme === 'dark' ? 'dark-theme' : theme === 'snes' ? 'snes-theme' : theme === 'our' ? 'our-theme' : theme === 'terminal' ? 'terminal-theme' : theme === 'dmg' ? 'dmg-theme' : theme === 'nautilus' ? 'nautilus-theme' : theme === 'copper' ? 'copper-theme' : 'beach-theme'}`}
+                onSubmit={onSubmit}
+                error={error}
+                loading={loading}
+                formMethods={formMethods}
+              />
+              <StarDataCell />
+            </div>
           </div>
         </div>
       </div>

@@ -24,7 +24,7 @@ const UserEditingForm = ({ onSubmit, error, loading, formMethods }) => {
           data-testid="name"
           name="name"
           type="text"
-          {...register('name', { required: true })}
+          {...register('name', { required: false })}
         />
         {errors.name && <p style={{ color: 'red' }}>Name is required</p>}
       </div>
@@ -39,7 +39,7 @@ const UserEditingForm = ({ onSubmit, error, loading, formMethods }) => {
           name="email"
           type="email"
           {...register('email', {
-            required: true,
+            required: false,
             pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
           })}
         />

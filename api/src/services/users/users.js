@@ -51,3 +51,9 @@ export const deleteUser = ({ id }) => {
     where: { id },
   })
 }
+
+export const deleteUserByEmail = ({ email }) => {
+  return db.user.delete({
+    where: { email },
+  })
+}

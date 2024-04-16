@@ -5,6 +5,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 /*POTENTIAL THEMING*/
 
 
@@ -498,6 +499,12 @@
 /*******************/
 
 
+
+meter::-webkit-meter-optimum-value {
+  background: gold;
+}
+
+
 .custom-syntax-highlighter .react-syntax-highlighter {
   background-color: transparent !important; /* Remove background */
   box-shadow: none !important; /* Remove shadow if any */
@@ -579,7 +586,7 @@
 .form-header {
   display: flex;
   flex-direction: row;
-  gap: 100px;
+  gap: 175px;
 }
 .form-group {
   display: flex;
