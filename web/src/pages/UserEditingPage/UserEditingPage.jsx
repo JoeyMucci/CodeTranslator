@@ -103,6 +103,8 @@ const UserEditingPage = () => {
         error={error}
         loading={loading}
         formMethods={formMethods}
+        data-testid="UserEditingForm"
+        role='UserForm'
       />
 
       <br></br>

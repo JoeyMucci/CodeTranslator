@@ -33,6 +33,201 @@ import UserEditingPage from './UserEditingPage'
 //   },
 // ]
 
+describe('Theme Buttons', () => {
+  it('should change the theme to "light" and update the container style when clicked', () => {
+
+    const {container} = render(<UserEditingPage />);
+
+
+    const button = screen.getByRole('button', { name: /rosetta/i });
+    fireEvent.click(button);
+
+    const firstDiv = container.querySelector('div');
+      expect(firstDiv).toHaveClass('light-theme');
+      expect(firstDiv).not.toHaveClass('dark-theme');
+      expect(firstDiv).not.toHaveClass('snes-theme');
+      expect(firstDiv).not.toHaveClass('our-theme');
+      expect(firstDiv).not.toHaveClass('terminal-theme');
+
+    expect(button).toHaveClass('button-outline');
+    expect(button).toHaveStyle({ backgroundColor: '#0369a1', color: 'white' });
+  });
+
+  it('should change the theme to "dark" and update the container style when clicked', () => {
+
+    const {container} = render(<UserEditingPage />);
+
+
+    const button = screen.getByRole('button', { name: /spade/i });
+    fireEvent.click(button);
+
+    const firstDiv = container.querySelector('div');
+      expect(firstDiv).toHaveClass('dark-theme');
+      expect(firstDiv).not.toHaveClass('light-theme');
+      expect(firstDiv).not.toHaveClass('snes-theme');
+      expect(firstDiv).not.toHaveClass('our-theme');
+      expect(firstDiv).not.toHaveClass('terminal-theme');
+
+
+    expect(button).toHaveClass('button-outline');
+  });
+
+  it('should change the theme to "Ours" and update the container style when clicked', () => {
+
+    const {container} = render(<UserEditingPage />);
+
+
+    const button = screen.getByRole('button', { name: /ours/i });
+    fireEvent.click(button);
+
+    const firstDiv = container.querySelector('div');
+      expect(firstDiv).toHaveClass('our-theme');
+      expect(firstDiv).not.toHaveClass('light-theme');
+      expect(firstDiv).not.toHaveClass('snes-theme');
+      expect(firstDiv).not.toHaveClass('dark-theme');
+      expect(firstDiv).not.toHaveClass('terminal-theme');
+
+
+    expect(button).toHaveClass('button-outline');
+  });
+
+  it('should change the theme to "snes" and update the container style when clicked', () => {
+
+    const {container} = render(<UserEditingPage />);
+
+
+    const button = screen.getByRole('button', { name: /snes/i });
+    fireEvent.click(button);
+
+    const firstDiv = container.querySelector('div');
+      expect(firstDiv).toHaveClass('snes-theme');
+      expect(firstDiv).not.toHaveClass('light-theme');
+      expect(firstDiv).not.toHaveClass('our-theme');
+      expect(firstDiv).not.toHaveClass('dark-theme');
+      expect(firstDiv).not.toHaveClass('terminal-theme');
+
+
+    expect(button).toHaveClass('button-outline');
+  });
+
+  it('should change the theme to "Copper" and update the container style when clicked', () => {
+
+    const {container} = render(<UserEditingPage />);
+
+
+    const button = screen.getByRole('button', { name: /copper/i });
+    fireEvent.click(button);
+
+    const firstDiv = container.querySelector('div');
+      expect(firstDiv).toHaveClass('copper-theme');
+      expect(firstDiv).not.toHaveClass('light-theme');
+      expect(firstDiv).not.toHaveClass('our-theme');
+      expect(firstDiv).not.toHaveClass('dark-theme');
+      expect(firstDiv).not.toHaveClass('terminal-theme');
+      expect(firstDiv).not.toHaveClass('dmg-theme');
+      expect(firstDiv).not.toHaveClass('nautilus-theme');
+      expect(firstDiv).not.toHaveClass('beach-theme');
+      expect(firstDiv).not.toHaveClass('snes-theme');
+
+
+    expect(button).toHaveClass('button-outline');
+  });
+
+  it('should change the theme to "Dmg" and update the container style when clicked', () => {
+
+    const {container} = render(<UserEditingPage />);
+
+
+    const button = screen.getByRole('button', { name: /dmg/i });
+    fireEvent.click(button);
+
+    const firstDiv = container.querySelector('div');
+      expect(firstDiv).toHaveClass('dmg-theme');
+      expect(firstDiv).not.toHaveClass('light-theme');
+      expect(firstDiv).not.toHaveClass('our-theme');
+      expect(firstDiv).not.toHaveClass('dark-theme');
+      expect(firstDiv).not.toHaveClass('terminal-theme');
+      expect(firstDiv).not.toHaveClass('copper-theme');
+      expect(firstDiv).not.toHaveClass('nautilus-theme');
+      expect(firstDiv).not.toHaveClass('beach-theme');
+      expect(firstDiv).not.toHaveClass('snes-theme');
+
+
+    expect(button).toHaveClass('button-outline');
+  });
+
+  it('should change the theme to "nautilus" and update the container style when clicked', () => {
+
+    const {container} = render(<UserEditingPage />);
+
+
+    const button = screen.getByRole('button', { name: /nautilus/i });
+    fireEvent.click(button);
+
+    const firstDiv = container.querySelector('div');
+      expect(firstDiv).toHaveClass('nautilus-theme');
+      expect(firstDiv).not.toHaveClass('light-theme');
+      expect(firstDiv).not.toHaveClass('our-theme');
+      expect(firstDiv).not.toHaveClass('dark-theme');
+      expect(firstDiv).not.toHaveClass('terminal-theme');
+      expect(firstDiv).not.toHaveClass('copper-theme');
+      expect(firstDiv).not.toHaveClass('dmg-theme');
+      expect(firstDiv).not.toHaveClass('beach-theme');
+      expect(firstDiv).not.toHaveClass('snes-theme');
+
+
+    expect(button).toHaveClass('button-outline');
+  });
+
+  it('should change the theme to "terminal" and update the container style when clicked', () => {
+
+    const {container} = render(<UserEditingPage />);
+
+
+    const button = screen.getByRole('button', { name: /terminal/i });
+    fireEvent.click(button);
+
+    const firstDiv = container.querySelector('div');
+      expect(firstDiv).toHaveClass('terminal-theme');
+      expect(firstDiv).not.toHaveClass('light-theme');
+      expect(firstDiv).not.toHaveClass('our-theme');
+      expect(firstDiv).not.toHaveClass('dark-theme');
+      expect(firstDiv).not.toHaveClass('nautilus-theme');
+      expect(firstDiv).not.toHaveClass('copper-theme');
+      expect(firstDiv).not.toHaveClass('dmg-theme');
+      expect(firstDiv).not.toHaveClass('beach-theme');
+      expect(firstDiv).not.toHaveClass('snes-theme');
+
+
+    expect(button).toHaveClass('button-outline');
+  });
+
+  it('should change the theme to "Beach" and update the container style when clicked', () => {
+
+    const {container} = render(<UserEditingPage />);
+
+
+    const button = screen.getByRole('button', { name: /beach/i });
+    fireEvent.click(button);
+
+    const firstDiv = container.querySelector('div');
+      expect(firstDiv).toHaveClass('beach-theme');
+      expect(firstDiv).not.toHaveClass('light-theme');
+      expect(firstDiv).not.toHaveClass('our-theme');
+      expect(firstDiv).not.toHaveClass('dark-theme');
+      expect(firstDiv).not.toHaveClass('nautilus-theme');
+      expect(firstDiv).not.toHaveClass('copper-theme');
+      expect(firstDiv).not.toHaveClass('dmg-theme');
+      expect(firstDiv).not.toHaveClass('terminal-theme');
+      expect(firstDiv).not.toHaveClass('snes-theme');
+
+
+    expect(button).toHaveClass('button-outline');
+  });
+
+});
+
+
 describe('Submission errors', () => {
   it('error for incorrect email one when all info is present', async () => {
     window.matchMedia = jest.fn()
