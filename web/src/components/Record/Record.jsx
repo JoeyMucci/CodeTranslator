@@ -150,61 +150,46 @@ const Record = ({
     <>
       <div className="flex flex-row justify-center space-x-20  ">
         <div className=" basis-1/4">
-          <div className="m-1 flex flex-row">
-            <h2 className="centertext">{originalLanguage}</h2>
+               <div className = "flex flex-row m-1">
+              <h2 className="centertext">{originalLanguage}</h2>
 
-            <div
-              className="TOTHERIGHT m-1 flex flex-row"
-              style={{ marginLeft: 'auto' }}
-            >
-              <button
-                className=" DOWNLOADBUTTON basis-1/8 w-8  items-center rounded text-white hover:bg-gray-800"
-                onClick={() => handleDownloadClick('input')}
-                aria-label="Download"
-              >
-                <img
-                  src="https://img.icons8.com/material-rounded/64/FFFFFF/download--v1.png"
-                  alt="copy"
-                  border="0"
-                />
-              </button>
-              <div style={{ width: '20px' }}></div>
-              <button
-                className="COPYBUTTON basis-1/8 w-8 rounded text-center text-white hover:bg-gray-800"
-                onClick={() => handleCopyClick('input')}
-                aria-label="Copy"
-              >
-                {' '}
-                <img
-                  src="https://img.icons8.com/material-outlined/96/FFFFFF/copy.png"
-                  alt="copy"
-                  border="0"
-                />
-              </button>
+              <div className = "TOTHERIGHT flex flex-row m-1" style={{ marginLeft: 'auto' }}>
+                <button
+                  className=" DOWNLOADBUTTON basis-1/8 w-8  items-center rounded bg-button"
+                  onClick={() => handleDownloadClick("input")}
+                  aria-label="Download"
+                  style={{ width: '40px' }}
+                >
+                  <img
+                    src="https://img.icons8.com/material-rounded/64/FFFFFF/download--v1.png"
+                    alt="copy"
+                    border="0"
+                  />
+                </button>
+                <div style={{ width: '20px' }}></div>
+                <button
+                  className="COPYBUTTON basis-1/8 w-8 rounded text-center bg-button"
+                  onClick={() => handleCopyClick("input")}
+                  aria-label="Copy"
+                  style={{ width: '40px' }}
+                >
+                  {' '}
+                  <img
+                    src="https://img.icons8.com/material-outlined/96/FFFFFF/copy.png"
+                    alt="copy"
+                    border="0"
+                  />
+                </button>
+              </div>
             </div>
-          </div>
-          <div
-            className="originalCode rounded bg-text_box p-5 hover:bg-blue-300"
-            style={{
-              overflow: isTranslatedCodeExpanded ? 'auto' : 'hidden',
-              width: '600px',
-              height: isOriginalCodeExpanded ? 'auto' : '150px',
-              cursor: 'pointer',
-            }}
-            onClick={toggleOriginalCode}
-          >
-            <pre
-              ref={originalCodeRef}
-              style={{
-                whiteSpace: 'pre-wrap',
-                background: 'transparent',
-                wordWrap: 'break-word',
-              }}
-            >
-              <code>{originalCode}</code>
-            </pre>
-          </div>
-          <p className="text-white">Created on {formatDateTime(createdAt)}</p>
+        <div className="originalCode rounded bg-dropdown p-5 " style={{ overflow: isTranslatedCodeExpanded ? 'auto' : 'hidden', width: '600px',  height: isOriginalCodeExpanded ? 'auto' : '150px', cursor: 'pointer'}} onClick={toggleOriginalCode}>
+          <pre ref={originalCodeRef} style={{ whiteSpace: 'pre-wrap', background: 'transparent', wordWrap: 'break-word' }}>
+            <code>
+              {originalCode}
+            </code>
+          </pre>
+        </div>
+        <p >Created on {formatDateTime(createdAt)}</p>
         </div>
         <div className="flex flex-col items-center justify-center">
           <img
@@ -214,61 +199,44 @@ const Record = ({
             style={{ width: '75px', height: '50px', align: 'middle' }}
           ></img>
         </div>
-
-        <div className=" basis-1/4">
-          <div className="m-1 flex flex-row">
-            <h2 className="centertext">{translatedLanguage}</h2>
-            <div
-              className="TOTHERIGHT m-1 flex flex-row"
-              style={{ marginLeft: 'auto' }}
-            >
-              <button
-                className=" DOWNLOADBUTTON basis-1/8 w-8  items-center rounded text-white hover:bg-gray-800"
-                onClick={() => handleDownloadClick('output')}
-                aria-label="Download"
-              >
-                <img
-                  src="https://img.icons8.com/material-rounded/64/FFFFFF/download--v1.png"
-                  alt="copy"
-                  border="0"
-                />
-              </button>
-              <div style={{ width: '20px' }}></div>
-              <button
-                className="COPYBUTTON basis-1/8 w-8 rounded text-center text-white hover:bg-gray-800"
-                onClick={() => handleCopyClick('output')}
-                aria-label="Copy"
-              >
-                {' '}
-                <img
-                  src="https://img.icons8.com/material-outlined/96/FFFFFF/copy.png"
-                  alt="copy"
-                  border="0"
-                />
-              </button>
+      <div className=" basis-1/4">
+            <div className = "flex flex-row m-1">
+              <h2 className="centertext">{translatedLanguage}</h2>
+              <div className = "TOTHERIGHT flex flex-row m-1" style={{ marginLeft: 'auto' }}>
+                <button
+                  className=" DOWNLOADBUTTON basis-1/8 w-8  items-center rounded bg-button"
+                  onClick={() => handleDownloadClick("output")}
+                  aria-label="Download"
+                  style={{ width: '40px' }}
+                >
+                  <img
+                    src="https://img.icons8.com/material-rounded/64/FFFFFF/download--v1.png"
+                    alt="copy"
+                    border="0"
+                  />
+                </button>
+                <div style={{ width: '20px' }}></div>
+                <button
+                  className="COPYBUTTON basis-1/8 w-8 rounded text-center bg-button"
+                  onClick={() => handleCopyClick("output")}
+                  aria-label="Copy"
+                  style={{ width: '40px' }}
+                >
+                  {' '}
+                  <img
+                    src="https://img.icons8.com/material-outlined/96/FFFFFF/copy.png"
+                    alt="copy"
+                    border="0"
+                  />
+                </button>
+              </div>
             </div>
-          </div>
-          <div
-            className="translatedCode rounded bg-text_box p-5 hover:bg-blue-300"
-            style={{
-              overflow: isTranslatedCodeExpanded ? 'auto' : 'hidden',
-              width: '600px',
-              height: isOriginalCodeExpanded ? 'auto' : '150px',
-              cursor: 'pointer',
-            }}
-            onClick={toggleTranslatedCode}
-          >
-            <pre
-              ref={translatedCodeRef}
-              style={{
-                whiteSpace: 'pre-wrap',
-                background: 'transparent',
-                wordWrap: 'break-word',
-              }}
-            >
-              <code>{translatedCode}</code>
-            </pre>
-          </div>
+        <div className="translatedCode rounded bg-dropdown p-5 " style={{ overflow: isTranslatedCodeExpanded ? 'auto' : 'hidden',  width: '600px',  height: isOriginalCodeExpanded ? 'auto' : '150px', cursor: 'pointer'}} onClick={toggleTranslatedCode}>
+          <pre ref={translatedCodeRef} style={{ whiteSpace: 'pre-wrap', background: 'transparent', wordWrap: 'break-word' }}>
+            <code>
+              {translatedCode}
+            </code>
+          </pre>
         </div>
       </div>
     </>

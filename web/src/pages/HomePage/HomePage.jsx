@@ -99,9 +99,14 @@ const LoginForm = () => {
     }
   }
 
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
   return (
+
+
     <Form
-      className="flex flex-col rounded-xl bg-gray-100 px-20 py-12 max-md:max-w-full max-md:px-5"
+
+      className={` flex flex-col rounded-xl bg-gray-100 px-20 py-12 max-md:max-w-full max-md:px-5 `}
       onSubmit={handleSubmit}
     >
       <Label htmlFor="emailInput" className="mt-2 text-black">

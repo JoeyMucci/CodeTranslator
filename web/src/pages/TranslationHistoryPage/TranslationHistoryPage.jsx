@@ -1,13 +1,15 @@
 // import { Link, routes } from '@redwoodjs/router'
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import RecordsCell from 'web/src/components/RecordsCell/RecordsCell.jsx';
 import { Metadata, useQuery } from '@redwoodjs/web'
+
 
 import arrow from 'web/public/Arrow.png';
 
 
 const RecordhistoryPage = () => {
   let emil = localStorage.getItem('userEmail')
+
 
 
   const languageDropdownRef1 = useRef(null)
@@ -23,8 +25,12 @@ const RecordhistoryPage = () => {
     setDateAscending((prevOrder) => !prevOrder);
    };
 
+   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
   return (
     <>
+
+    <div className={`  ${theme === 'light' ? 'light-theme' : theme === 'dark' ? 'dark-theme' : theme === 'snes' ? 'snes-theme' : theme === 'our' ? 'our-theme' : theme === 'terminal' ? 'terminal-theme' : theme === 'dmg' ? 'dmg-theme' : theme === 'nautilus' ? 'nautilus-theme' : theme === 'copper' ? 'copper-theme' : 'beach-theme'}`} >
       <Metadata
         title="Translationhistory"
         description="Translationhistory page"
@@ -39,7 +45,7 @@ const RecordhistoryPage = () => {
 <div className="flex  justify-center  " style={{ margin: 'auto' }}>
   <div className="flex flex-row justify-center space-x-20">
     <div className="OriginalFilter basis-1/4" style={{width: '600px'}}>
-      <label htmlFor="language" className="text-white">
+      <label htmlFor="language" >
               Filter by Input Language:
             </label>
             <div className="flex flex-row justify-between">
@@ -48,7 +54,7 @@ const RecordhistoryPage = () => {
                 onChange={(e) => setInputLanguage(e.target.value)}
                 name="language"
                 id="language"
-                className="mt-1 h-7 w-20 basis-3/4 rounded bg-text_box text-center hover:bg-blue-200 "
+                className="mt-1 h-7 w-20 basis-3/4 rounded bg-dropdown text-center "
               >
                 <option value="Default">All Languages</option>
                 <option value="C">C</option>
@@ -65,7 +71,7 @@ const RecordhistoryPage = () => {
     </div>
 
     <div className="OriginalFilter basis-1/4" style={{width: '600px'}}>
-      <label htmlFor="language" className="text-white">
+      <label htmlFor="language">
       Filter by Output Language:
             </label>
             <div className="flex flex-row justify-between">
@@ -74,7 +80,7 @@ const RecordhistoryPage = () => {
                 onChange={(e) => setOutputLanguage(e.target.value)}
                 name="language"
                 id="language"
-                className="mt-1 h-7 w-20 basis-3/4 rounded bg-text_box text-center hover:bg-blue-200 "
+                className="mt-1 h-7 w-20 basis-3/4 rounded bg-dropdown text-center  "
               >
                 <option value="Default">All Languages</option>
                 <option value="C">C</option>
@@ -90,7 +96,7 @@ const RecordhistoryPage = () => {
             </div>
 
     </div>
-    <button className="mt-5 w-1/2 justify-center  rounded bg-sky-700 text-white hover:bg-sky-800 "
+    <button className="mt-5 w-1/2 justify-center  rounded bg-button text-white "
               onClick={toggleOrder}
               aria-label="FilterSubmission"
               style={{width: '200px'}}>Toggle Date Desc/Asc</button>
@@ -100,10 +106,12 @@ const RecordhistoryPage = () => {
 
   </div>
   <br></br>
+
   <br></br>
   <hr style={{ margin: 'auto' }}></hr>
       <br></br>
-      <RecordsCell goal={emil}  DateAscending={DateAscending} inputLanguage={inputLanguage} outputLanguage={outputLanguage} />
+      <RecordsCell  goal={emil}  DateAscending={DateAscending} inputLanguage={inputLanguage} outputLanguage={outputLanguage} />
+      </div>
     </>
   )
 }

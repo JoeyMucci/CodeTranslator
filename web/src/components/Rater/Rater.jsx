@@ -62,7 +62,7 @@ const Rater = ({ onSubmit, error, loading, formMethods }) => {
             title="error: expected usable code"
           ></Label>
         </fieldset>
-        <Submit className="submitbutton" disabled={loading}>
+        <Submit className="submitbutton bg-button text-white" disabled={loading}>
           Submit
         </Submit>
       </Form>
