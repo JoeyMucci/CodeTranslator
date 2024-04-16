@@ -15,8 +15,11 @@ import { toast, Toaster } from '@redwoodjs/web/toast'
 
 export const UPDATE_USER = gql`
   mutation UpdateUserMutation($email: String!, $input: UpdateUserInput!) {
-    updateUserByEmail(email: $email, input: $input) {
-      email
+    updateUserMute(email: $email, input: $input) {
+      user {
+        email
+      }
+      error
     }
   }
 `
@@ -35,12 +38,15 @@ export const CHANGE_PASSWORD = gql`
     $oldPassword: String!
     $newPassword: String!
   ) {
-    changePasswordNew(
+    changePasswordMute(
       email: $email
       oldPassword: $oldPassword
       newPassword: $newPassword
     ) {
-      email
+      user {
+        email
+      }
+      error
     }
   }
 `
@@ -84,8 +90,6 @@ const UserEditingPage = () => {
   const [updateUser, { loading, error }] = useMutation(UPDATE_USER, {
     onCompleted: async () => {
       formMethodsInfo.reset()
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      location.reload()
     },
   })
 
@@ -119,27 +123,35 @@ const UserEditingPage = () => {
         email:
           data.email == '' ? localStorage.getItem('userEmail') : data.email,
       }
-      await updateUser({
+      const res = await updateUser({
         variables: {
           email: localStorage.getItem('userEmail'),
           input: realData,
         },
       })
-      localStorage.setItem('userEmail', realData.email)
-      localStorage.setItem('userName', realData.name)
-      toast.success('Your profile is updated! Hang tight!')
-    } catch (error) {
-      console.log(error)
-      console.log(error.graphQLErrors[0])
       if (
-        error.graphQLErrors &&
-        error.graphQLErrors[0] &&
-        error.graphQLErrors[0].extensions.originalError.message.includes(
-          'Unique constraint'
-        )
-      )
+        res.data.updateUserMute.user == null &&
+        res.data.updateUserMute.error == 'P2002'
+      ) {
         toast.error('Email is already registered')
-      else toast.error('Update user info failed')
+      } else {
+        localStorage.setItem('userEmail', realData.email)
+        localStorage.setItem('userName', realData.name)
+        toast.success('Your profile is updated! Hang tight!')
+        await new Promise((resolve) => setTimeout(resolve, 2000))
+        location.reload()
+      }
+    } catch (error) {
+      // console.log(error)
+      // console.log(error.graphQLErrors[0])
+      // if (
+      //   error.graphQLErrors &&
+      //   error.graphQLErrors[0] &&
+      //   error.graphQLErrors[0].extensions.originalError.message.includes(
+      //     'Unique constraint'
+      //   )
+      // )
+      toast.error('Update user info failed')
     }
   }
 
@@ -151,27 +163,35 @@ const UserEditingPage = () => {
       else if (!passwordRegex.test(data.newpassword))
         toast.error('Password is too weak')
       else {
-        await changePassword({
+        const res = await changePassword({
           variables: {
             email: localStorage.getItem('userEmail'),
             oldPassword: data.oldpassword,
             newPassword: data.newpassword,
           },
         })
-        toast.success('Password changed!')
+        if (
+          res.data.changePasswordMute.user == null &&
+          res.data.changePasswordMute.error == 'Invalid password'
+        ) {
+          toast.error('Incorrect Password')
+        } else {
+          toast.success('Password changed!')
+        }
       }
     } catch (error) {
-      console.log(error)
-      console.log(error.graphQLErrors[0])
-      if (
-        error.graphQLErrors &&
-        error.graphQLErrors[0] &&
-        error.graphQLErrors[0].extensions.originalError.message.includes(
-          'Invalid password'
-        )
-      )
-        toast.error('Incorrect Password')
-      else toast.error('Change password failed')
+      // console.log(error)
+      // console.log(error.graphQLErrors[0])
+      // if (
+      //   error.graphQLErrors &&
+      //   error.graphQLErrors[0] &&
+      //   error.graphQLErrors[0].extensions.originalError.message.includes(
+      //     'Invalid password'
+      //   )
+      // )
+      //   toast.error('Incorrect Password')
+      // else
+      toast.error('Change password failed')
     }
   }
 

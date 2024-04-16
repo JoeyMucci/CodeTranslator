@@ -3,6 +3,26 @@ import jwt from 'jsonwebtoken'
 
 import { db } from 'src/lib/db'
 
+export const loginUserMute = async ({ email, password }) => {
+  try {
+    const result = await loginUser({
+      email: email,
+      password: password,
+    })
+    return {
+      token: result.token,
+      user: result.user,
+      error: 'none',
+    }
+  } catch (error) {
+    return {
+      token: null,
+      user: null,
+      error: error.message,
+    }
+  }
+}
+
 export const loginUser = async ({ email, password }) => {
   const user = await db.user.findUnique({ where: { email } })
 

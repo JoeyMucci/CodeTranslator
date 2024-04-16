@@ -9,21 +9,12 @@ import LoginForm from './HomePage'
 
 describe('Login Form', () => {
   test('Displays message for incorrect email', async () => {
+    window.matchMedia = jest.fn()
     render(
       <GraphQLHooksProvider
         useMutation={jest.fn().mockReturnValue([
-          jest.fn().mockImplementation(async () => {
-            const bruh = new Error('Bruh Three')
-            bruh.graphQLErrors = {
-              0: {
-                extensions: {
-                  originalError: {
-                    message: 'User not found',
-                  },
-                },
-              },
-            }
-            throw bruh
+          jest.fn().mockReturnValue({
+            data: { loginUserMute: { user: null, error: 'User not found' } },
           }),
           {},
         ])}
@@ -50,21 +41,12 @@ describe('Login Form', () => {
   })
 
   test('Displays message for incorrect password', async () => {
+    window.matchMedia = jest.fn()
     render(
       <GraphQLHooksProvider
         useMutation={jest.fn().mockReturnValue([
-          jest.fn().mockImplementation(async () => {
-            const bruh = new Error('Bruh Three')
-            bruh.graphQLErrors = {
-              0: {
-                extensions: {
-                  originalError: {
-                    message: 'Invalid password',
-                  },
-                },
-              },
-            }
-            throw bruh
+          jest.fn().mockReturnValue({
+            data: { loginUserMute: { user: null, error: 'Invalid password' } },
           }),
           {},
         ])}

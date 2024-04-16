@@ -4,6 +4,24 @@ import { db } from 'src/lib/db'
 
 import { updateUser } from '../users/users'
 
+export const changePasswordMute = async ({ email, oldPassword, newPassword }) => {
+  try {
+    return {
+      user: await changePasswordNew({
+        email: email,
+        oldPassword: oldPassword,
+        newPassword: newPassword,
+      }),
+      error: 'none',
+    }
+  } catch (error) {
+    return {
+      user: null,
+      error: error.message,
+    }
+  }
+}
+
 export const changePasswordNew = async ({ email, oldPassword, newPassword }) => {
   const user = await db.user.findUnique({ where: { email } })
   const passwordMatches = await bcrypt.compare(oldPassword, user.password)

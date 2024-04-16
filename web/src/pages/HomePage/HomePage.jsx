@@ -25,13 +25,14 @@ const CREATE_USER = gql`
 
 const LOGIN_USER = gql`
   mutation LoginUser($email: String!, $password: String!) {
-    loginUser(email: $email, password: $password) {
+    loginUserMute(email: $email, password: $password) {
       token
       user {
         name
         email
         password
       }
+      error
     }
   }
 `
@@ -87,33 +88,44 @@ const LoginForm = () => {
   const handleSubmit = async () => {
     try {
       const response = await loginUser({ variables: { email, password } })
-      localStorage.setItem('userName', response.data.loginUser.user.name)
-      localStorage.setItem('userEmail', response.data.loginUser.user.email)
-      localStorage.setItem('authToken', response.data.loginUser.token)
-      navigate('/code-translator')
-      location.reload()
+      if (response.data.loginUserMute.user == null) {
+        if (response.data.loginUserMute.error == 'Invalid password')
+          setWrongPasswordError('Invalid password')
+        else if (response.data.loginUserMute.error == 'User not found')
+          setWrongEmailError('User not found')
+      } else {
+        localStorage.setItem('userName', response.data.loginUserMute.user.name)
+        localStorage.setItem(
+          'userEmail',
+          response.data.loginUserMute.user.email
+        )
+        localStorage.setItem('authToken', response.data.loginUserMute.token)
+        navigate('/code-translator')
+        location.reload()
+      }
     } catch (error) {
       // if (error.message.includes('500'))
       //   toast.error('Cannot authenticate with our API, please wait')
       // else toast.error('Login Failed')
       // setWrongPasswordError(error.message)
-      if (
-        error.graphQLErrors &&
-        error.graphQLErrors[0] &&
-        error.graphQLErrors[0].extensions.originalError.message.includes(
-          'Invalid password'
-        )
-      )
-        setWrongPasswordError(error.message)
-      else if (
-        error.graphQLErrors &&
-        error.graphQLErrors[0] &&
-        error.graphQLErrors[0].extensions.originalError.message.includes(
-          'User not found'
-        )
-      )
-        setWrongEmailError(error.message)
-      else if (error.message.includes('500'))
+      // if (
+      //   error.graphQLErrors &&
+      //   error.graphQLErrors[0] &&
+      //   error.graphQLErrors[0].extensions.originalError.message.includes(
+      //     'Invalid password'
+      //   )
+      // )
+      //   setWrongPasswordError(error.message)
+      // else if (
+      //   error.graphQLErrors &&
+      //   error.graphQLErrors[0] &&
+      //   error.graphQLErrors[0].extensions.originalError.message.includes(
+      //     'User not found'
+      //   )
+      // )
+      //   setWrongEmailError(error.message)
+      // else
+      if (error.message.includes('500'))
         toast.error('Cannot authenticate with our API, please wait')
       else toast.error('Login Failed')
     }

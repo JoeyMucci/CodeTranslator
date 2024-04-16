@@ -33,201 +33,172 @@ import UserEditingPage from './UserEditingPage'
 //   },
 // ]
 
-
 describe('Theme Buttons', () => {
   it('should change the theme to "light" and update the container style when clicked', () => {
+    const { container } = render(<UserEditingPage />)
 
-    const {container} = render(<UserEditingPage />);
+    const button = screen.getByRole('button', { name: /rosetta/i })
+    fireEvent.click(button)
 
+    const firstDiv = container.querySelector('div')
+    expect(firstDiv).toHaveClass('light-theme')
+    expect(firstDiv).not.toHaveClass('dark-theme')
+    expect(firstDiv).not.toHaveClass('snes-theme')
+    expect(firstDiv).not.toHaveClass('our-theme')
+    expect(firstDiv).not.toHaveClass('terminal-theme')
 
-    const button = screen.getByRole('button', { name: /rosetta/i });
-    fireEvent.click(button);
-
-    const firstDiv = container.querySelector('div');
-      expect(firstDiv).toHaveClass('light-theme');
-      expect(firstDiv).not.toHaveClass('dark-theme');
-      expect(firstDiv).not.toHaveClass('snes-theme');
-      expect(firstDiv).not.toHaveClass('our-theme');
-      expect(firstDiv).not.toHaveClass('terminal-theme');
-
-    expect(button).toHaveClass('button-outline');
-    expect(button).toHaveStyle({ backgroundColor: '#0369a1', color: 'white' });
-  });
+    expect(button).toHaveClass('button-outline')
+    expect(button).toHaveStyle({ backgroundColor: '#0369a1', color: 'white' })
+  })
 
   it('should change the theme to "dark" and update the container style when clicked', () => {
+    const { container } = render(<UserEditingPage />)
 
-    const {container} = render(<UserEditingPage />);
+    const button = screen.getByRole('button', { name: /spade/i })
+    fireEvent.click(button)
 
+    const firstDiv = container.querySelector('div')
+    expect(firstDiv).toHaveClass('dark-theme')
+    expect(firstDiv).not.toHaveClass('light-theme')
+    expect(firstDiv).not.toHaveClass('snes-theme')
+    expect(firstDiv).not.toHaveClass('our-theme')
+    expect(firstDiv).not.toHaveClass('terminal-theme')
 
-    const button = screen.getByRole('button', { name: /spade/i });
-    fireEvent.click(button);
-
-    const firstDiv = container.querySelector('div');
-      expect(firstDiv).toHaveClass('dark-theme');
-      expect(firstDiv).not.toHaveClass('light-theme');
-      expect(firstDiv).not.toHaveClass('snes-theme');
-      expect(firstDiv).not.toHaveClass('our-theme');
-      expect(firstDiv).not.toHaveClass('terminal-theme');
-
-
-    expect(button).toHaveClass('button-outline');
-  });
+    expect(button).toHaveClass('button-outline')
+  })
 
   it('should change the theme to "Ours" and update the container style when clicked', () => {
+    const { container } = render(<UserEditingPage />)
 
-    const {container} = render(<UserEditingPage />);
+    const button = screen.getByRole('button', { name: /ours/i })
+    fireEvent.click(button)
 
+    const firstDiv = container.querySelector('div')
+    expect(firstDiv).toHaveClass('our-theme')
+    expect(firstDiv).not.toHaveClass('light-theme')
+    expect(firstDiv).not.toHaveClass('snes-theme')
+    expect(firstDiv).not.toHaveClass('dark-theme')
+    expect(firstDiv).not.toHaveClass('terminal-theme')
 
-    const button = screen.getByRole('button', { name: /ours/i });
-    fireEvent.click(button);
-
-    const firstDiv = container.querySelector('div');
-      expect(firstDiv).toHaveClass('our-theme');
-      expect(firstDiv).not.toHaveClass('light-theme');
-      expect(firstDiv).not.toHaveClass('snes-theme');
-      expect(firstDiv).not.toHaveClass('dark-theme');
-      expect(firstDiv).not.toHaveClass('terminal-theme');
-
-
-    expect(button).toHaveClass('button-outline');
-  });
+    expect(button).toHaveClass('button-outline')
+  })
 
   it('should change the theme to "snes" and update the container style when clicked', () => {
+    const { container } = render(<UserEditingPage />)
 
-    const {container} = render(<UserEditingPage />);
+    const button = screen.getByRole('button', { name: /snes/i })
+    fireEvent.click(button)
 
+    const firstDiv = container.querySelector('div')
+    expect(firstDiv).toHaveClass('snes-theme')
+    expect(firstDiv).not.toHaveClass('light-theme')
+    expect(firstDiv).not.toHaveClass('our-theme')
+    expect(firstDiv).not.toHaveClass('dark-theme')
+    expect(firstDiv).not.toHaveClass('terminal-theme')
 
-    const button = screen.getByRole('button', { name: /snes/i });
-    fireEvent.click(button);
-
-    const firstDiv = container.querySelector('div');
-      expect(firstDiv).toHaveClass('snes-theme');
-      expect(firstDiv).not.toHaveClass('light-theme');
-      expect(firstDiv).not.toHaveClass('our-theme');
-      expect(firstDiv).not.toHaveClass('dark-theme');
-      expect(firstDiv).not.toHaveClass('terminal-theme');
-
-
-    expect(button).toHaveClass('button-outline');
-  });
+    expect(button).toHaveClass('button-outline')
+  })
 
   it('should change the theme to "Copper" and update the container style when clicked', () => {
+    const { container } = render(<UserEditingPage />)
 
-    const {container} = render(<UserEditingPage />);
+    const button = screen.getByRole('button', { name: /copper/i })
+    fireEvent.click(button)
 
+    const firstDiv = container.querySelector('div')
+    expect(firstDiv).toHaveClass('copper-theme')
+    expect(firstDiv).not.toHaveClass('light-theme')
+    expect(firstDiv).not.toHaveClass('our-theme')
+    expect(firstDiv).not.toHaveClass('dark-theme')
+    expect(firstDiv).not.toHaveClass('terminal-theme')
+    expect(firstDiv).not.toHaveClass('dmg-theme')
+    expect(firstDiv).not.toHaveClass('nautilus-theme')
+    expect(firstDiv).not.toHaveClass('beach-theme')
+    expect(firstDiv).not.toHaveClass('snes-theme')
 
-    const button = screen.getByRole('button', { name: /copper/i });
-    fireEvent.click(button);
-
-    const firstDiv = container.querySelector('div');
-      expect(firstDiv).toHaveClass('copper-theme');
-      expect(firstDiv).not.toHaveClass('light-theme');
-      expect(firstDiv).not.toHaveClass('our-theme');
-      expect(firstDiv).not.toHaveClass('dark-theme');
-      expect(firstDiv).not.toHaveClass('terminal-theme');
-      expect(firstDiv).not.toHaveClass('dmg-theme');
-      expect(firstDiv).not.toHaveClass('nautilus-theme');
-      expect(firstDiv).not.toHaveClass('beach-theme');
-      expect(firstDiv).not.toHaveClass('snes-theme');
-
-
-    expect(button).toHaveClass('button-outline');
-  });
+    expect(button).toHaveClass('button-outline')
+  })
 
   it('should change the theme to "Dmg" and update the container style when clicked', () => {
+    const { container } = render(<UserEditingPage />)
 
-    const {container} = render(<UserEditingPage />);
+    const button = screen.getByRole('button', { name: /dmg/i })
+    fireEvent.click(button)
 
+    const firstDiv = container.querySelector('div')
+    expect(firstDiv).toHaveClass('dmg-theme')
+    expect(firstDiv).not.toHaveClass('light-theme')
+    expect(firstDiv).not.toHaveClass('our-theme')
+    expect(firstDiv).not.toHaveClass('dark-theme')
+    expect(firstDiv).not.toHaveClass('terminal-theme')
+    expect(firstDiv).not.toHaveClass('copper-theme')
+    expect(firstDiv).not.toHaveClass('nautilus-theme')
+    expect(firstDiv).not.toHaveClass('beach-theme')
+    expect(firstDiv).not.toHaveClass('snes-theme')
 
-    const button = screen.getByRole('button', { name: /dmg/i });
-    fireEvent.click(button);
-
-    const firstDiv = container.querySelector('div');
-      expect(firstDiv).toHaveClass('dmg-theme');
-      expect(firstDiv).not.toHaveClass('light-theme');
-      expect(firstDiv).not.toHaveClass('our-theme');
-      expect(firstDiv).not.toHaveClass('dark-theme');
-      expect(firstDiv).not.toHaveClass('terminal-theme');
-      expect(firstDiv).not.toHaveClass('copper-theme');
-      expect(firstDiv).not.toHaveClass('nautilus-theme');
-      expect(firstDiv).not.toHaveClass('beach-theme');
-      expect(firstDiv).not.toHaveClass('snes-theme');
-
-
-    expect(button).toHaveClass('button-outline');
-  });
+    expect(button).toHaveClass('button-outline')
+  })
 
   it('should change the theme to "nautilus" and update the container style when clicked', () => {
+    const { container } = render(<UserEditingPage />)
 
-    const {container} = render(<UserEditingPage />);
+    const button = screen.getByRole('button', { name: /nautilus/i })
+    fireEvent.click(button)
 
+    const firstDiv = container.querySelector('div')
+    expect(firstDiv).toHaveClass('nautilus-theme')
+    expect(firstDiv).not.toHaveClass('light-theme')
+    expect(firstDiv).not.toHaveClass('our-theme')
+    expect(firstDiv).not.toHaveClass('dark-theme')
+    expect(firstDiv).not.toHaveClass('terminal-theme')
+    expect(firstDiv).not.toHaveClass('copper-theme')
+    expect(firstDiv).not.toHaveClass('dmg-theme')
+    expect(firstDiv).not.toHaveClass('beach-theme')
+    expect(firstDiv).not.toHaveClass('snes-theme')
 
-    const button = screen.getByRole('button', { name: /nautilus/i });
-    fireEvent.click(button);
-
-    const firstDiv = container.querySelector('div');
-      expect(firstDiv).toHaveClass('nautilus-theme');
-      expect(firstDiv).not.toHaveClass('light-theme');
-      expect(firstDiv).not.toHaveClass('our-theme');
-      expect(firstDiv).not.toHaveClass('dark-theme');
-      expect(firstDiv).not.toHaveClass('terminal-theme');
-      expect(firstDiv).not.toHaveClass('copper-theme');
-      expect(firstDiv).not.toHaveClass('dmg-theme');
-      expect(firstDiv).not.toHaveClass('beach-theme');
-      expect(firstDiv).not.toHaveClass('snes-theme');
-
-
-    expect(button).toHaveClass('button-outline');
-  });
+    expect(button).toHaveClass('button-outline')
+  })
 
   it('should change the theme to "terminal" and update the container style when clicked', () => {
+    const { container } = render(<UserEditingPage />)
 
-    const {container} = render(<UserEditingPage />);
+    const button = screen.getByRole('button', { name: /terminal/i })
+    fireEvent.click(button)
 
+    const firstDiv = container.querySelector('div')
+    expect(firstDiv).toHaveClass('terminal-theme')
+    expect(firstDiv).not.toHaveClass('light-theme')
+    expect(firstDiv).not.toHaveClass('our-theme')
+    expect(firstDiv).not.toHaveClass('dark-theme')
+    expect(firstDiv).not.toHaveClass('nautilus-theme')
+    expect(firstDiv).not.toHaveClass('copper-theme')
+    expect(firstDiv).not.toHaveClass('dmg-theme')
+    expect(firstDiv).not.toHaveClass('beach-theme')
+    expect(firstDiv).not.toHaveClass('snes-theme')
 
-    const button = screen.getByRole('button', { name: /terminal/i });
-    fireEvent.click(button);
-
-    const firstDiv = container.querySelector('div');
-      expect(firstDiv).toHaveClass('terminal-theme');
-      expect(firstDiv).not.toHaveClass('light-theme');
-      expect(firstDiv).not.toHaveClass('our-theme');
-      expect(firstDiv).not.toHaveClass('dark-theme');
-      expect(firstDiv).not.toHaveClass('nautilus-theme');
-      expect(firstDiv).not.toHaveClass('copper-theme');
-      expect(firstDiv).not.toHaveClass('dmg-theme');
-      expect(firstDiv).not.toHaveClass('beach-theme');
-      expect(firstDiv).not.toHaveClass('snes-theme');
-
-
-    expect(button).toHaveClass('button-outline');
-  });
+    expect(button).toHaveClass('button-outline')
+  })
 
   it('should change the theme to "Beach" and update the container style when clicked', () => {
+    const { container } = render(<UserEditingPage />)
 
-    const {container} = render(<UserEditingPage />);
+    const button = screen.getByRole('button', { name: /beach/i })
+    fireEvent.click(button)
 
+    const firstDiv = container.querySelector('div')
+    expect(firstDiv).toHaveClass('beach-theme')
+    expect(firstDiv).not.toHaveClass('light-theme')
+    expect(firstDiv).not.toHaveClass('our-theme')
+    expect(firstDiv).not.toHaveClass('dark-theme')
+    expect(firstDiv).not.toHaveClass('nautilus-theme')
+    expect(firstDiv).not.toHaveClass('copper-theme')
+    expect(firstDiv).not.toHaveClass('dmg-theme')
+    expect(firstDiv).not.toHaveClass('terminal-theme')
+    expect(firstDiv).not.toHaveClass('snes-theme')
 
-    const button = screen.getByRole('button', { name: /beach/i });
-    fireEvent.click(button);
-
-    const firstDiv = container.querySelector('div');
-      expect(firstDiv).toHaveClass('beach-theme');
-      expect(firstDiv).not.toHaveClass('light-theme');
-      expect(firstDiv).not.toHaveClass('our-theme');
-      expect(firstDiv).not.toHaveClass('dark-theme');
-      expect(firstDiv).not.toHaveClass('nautilus-theme');
-      expect(firstDiv).not.toHaveClass('copper-theme');
-      expect(firstDiv).not.toHaveClass('dmg-theme');
-      expect(firstDiv).not.toHaveClass('terminal-theme');
-      expect(firstDiv).not.toHaveClass('snes-theme');
-
-
-    expect(button).toHaveClass('button-outline');
-  });
-
-});
-
+    expect(button).toHaveClass('button-outline')
+  })
+})
 
 describe('Submission errors info', () => {
   it('error for incorrect email one when all info is present', async () => {
@@ -237,7 +208,7 @@ describe('Submission errors info', () => {
         useMutation={jest.fn().mockReturnValue([
           jest.fn().mockReturnValue({
             data: {
-              updateUserByEmail: { email: 'blah@blah.co' },
+              updateUserMute: { email: 'blah@blah.co' },
             },
           }),
           {},
@@ -271,7 +242,7 @@ describe('Submission errors info', () => {
         useMutation={jest.fn().mockReturnValue([
           jest.fn().mockReturnValue({
             data: {
-              updateUserByEmail: { email: 'blah@blah.co' },
+              updateUserMute: { email: 'blah@blah.co' },
             },
           }),
           {},
@@ -307,7 +278,7 @@ describe('Submission errors info', () => {
         useMutation={jest.fn().mockReturnValue([
           jest.fn().mockReturnValue({
             data: {
-              updateUserByEmail: { email: 'blah@blah.co' },
+              updateUserMute: { email: 'blah@blah.co' },
             },
           }),
           {},
@@ -341,7 +312,7 @@ describe('Submission errors info', () => {
         useMutation={jest.fn().mockReturnValue([
           jest.fn().mockReturnValue({
             data: {
-              updateUserByEmail: { email: 'blah@blah.co' },
+              updateUserMute: { email: 'blah@blah.co' },
             },
           }),
           {},
@@ -368,7 +339,7 @@ describe('Submission errors info', () => {
         useMutation={jest.fn().mockReturnValue([
           jest.fn().mockReturnValue({
             data: {
-              updateUserByEmail: { email: 'blah@blah.co' },
+              updateUserMute: { email: 'blah@blah.co' },
             },
           }),
           {},
@@ -405,7 +376,7 @@ describe('Toast notifications info', () => {
         useMutation={jest.fn().mockReturnValue([
           jest.fn().mockReturnValue({
             data: {
-              updateUserByEmail: { email: 'blah@blah.co' },
+              updateUserMute: { email: 'blah@blah.co' },
             },
           }),
           {},
@@ -477,18 +448,8 @@ describe('Toast notifications info', () => {
     render(
       <GraphQLHooksProvider
         useMutation={jest.fn().mockReturnValue([
-          jest.fn().mockImplementation(async () => {
-            const bruh = new Error('Bruh Two')
-            bruh.graphQLErrors = {
-              0: {
-                extensions: {
-                  originalError: {
-                    message: "Unique constraint violated on field 'email'",
-                  },
-                },
-              },
-            }
-            throw bruh
+          jest.fn().mockReturnValue({
+            data: { updateUserMute: { user: null, error: 'P2002' } },
           }),
           {},
         ])}
@@ -611,7 +572,7 @@ describe('Toast notifications password', () => {
         useMutation={jest.fn().mockReturnValue([
           jest.fn().mockReturnValue({
             data: {
-              changePassword: { email: 'blah@blah.co' },
+              changePasswordMute: { email: 'blah@blah.co' },
             },
           }),
           {},
@@ -675,18 +636,10 @@ describe('Toast notifications password', () => {
     render(
       <GraphQLHooksProvider
         useMutation={jest.fn().mockReturnValue([
-          jest.fn().mockImplementation(async () => {
-            const bruh = new Error('Bruh Two')
-            bruh.graphQLErrors = {
-              0: {
-                extensions: {
-                  originalError: {
-                    message: 'Invalid password',
-                  },
-                },
-              },
-            }
-            throw bruh
+          jest.fn().mockReturnValue({
+            data: {
+              changePasswordMute: { user: null, error: 'Invalid password' },
+            },
           }),
           {},
         ])}

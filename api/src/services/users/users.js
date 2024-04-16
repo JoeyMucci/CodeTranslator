@@ -24,6 +24,23 @@ export const createUser = async ({ input }) => {
   return user
 }
 
+export const updateUserMute = async ({ email, input }) => {
+  try {
+    return {
+      user: await updateUserByEmail({
+        email: email,
+        input: input,
+      }),
+      error: 'none',
+    }
+  } catch (error) {
+    return {
+      user: null,
+      error: error.code,
+    }
+  }
+}
+
 export const updateUser = ({ email, input }) => {
   return db.user.update({
     data: input,
