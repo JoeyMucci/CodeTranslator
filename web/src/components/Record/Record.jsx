@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react'
+import { Metadata, useMutation, useQuery  } from '@redwoodjs/web'
 
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github.css'
@@ -13,6 +14,7 @@ const Record = ({
   originalLanguage,
   translatedLanguage,
   createdAt,
+  onDelete,
 }) => {
   const originalCodeRef = useRef(null)
   const translatedCodeRef = useRef(null)
@@ -37,6 +39,35 @@ const Record = ({
       hour12: true, // Use AM/PM
     })
   }
+
+
+  const DELETE_TRANSLATION = gql`
+  mutation DeleteTranslationMutation($id: Int!) {
+    deleteTranslation(id: $id) {
+      id
+    }
+  }
+`
+const [deleteTranslation, { loading, error }] = useMutation(DELETE_TRANSLATION, {
+  onCompleted: () => {
+    console.log("Translation deleted. ID:", id);
+  },
+  refetchQueries: ['RecordsQuery'],
+});
+
+const handleDeleteByIdClick = (id) => {
+  if (!id) {
+    console.error("Cannot delete translation: ID is null WHAT THE FREEK MAn.");
+    return; // Stop execution if id is null
+  }
+  deleteTranslation({ variables: { id: parseInt(id) } })
+      .then(() => {
+        onDelete();
+      })
+      .catch((error) => {
+        console.error("Error deleting translation:", error);
+      });
+}
 
   // Function to toggle the expansion state of original code
   const toggleOriginalCode = () => {
@@ -145,9 +176,10 @@ const Record = ({
     // Deselect the code element
     window.getSelection().removeAllRanges()
   }
-
+  console.log("Rendering Record with ID:", id);
   return (
     <>
+
       <div className="flex flex-row justify-center space-x-20  ">
         <div className=" basis-1/4">
                <div className = "flex flex-row m-1">
@@ -237,7 +269,23 @@ const Record = ({
               {translatedCode}
             </code>
           </pre>
+
         </div>
+        <div className = "flex flex-row">
+        <p>Delete this translation </p>
+        <button
+                  className=" DELETESINGLETRANSLATION basis-1/8 w-8  items-center rounded bg-button"
+                  onClick={() => handleDeleteByIdClick(id)}
+                  aria-label="DeleteSingle"
+                  style={{ width: '20px',  marginTop: '4px' ,marginLeft: '4px'}}
+                >
+                  <img
+                    src="https://img.icons8.com/sf-black-filled/64/FFFFFF/x.png"
+                    alt="delete"
+                    border="0"
+                  />
+                </button>
+                </div>
       </div>
       </div>
     </>

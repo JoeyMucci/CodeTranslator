@@ -1,6 +1,7 @@
-import { render,screen } from '@redwoodjs/testing/web'
+import { render,screen, waitFor, fireEvent,act, MockedProvider, mockGraphQLQuery  } from '@redwoodjs/testing/web'
 import RecordsCell from 'web/src/components/RecordsCell/RecordsCell.jsx';
 import TranslationHistoryPage from './TranslationHistoryPage'
+
 
 //   Improve this test with help from the Redwood Testing Doc:
 //   https://redwoodjs.com/docs/testing#testing-pages-layouts
@@ -258,7 +259,6 @@ describe('TranslationHistoryPage', () => {
     expect(screen.getByText('C')).toBeInTheDocument();
     expect(screen.getByText('Java')).toBeInTheDocument();
   });
-
 
 
 
