@@ -29,7 +29,6 @@ export const Success = ({ feedbacks }) => {
     <>
       <h1 className="text">Hear from some of our users</h1>
       <hr style={{ margin: 'auto' }}></hr>
-
       <div className="flex flex-col space-y-10 p-5">
         {feedbacks.map((item) => {
           return (

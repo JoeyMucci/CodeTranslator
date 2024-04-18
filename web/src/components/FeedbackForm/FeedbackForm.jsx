@@ -19,7 +19,7 @@ const FeedbackForm = ({ onSubmit, error, loading, formMethods }) => {
         formMethods={formMethods}
       >
         <FormError error={error} wrapperClassName="form-error" />
-        <h1 className='centertext'>Feedback Form</h1>
+        <h1 style={{ textAlign: 'center'}}>Feedback Form</h1>
 
         <div className='form-header flex justify-between'>
           <div className="form-group flex">
