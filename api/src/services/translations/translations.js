@@ -7,7 +7,12 @@ export const translations = () => {
 
 export const myTranslations = ({ emmy }) => {
   return cache(`translations-${emmy}`, () => {
-    return db.translation.findMany({ where: { userEmail: emmy } })
+    return db.translation.findMany({
+      where: { userEmail: emmy },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    })
   })
 }
 
