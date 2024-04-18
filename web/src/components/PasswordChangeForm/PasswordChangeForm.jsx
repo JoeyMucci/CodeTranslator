@@ -11,7 +11,7 @@ const UserEditingForm = ({ onSubmit, error, loading, formMethods }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div
         className="mt-5 flex w-1/4 flex-col justify-center space-y-2  rounded bg-text_box "
-        style={{ margin: 'auto' }}
+        style={{ margin: 'auto'}}
       >
         <div className=" " style={{ margin: 'auto', marginTop: '20px' }}>
           <label htmlFor="oldpassword" style={{ marginRight: '10px' }}>
@@ -25,6 +25,7 @@ const UserEditingForm = ({ onSubmit, error, loading, formMethods }) => {
             name="oldpassword"
             type="password"
             {...register('oldpassword', { required: true })}
+            style={{color: 'black'}}
           />
           {errors.oldpassword && (
             <p style={{ color: 'red' }}>Old Password is required</p>
@@ -44,6 +45,7 @@ const UserEditingForm = ({ onSubmit, error, loading, formMethods }) => {
             {...register('newpassword', {
               required: true,
             })}
+            style={{color: 'black'}}
           />
           {errors.newpassword && (
             <p style={{ color: 'red' }}>New Password is required</p>
@@ -63,6 +65,7 @@ const UserEditingForm = ({ onSubmit, error, loading, formMethods }) => {
             {...register('confirmpassword', {
               required: true,
             })}
+            style={{color: 'black'}}
           />
           {errors.confirmpassword && (
             <p style={{ color: 'red' }}>Confirm Password is required</p>
