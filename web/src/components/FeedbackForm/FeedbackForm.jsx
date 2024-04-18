@@ -19,9 +19,10 @@ const FeedbackForm = ({ onSubmit, error, loading, formMethods }) => {
         formMethods={formMethods}
       >
         <FormError error={error} wrapperClassName="form-error" />
-        <h1>Feedback Form</h1>
-        <div className="form-header">
-          <div className="form-group">
+        <h1 className='centertext'>Feedback Form</h1>
+
+        <div className='form-header flex justify-between'>
+          <div className="form-group flex">
 
             <Label name="subject">
               Subject*:
@@ -29,14 +30,14 @@ const FeedbackForm = ({ onSubmit, error, loading, formMethods }) => {
             <TextField
               className="box bg-text_box"
               name="subject"
-              placeholder="History Page"
+              placeholder=" History Page"
               validation={{ required: true }}
               errorClassName="error box"
             />
             <FieldError name="subject" className="error" />
           </div>
 
-          <div className="form-group">
+          <div className="form-group flex">
 
             <Label name="b_email">
               Backup Email:
@@ -44,7 +45,7 @@ const FeedbackForm = ({ onSubmit, error, loading, formMethods }) => {
             <TextField
               className="box bg-text_box"
               name="b_email"
-              placeholder="john.smith@gmail.com"
+              placeholder=" john.smith@gmail.com"
               validation={{
                 required: false,
                 pattern: {
@@ -57,8 +58,9 @@ const FeedbackForm = ({ onSubmit, error, loading, formMethods }) => {
             <FieldError name="b_email" className="error" />
           </div>
         </div>
+
         <br></br>
-        <div className="reg-flex">
+        <div className="flex flex-col justify-center space-y-4 ">
           <TextAreaField
             className="box bg-text_box"
             name="message"
@@ -69,11 +71,14 @@ const FeedbackForm = ({ onSubmit, error, loading, formMethods }) => {
             errorClassName="error box"
           />
           <FieldError name="message" className="error" />
-        </div>
+
         <br></br>
+        <div className='flex justify-center'>
         <Submit className="submitbox bg-button" disabled={loading}>
           Submit
         </Submit>
+        </div>
+        </div>
       </Form>
     </>
   )

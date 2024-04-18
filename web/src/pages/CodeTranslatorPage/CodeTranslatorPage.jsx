@@ -403,6 +403,7 @@ const CodeTranslatorPage = () => {
               placeholder="Enter code to translate"
               className=" mt-5 w-full resize-none rounded border-gray-300 bg-text_box p-4 placeholder-gray-600"
               data-testid="InputBoxTestId"
+              style={{wordWrap: 'break-word', whiteSpace: 'pre-wrap'}}
             />
 
             <button
@@ -468,16 +469,16 @@ const CodeTranslatorPage = () => {
               id="copy me"
               ref={codeRef}
               onChange={codeChange}
-              className=" custom-syntax-highlighter mt-5 w-full resize-none overflow-auto rounded border-gray-300 bg-text_box p-4"
+              className=" custom-syntax-highlighter mt-5 w-full rounded border-gray-300 bg-text_box p-4"
               style={{
                 fontFamily: 'monospace',
                 whiteSpace: 'pre-wrap',
                 height: '510px', // Height for approximately 20 row
                 padding: '8px',
-                // Use a background color that matches your theme
                 fontSize: '16px', // Adjust as needed
                 lineHeight: '1.5', // Adjust as needed
                 overflowY: 'auto', // Ensure vertical scrolling
+                wordWrap: 'break-word'
               }}
               aria-readonly="true"
               data-testid="codeDivTestId"
@@ -490,6 +491,7 @@ const CodeTranslatorPage = () => {
                     __html: hljs.highlightAuto(code).value,
                   }}
                   data-testid="codeDivTestIdTwo"
+                  style={{wordWrap: 'break-word', whiteSpace: 'pre-wrap'}}
                 />
               </pre>
             </div>
