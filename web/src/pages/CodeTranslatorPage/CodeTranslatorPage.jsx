@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 
 // was previously running this directly in the fronted, imrpoved security by using GraphQL mutation
 //import { runTranslation } from 'api/src/services/gpt/gpt.js'
+import { runTranslationMute } from 'api/src/services/gpt/gpt.js'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/default.css'
 import rc from 'web/public/Rosetta_Code.png'
@@ -140,7 +141,7 @@ const CodeTranslatorPage = () => {
   }
 
   /*theme handler */
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light')
   /* */
 
   const handleTranslateSubmission = () => {
@@ -163,18 +164,27 @@ const CodeTranslatorPage = () => {
       const translatedLanguage = languageDropdownRef2.current.value
       // if (codeRef.current.value != '')
       //   codeRef.current.value = rawCodeRef.current.value
-      const response = await createtransreq({
-        variables: {
-          input: {
-            fromLanguage: originalLanguage,
-            toLanguage: translatedLanguage,
-            code: originalCode,
-          },
+      // const response = await createtransreq({
+      //   variables: {
+      //     input: {
+      //       fromLanguage: originalLanguage,
+      //       toLanguage: translatedLanguage,
+      //       code: originalCode,
+      //     },
+      //   },
+      // })
+      const response = await runTranslationMute({
+        input: {
+          fromLanguage: originalLanguage,
+          toLanguage: translatedLanguage,
+          code: originalCode,
         },
       })
-      const translatedCode = response.data.runTranslationMute.rescode
+      // const translatedCode = response.data.runTranslationMute.rescode
+      const translatedCode = response.rescode
       if (translatedCode == 'ERROR') {
-        const errorcode = response.data.runTranslationMute.error
+        // const errorcode = response.data.runTranslationMute.error
+        const errorcode = response.error
         if (errorcode == 'nonsense') codeError('Your code was not recognized')
         else if (errorcode == 'mt') codeError('Please enter code')
         else if (errorcode == 'too long')
@@ -337,176 +347,208 @@ const CodeTranslatorPage = () => {
   // }
   // }
 
-
-
   return (
     <>
-    <div className={`  ${theme === 'light' ? 'light-theme' : theme === 'dark' ? 'dark-theme' : theme === 'snes' ? 'snes-theme' : theme === 'our' ? 'our-theme' : theme === 'terminal' ? 'terminal-theme' : theme === 'dmg' ? 'dmg-theme' : theme === 'nautilus' ? 'nautilus-theme' : theme === 'copper' ? 'copper-theme' : 'beach-theme'}`}>
-      <div className="min-h-screen ">
-        <Metadata title="CodeTranslator" description="CodeTranslator page" />
-        <div className="flex w-full justify-center ">
-          <img src={rc} alt="rosetta code" className="mt-20" />
-        </div>
+      <div
+        className={`  ${
+          theme === 'light'
+            ? 'light-theme'
+            : theme === 'dark'
+            ? 'dark-theme'
+            : theme === 'snes'
+            ? 'snes-theme'
+            : theme === 'our'
+            ? 'our-theme'
+            : theme === 'terminal'
+            ? 'terminal-theme'
+            : theme === 'dmg'
+            ? 'dmg-theme'
+            : theme === 'nautilus'
+            ? 'nautilus-theme'
+            : theme === 'copper'
+            ? 'copper-theme'
+            : 'beach-theme'
+        }`}
+      >
+        <div className="min-h-screen ">
+          <Metadata title="CodeTranslator" description="CodeTranslator page" />
+          <div className="flex w-full justify-center ">
+            <img src={rc} alt="rosetta code" className="mt-20" />
+          </div>
 
-        <div className="flex flex-row justify-center space-x-20 pt-10">
-          {/* Input Box */}
+          <div className="flex flex-row justify-center space-x-20 pt-10">
+            {/* Input Box */}
 
-          <div className="flex basis-1/4 flex-col ">
-            <label htmlFor="language" >
-              Choose a coding language:
-            </label>
-            <div className="flex flex-row justify-between">
-              <select
-                ref={languageDropdownRef1}
-                name="language"
-                id="language"
-                className="mt-1 h-7 w-20 basis-3/4 rounded bg-dropdown text-center  "
-              >
-                <option value="C">C</option>
-                <option value="C++">C++</option>
-                <option value="Java">Java</option>
-                <option value="PHP">PHP</option>
-                <option value="Python">Python</option>
-                <option value="SQL">SQL</option>
-                <option value="Rust">Rust</option>
-                <option value="R">R</option>
-                <option value="Go">Go</option>
-              </select>
+            <div className="flex basis-1/4 flex-col ">
+              <label htmlFor="language">Choose a coding language:</label>
+              <div className="flex flex-row justify-between">
+                <select
+                  ref={languageDropdownRef1}
+                  name="language"
+                  id="language"
+                  className="bg-dropdown mt-1 h-7 w-20 basis-3/4 rounded text-center  "
+                >
+                  <option value="C">C</option>
+                  <option value="C++">C++</option>
+                  <option value="Java">Java</option>
+                  <option value="PHP">PHP</option>
+                  <option value="Python">Python</option>
+                  <option value="SQL">SQL</option>
+                  <option value="Rust">Rust</option>
+                  <option value="R">R</option>
+                  <option value="Go">Go</option>
+                </select>
 
-              <input
-                type="file"
-                ref={fileInputRef}
-                onChange={handleFileChange}
-                style={{ display: 'none' }}
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  style={{ display: 'none' }}
+                />
+
+                <button
+                  className=" basis-1/8 bg-button w-8 rounded"
+                  aria-label="add file"
+                  onClick={handleButtonClick}
+                >
+                  {' '}
+                  <img
+                    src="https://img.icons8.com/sf-black-filled/64/FFFFFF/add-file.png"
+                    alt="buttonpng"
+                    border="0"
+                  />
+                </button>
+              </div>
+
+              <textarea
+                type="text"
+                value={inputText1}
+                onChange={handleInputChange1}
+                ref={rawCodeRef}
+                rows={20}
+                placeholder="Enter code to translate"
+                className=" mt-5 w-full resize-none rounded border-gray-300 bg-text_box p-4 placeholder-gray-600"
+                data-testid="InputBoxTestId"
               />
 
               <button
-                className=" basis-1/8 w-8 rounded bg-button"
-                aria-label="add file"
-                onClick={handleButtonClick}
+                className="bg-button mt-5 w-1/2  justify-center rounded text-white  "
+                onClick={handleTranslateSubmission}
+                aria-label="Translate"
               >
-                {' '}
-                <img
-                  src="https://img.icons8.com/sf-black-filled/64/FFFFFF/add-file.png"
-                  alt="buttonpng"
-                  border="0"
-                />
+                Translate
               </button>
             </div>
 
-            <textarea
-              type="text"
-              value={inputText1}
-              onChange={handleInputChange1}
-              ref={rawCodeRef}
-              rows={20}
-              placeholder="Enter code to translate"
-              className=" mt-5 w-full resize-none rounded border-gray-300 bg-text_box p-4 placeholder-gray-600"
-              data-testid="InputBoxTestId"
-            />
+            {/* Output Box */}
+            <div className="flex basis-1/4 flex-col ">
+              <label htmlFor="language">
+                Choose a coding language to translate to:
+              </label>
+              <div className="flex flex-row justify-between">
+                <select
+                  ref={languageDropdownRef2}
+                  name="language"
+                  id="language"
+                  className="bg-dropdown mt-1 h-7 w-20 basis-3/4 rounded text-center "
+                >
+                  <option value="C">C</option>
+                  <option value="C++">C++</option>
+                  <option value="Java">Java</option>
+                  <option value="PHP">PHP</option>
+                  <option value="Python">Python</option>
+                  <option value="SQL">SQL</option>
+                  <option value="Rust">Rust</option>
+                  <option value="R">R</option>
+                  <option value="Go">Go</option>
+                </select>
 
-            <button
-              className="mt-5 w-1/2 justify-center  rounded bg-button text-white  "
-              onClick={handleTranslateSubmission}
-              aria-label="Translate"
-            >
-              Translate
-            </button>
-          </div>
+                <button
+                  className=" basis-1/8 bg-button w-8 rounded text-center"
+                  onClick={handleCopyClick}
+                  aria-label="Copy"
+                >
+                  {' '}
+                  <img
+                    src="https://img.icons8.com/material-outlined/96/FFFFFF/copy.png"
+                    alt="copy"
+                    border="0"
+                  />
+                </button>
+                <button
+                  className=" basis-1/8 bg-button  w-8 items-center justify-center  rounded"
+                  onClick={handleDownloadClick}
+                  aria-label="Download"
+                >
+                  <img
+                    src="https://img.icons8.com/material-rounded/64/FFFFFF/download--v1.png"
+                    alt="copy"
+                    border="0"
+                  />
+                </button>
+              </div>
 
-          {/* Output Box */}
-          <div className="flex basis-1/4 flex-col ">
-            <label htmlFor="language" >
-              Choose a coding language to translate to:
-            </label>
-            <div className="flex flex-row justify-between">
-              <select
-                ref={languageDropdownRef2}
-                name="language"
-                id="language"
-                className="mt-1 h-7 w-20 basis-3/4 rounded bg-dropdown text-center "
+              <div
+                id="copy me"
+                ref={codeRef}
+                onChange={codeChange}
+                className=" custom-syntax-highlighter mt-5 w-full resize-none overflow-auto rounded border-gray-300 bg-text_box p-4"
+                style={{
+                  fontFamily: 'monospace',
+                  whiteSpace: 'pre-wrap',
+                  height: '510px', // Height for approximately 20 row
+                  padding: '8px',
+                  // Use a background color that matches your theme
+                  fontSize: '16px', // Adjust as needed
+                  lineHeight: '1.5', // Adjust as needed
+                  overflowY: 'auto', // Ensure vertical scrolling
+                }}
+                aria-readonly="true"
+                data-testid="codeDivTestId"
               >
-                <option value="C">C</option>
-                <option value="C++">C++</option>
-                <option value="Java">Java</option>
-                <option value="PHP">PHP</option>
-                <option value="Python">Python</option>
-                <option value="SQL">SQL</option>
-                <option value="Rust">Rust</option>
-                <option value="R">R</option>
-                <option value="Go">Go</option>
-              </select>
-
-              <button
-                className=" basis-1/8 w-8 rounded text-center bg-button"
-                onClick={handleCopyClick}
-                aria-label="Copy"
-              >
-                {' '}
-                <img
-                  src="https://img.icons8.com/material-outlined/96/FFFFFF/copy.png"
-                  alt="copy"
-                  border="0"
+                <pre>
+                  <code
+                    className={`language-${languageDropdownRef2.current?.value}`}
+                    placeholder="test"
+                    dangerouslySetInnerHTML={{
+                      __html: hljs.highlightAuto(code).value,
+                    }}
+                    data-testid="codeDivTestIdTwo"
+                  />
+                </pre>
+              </div>
+              <Toaster />
+              <div className="flex flex-row space-x-5">
+                <Rater
+                  className={`  ${
+                    theme === 'light'
+                      ? 'light-theme'
+                      : theme === 'dark'
+                      ? 'dark-theme'
+                      : theme === 'snes'
+                      ? 'snes-theme'
+                      : theme === 'our'
+                      ? 'our-theme'
+                      : theme === 'terminal'
+                      ? 'terminal-theme'
+                      : theme === 'dmg'
+                      ? 'dmg-theme'
+                      : theme === 'nautilus'
+                      ? 'nautilus-theme'
+                      : theme === 'copper'
+                      ? 'copper-theme'
+                      : 'beach-theme'
+                  }`}
+                  onSubmit={onSubmit}
+                  error={error}
+                  loading={loading}
+                  formMethods={formMethods}
                 />
-              </button>
-              <button
-                className=" basis-1/8 w-8  items-center justify-center rounded  bg-button"
-                onClick={handleDownloadClick}
-                aria-label="Download"
-
-              >
-                <img
-                  src="https://img.icons8.com/material-rounded/64/FFFFFF/download--v1.png"
-                  alt="copy"
-                  border="0"
-
-                />
-              </button>
-            </div>
-
-            <div
-              id="copy me"
-              ref={codeRef}
-              onChange={codeChange}
-              className=" custom-syntax-highlighter mt-5 w-full resize-none overflow-auto rounded border-gray-300 bg-text_box p-4"
-              style={{
-                fontFamily: 'monospace',
-                whiteSpace: 'pre-wrap',
-                height: '510px', // Height for approximately 20 row
-                padding: '8px',
-                // Use a background color that matches your theme
-                fontSize: '16px', // Adjust as needed
-                lineHeight: '1.5', // Adjust as needed
-                overflowY: 'auto', // Ensure vertical scrolling
-              }}
-              aria-readonly="true"
-              data-testid="codeDivTestId"
-            >
-              <pre>
-                <code
-                  className={`language-${languageDropdownRef2.current?.value}`}
-                  placeholder="test"
-                  dangerouslySetInnerHTML={{
-                    __html: hljs.highlightAuto(code).value,
-                  }}
-                  data-testid="codeDivTestIdTwo"
-                />
-              </pre>
-            </div>
-            <Toaster />
-            <div className="flex flex-row space-x-5">
-              <Rater
-                className={`  ${theme === 'light' ? 'light-theme' : theme === 'dark' ? 'dark-theme' : theme === 'snes' ? 'snes-theme' : theme === 'our' ? 'our-theme' : theme === 'terminal' ? 'terminal-theme' : theme === 'dmg' ? 'dmg-theme' : theme === 'nautilus' ? 'nautilus-theme' : theme === 'copper' ? 'copper-theme' : 'beach-theme'}`}
-                onSubmit={onSubmit}
-                error={error}
-                loading={loading}
-                formMethods={formMethods}
-              />
-              <StarDataCell />
+                <StarDataCell />
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </div>
     </>
   )

@@ -4,7 +4,13 @@ export const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
   // WAS ABLE TO CHANGE THIS AFTER USING A MUTATION
   // dangerouslyAllowBrowser: true,
-  dangerouslyAllowBrowser: false,
+
+  // HAD TO CHANGE THIS BACK BECAUSE NETLIFY YELLED AT
+  // US FOR RUNNING TRANSLATIONS LONGER THAN 10 SECS
+  // AND WE ARE SERVERLESS SO THIS IS OUR ONLY OPTION
+  // WITHOUT REHAULING ALL OUR ERROR HANDLING
+  // dangerouslyAllowBrowser: false,
+  dangerouslyAllowBrower: true,
 })
 
 let queue = []
