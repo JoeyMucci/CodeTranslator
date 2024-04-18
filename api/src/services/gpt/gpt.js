@@ -10,7 +10,7 @@ export const openai = new OpenAI({
   // AND WE ARE SERVERLESS SO THIS IS OUR ONLY OPTION
   // WITHOUT REHAULING ALL OUR ERROR HANDLING
   // dangerouslyAllowBrowser: false,
-  dangerouslyAllowBrower: true,
+  dangerouslyAllowBrowser: true,
 })
 
 let queue = []
