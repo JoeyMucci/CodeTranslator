@@ -31,6 +31,7 @@ const LOGIN_USER = gql`
         name
         email
         password
+        theme
       }
       error
     }
@@ -100,6 +101,9 @@ const LoginForm = () => {
           response.data.loginUserMute.user.email
         )
         localStorage.setItem('authToken', response.data.loginUserMute.token)
+        let theme = response.data.loginUserMute.user.theme
+        if (!theme) theme = 'light'
+        localStorage.setItem('theme', theme)
         navigate('/code-translator')
         location.reload()
       }

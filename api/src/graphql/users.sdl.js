@@ -4,6 +4,7 @@ export const schema = gql`
     name: String
     email: String!
     password: String!
+    theme: String
     resetToken: String
     resetTokenExpiresAt: DateTime
   }
@@ -28,6 +29,7 @@ export const schema = gql`
     name: String
     email: String
     password: String
+    theme: String
     resetToken: String
     resetTokenExpiresAt: DateTime
   }
