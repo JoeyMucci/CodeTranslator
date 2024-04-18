@@ -3,6 +3,11 @@ export const QUERY = gql`
     starData: getAverageRating {
       avg
       count
+      onecount
+      twocount
+      threecount
+      fourcount
+      fivecount
     }
   }
 `
@@ -21,8 +26,19 @@ export const Success = ({ starData }) => {
   const val = starData.count > 0 ? Math.round(starData.avg * 100) / 100 : 0
   const message =
     starData.count > 0 ? val + '(' + starData.count + ')' : '0 ratings'
+  const tooltip =
+    '5 star: ' +
+    starData.fivecount +
+    '\n4 star: ' +
+    starData.fourcount +
+    '\n3 star: ' +
+    starData.threecount +
+    '\n2 star: ' +
+    starData.twocount +
+    '\n1 star: ' +
+    starData.onecount
   return (
-    <div className="inline">
+    <div title={tooltip} className="inline">
       <p className="smalltext">Summary</p>
       <meter
         id="range"
