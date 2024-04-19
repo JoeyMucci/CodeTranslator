@@ -49,13 +49,13 @@ const HelpPage = () => {
       open: false,
     },
     {
-      question: 'How about a video tutorial?',
+      question: 'How Can I leave feedback??',
       answer: (
         <iframe
           width="420"
           height="315"
           title="vid"
-          src="https://www.youtube.com/embed/8NLhRSeONqM"
+          src="https://www.youtube.com/embed/-PLi74i_hcE"
         ></iframe>
       ),
       open: false,

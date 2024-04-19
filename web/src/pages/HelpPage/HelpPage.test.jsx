@@ -100,7 +100,7 @@ describe('HelpPage', () => {
     expect(myClass).toBe(true)
   })
 
-  test('renders a link to the tutorial vid', async () => {
+  test('renders a link to the feedback tutorial vid', async () => {
     render(<HelpPage />)
     expect(screen.getByTitle('vid')).toHaveAttribute(
       'src',
