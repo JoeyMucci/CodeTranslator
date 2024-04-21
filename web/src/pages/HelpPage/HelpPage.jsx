@@ -32,7 +32,7 @@ const HelpPage = () => {
     {
       question: 'What languages are supported?',
       answer:
-        'Currently the languages we support are: C, C++, Java, PHP, Python, Rust, Go, R, and SQL. We plan on adding more languages as time goes on',
+        'Currently the languages we support are: C, C++, Java, JavaScript, PHP, Python, Rust, Go, R, and SQL. We plan on adding more languages as time goes on',
       open: false,
     },
     {
@@ -80,132 +80,152 @@ const HelpPage = () => {
     )
   }
 
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light')
 
   return (
     <>
-    <div className={`  ${theme === 'light' ? 'light-theme' : theme === 'dark' ? 'dark-theme' : theme === 'snes' ? 'snes-theme' : theme === 'our' ? 'our-theme' : theme === 'terminal' ? 'terminal-theme' : theme === 'dmg' ? 'dmg-theme' : theme === 'nautilus' ? 'nautilus-theme' : theme === 'copper' ? 'copper-theme' : 'beach-theme'}`}>
-      <Metadata title="Help" description="Help page" />
-      {/* */}
-      <div className="min-h-screen  ">
-        <Header />
-        <h1>FAQ</h1>
-        <hr></hr>
+      <div
+        className={`  ${
+          theme === 'light'
+            ? 'light-theme'
+            : theme === 'dark'
+            ? 'dark-theme'
+            : theme === 'snes'
+            ? 'snes-theme'
+            : theme === 'our'
+            ? 'our-theme'
+            : theme === 'terminal'
+            ? 'terminal-theme'
+            : theme === 'dmg'
+            ? 'dmg-theme'
+            : theme === 'nautilus'
+            ? 'nautilus-theme'
+            : theme === 'copper'
+            ? 'copper-theme'
+            : 'beach-theme'
+        }`}
+      >
+        <Metadata title="Help" description="Help page" />
+        {/* */}
+        <div className="min-h-screen  ">
+          <Header />
+          <h1>FAQ</h1>
+          <hr></hr>
 
-        {/*FAQ CONTAINERS*/}
-        <div className="faqs ">
-          {faqs.map((faq, i) => (
-            <FAQ faq={faq} index={i} toggleFAQ={toggleFAQ} />
-          ))}
-        </div>
-
-        <br></br>
-        <br></br>
-        <br></br>
-
-        <h1>Helpful sites</h1>
-        <hr></hr>
-
-        <div className="flex basis-1/4 flex-row space-x-10 p-5">
-          <div
-            style={{
-              fontFamily: 'monospace',
-              whiteSpace: 'pre-wrap',
-              height: '205px', // Height for approximately 20 row
-              // Use a background color that matches your theme
-              fontSize: '16px', // Adjust as needed
-              lineHeight: '1.5',
-            }}
-            className="basis-1/4 rounded bg-button text-center"
-          >
-            <a href="https://www.python.org/downloads/" aria-label="Python">
-              <p>Install Python</p>
-              <br></br>
-
-              <img
-                className="justify-center"
-                src={py}
-                alt="Python"
-                style={{ width: '150px', margin: 'auto' }}
-              />
-            </a>
+          {/*FAQ CONTAINERS*/}
+          <div className="faqs ">
+            {faqs.map((faq, i) => (
+              <FAQ faq={faq} index={i} toggleFAQ={toggleFAQ} />
+            ))}
           </div>
-          <div
-            style={{
-              fontFamily: 'monospace',
-              whiteSpace: 'pre-wrap',
-              height: '205px', // Height for approximately 20 row
-              // Use a background color that matches your theme
-              fontSize: '16px', // Adjust as needed
-              lineHeight: '1.5',
-            }}
-            className="basis-1/4 rounded bg-button text-center"
-          >
-            <a
-              href="https://www.java.com/en/download/help/download_options.html"
-              aria-label="Java"
+
+          <br></br>
+          <br></br>
+          <br></br>
+
+          <h1>Helpful sites</h1>
+          <hr></hr>
+
+          <div className="flex basis-1/4 flex-row space-x-10 p-5">
+            <div
+              style={{
+                fontFamily: 'monospace',
+                whiteSpace: 'pre-wrap',
+                height: '205px', // Height for approximately 20 row
+                // Use a background color that matches your theme
+                fontSize: '16px', // Adjust as needed
+                lineHeight: '1.5',
+              }}
+              className="bg-button basis-1/4 rounded text-center"
             >
-              <p>Install java</p>
-              <br />
-              <img
-                className="justify-center"
-                src={jv}
-                alt="Java"
-                style={{ width: '150px', margin: 'auto' }}
-              />
-            </a>
-          </div>
-          <div
-            style={{
-              fontFamily: 'monospace',
-              whiteSpace: 'pre-wrap',
-              height: '205px', // Height for approximately 20 row
+              <a href="https://www.python.org/downloads/" aria-label="Python">
+                <p>Install Python</p>
+                <br></br>
 
-              // Use a background color that matches your theme
-              fontSize: '16px', // Adjust as needed
-              lineHeight: '1.5', // Adjust as needed
-            }}
-            className="basis-1/4 rounded bg-button text-center"
-          >
-            <a
-              href="https://code.visualstudio.com/docs/cpp/config-mingw"
-              aria-label="C compiler"
+                <img
+                  className="justify-center"
+                  src={py}
+                  alt="Python"
+                  style={{ width: '150px', margin: 'auto' }}
+                />
+              </a>
+            </div>
+            <div
+              style={{
+                fontFamily: 'monospace',
+                whiteSpace: 'pre-wrap',
+                height: '205px', // Height for approximately 20 row
+                // Use a background color that matches your theme
+                fontSize: '16px', // Adjust as needed
+                lineHeight: '1.5',
+              }}
+              className="bg-button basis-1/4 rounded text-center"
             >
-              <p>GCC C++ compiler in VS Code</p>
-              <br></br>
-              <img
-                className="justify-center"
-                src={c}
-                alt="C"
-                style={{ width: '120px', margin: 'auto' }}
-              />
-            </a>
-          </div>
+              <a
+                href="https://www.java.com/en/download/help/download_options.html"
+                aria-label="Java"
+              >
+                <p>Install java</p>
+                <br />
+                <img
+                  className="justify-center"
+                  src={jv}
+                  alt="Java"
+                  style={{ width: '150px', margin: 'auto' }}
+                />
+              </a>
+            </div>
+            <div
+              style={{
+                fontFamily: 'monospace',
+                whiteSpace: 'pre-wrap',
+                height: '205px', // Height for approximately 20 row
 
-          <div
-            style={{
-              fontFamily: 'monospace',
-              whiteSpace: 'pre-wrap',
-              height: '205px', // Height for approximately 20 row
-              fontSize: '16px', // Adjust as needed
-            }}
-            className="basis-1/4 rounded bg-button text-center"
-          >
-            <a href="https://www.w3schools.com/php/" aria-label="php">
-              <p>PHP tutorial</p>
-              <br></br>
-              <img
-                className="justify-center"
-                src={ph}
-                alt="PHP"
-                style={{ width: '230px', margin: 'auto' }}
-              />
-            </a>
+                // Use a background color that matches your theme
+                fontSize: '16px', // Adjust as needed
+                lineHeight: '1.5', // Adjust as needed
+              }}
+              className="bg-button basis-1/4 rounded text-center"
+            >
+              <a
+                href="https://code.visualstudio.com/docs/cpp/config-mingw"
+                aria-label="C compiler"
+              >
+                <p>GCC C++ compiler in VS Code</p>
+                <br></br>
+                <img
+                  className="justify-center"
+                  src={c}
+                  alt="C"
+                  style={{ width: '120px', margin: 'auto' }}
+                />
+              </a>
+            </div>
+
+            <div
+              style={{
+                fontFamily: 'monospace',
+                whiteSpace: 'pre-wrap',
+                height: '205px', // Height for approximately 20 row
+                fontSize: '16px', // Adjust as needed
+              }}
+              className="bg-button basis-1/4 rounded text-center"
+            >
+              <a href="https://www.w3schools.com/php/" aria-label="php">
+                <p>PHP tutorial</p>
+                <br></br>
+                <img
+                  className="justify-center"
+                  src={ph}
+                  alt="PHP"
+                  style={{ width: '230px', margin: 'auto' }}
+                />
+              </a>
+            </div>
           </div>
+          <br></br>
+          <br></br>
         </div>
-        <br></br>
-        <br></br>
-      </div>
       </div>
     </>
   )
