@@ -1,4 +1,3 @@
-import { cache, deleteCacheKey } from 'src/lib/cache'
 import { db } from 'src/lib/db'
 
 export const translations = () => {
@@ -6,18 +5,18 @@ export const translations = () => {
 }
 
 export const myTranslations = ({ emmy }) => {
-  return cache(`translations-${emmy}`, () => {
-    return db.translation.findMany({
-      where: { userEmail: emmy },
-      orderBy: {
-        createdAt: 'desc',
-      },
-    })
+  // return cache(`translations-${emmy}`, () => {
+  return db.translation.findMany({
+    where: { userEmail: emmy },
+    orderBy: {
+      createdAt: 'desc',
+    },
   })
+  // })
 }
 
 export const createTranslation = ({ input }) => {
-  deleteCacheKey(`translations-${input.userEmail}`)
+  // deleteCacheKey(`translations-${input.userEmail}`)
   return db.translation.create({
     data: input,
   })

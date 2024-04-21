@@ -52,7 +52,8 @@ export const isCorrectLanguage = async ({ language, code, openai }) => {
     languageResponse.split(' ').includes(language + ';') ||
     languageResponse.split(' ').includes(language + '!') ||
     languageResponse.split(' ').includes(language + '?') ||
-    (language = 'SQL' && languageResponse.includes('SQL'))
+    (language = 'SQL' && languageResponse.includes('SQL')) ||
+    (language = 'JavaScript' && languageResponse.includes('Java'))
   )
 }
 
@@ -122,20 +123,27 @@ export const doOptimization = async ({ language, code, openai }) => {
 export const cleanup = ({ fromLanguage, code }) => {
   // https://blog.ostermiller.org/finding-comments-in-source-code-using-regular-expressions/
 
-  // python being weird edgecase
-  if (code.substring(0, 3) == '```' && code.substring(code.length - 3, code.length) == '```') {
-    code = code.substring(code.indexOf(' '))
-    code = code.substring(0, code.length - 3)
-  }
-
-  if (fromLanguage == 'C' || fromLanguage == 'Java' || fromLanguage == 'C++' || fromLanguage == 'Go')
-    return code.replace(/(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*?\*+\/)|(\/\/.*)/g, '')
-  else if (fromLanguage == 'SQL') return code.replace(/(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*?\*+\/)|(--.*)/g, '')
-  else if (fromLanguage == 'Python' || fromLanguage == 'R') return code.replace(/(#.*)/g, '')
+  if (
+    fromLanguage == 'C' ||
+    fromLanguage == 'Java' ||
+    fromLanguage == 'C++' ||
+    fromLanguage == 'Go' ||
+    fromLanguage == 'JavaScript'
+  )
+    code = code.replace(/(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*?\*+\/)|(\/\/.*)/g, '')
+  else if (fromLanguage == 'SQL') code = code.replace(/(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*?\*+\/)|(--.*)/g, '')
+  else if (fromLanguage == 'Python' || fromLanguage == 'R') code = code.replace(/(#.*)/g, '')
   else if (fromLanguage == 'PHP')
-    return code.replace(/(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*?\*+\/)|(\/\/.*)|(#.*)/g, '')
-  else if (fromLanguage == 'Rust') return code.replace(/(\/\/.*)/g, '')
-  else if (fromLanguage == 'Assembly') return code.replace(/(#.*)|(;.*)/g, '')
+    code = code.replace(/(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*?\*+\/)|(\/\/.*)|(#.*)/g, '')
+  else if (fromLanguage == 'Rust') code = code.replace(/(\/\/.*)/g, '')
+
+  // python being weird edgecase
+  while (code.includes('```') && !code.includes("'```'") && !code.includes('"```"')) {
+    code = code.substring(code.indexOf('```'))
+    code = code.substring(code.indexOf(' '))
+    code = code.substring(0, code.lastIndexOf('```'))
+  }
+  return code
 }
 
 export const exists = ({ fromLanguage, toLanguage, code }) => {
@@ -167,7 +175,7 @@ export const runTranslationMute = async ({ input }) => {
 }
 
 export const runTranslation = async ({ fromLanguage, toLanguage, code }) => {
-  return await runTranslationHelperOld({
+  return await runTranslationHelper({
     fromLanguage: fromLanguage,
     toLanguage: toLanguage,
     code: code,
