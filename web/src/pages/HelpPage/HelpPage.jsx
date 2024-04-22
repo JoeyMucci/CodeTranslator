@@ -48,6 +48,33 @@ const HelpPage = () => {
         'it depends on the size of the file you are trying to convert. If its a small file it should only take a few seconds. As for larger files it may vary',
       open: false,
     },
+
+    {
+      question: 'How do I log in and register?',
+      answer: (
+        <iframe
+          width="420"
+          height="315"
+          title="vid"
+          src="https://www.youtube.com/embed/vFDhltQ0_TM"
+        ></iframe>
+      ),
+      open: false,
+    },
+
+    {
+      question: 'How do I Translate code?',
+      answer: (
+        <iframe
+          width="420"
+          height="315"
+          title="vid"
+          src="https://www.youtube.com/embed/2S1sn5n9_oI"
+        ></iframe>
+      ),
+      open: false,
+    },
+
     {
       question: 'How Can I leave feedback??',
       answer: (
