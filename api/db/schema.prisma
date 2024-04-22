@@ -29,6 +29,7 @@ model User {
   name                String?
   email               String        @unique
   password            String
+  theme               String?
   resetToken          String?
   resetTokenExpiresAt DateTime?
   roles               String        @default("moderator")

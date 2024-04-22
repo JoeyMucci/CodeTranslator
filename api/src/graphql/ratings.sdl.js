@@ -8,6 +8,11 @@ export const schema = gql`
   type AverageData {
     avg: Float
     count: Int!
+    onecount: Int!
+    twocount: Int!
+    threecount: Int!
+    fourcount: Int!
+    fivecount: Int!
   }
 
   type Query {

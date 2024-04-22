@@ -81,9 +81,27 @@ const UserEditingPage = () => {
     localStorage.setItem('theme', theme)
   }, [theme])
 
-  const handleSetTheme = (theme) => {
-    setTheme(theme)
-    localStorage.setItem('theme', theme)
+  // eslint-disable-next-line no-unused-vars
+  const [updateTheme, { loadingtheme, errortheme }] = useMutation(UPDATE_USER, {
+    onCompleted: async () => {},
+  })
+
+  const handleSetTheme = async (theme) => {
+    try {
+      const realData = {
+        theme: theme,
+      }
+      await updateTheme({
+        variables: {
+          email: localStorage.getItem('userEmail'),
+          input: realData,
+        },
+      })
+      setTheme(theme)
+      localStorage.setItem('theme', theme)
+    } catch (error) {
+      toast.error('Update theme failed, try again later')
+    }
   }
   /**** */
 

@@ -31,6 +31,7 @@ const LOGIN_USER = gql`
         name
         email
         password
+        theme
       }
       error
     }
@@ -100,6 +101,9 @@ const LoginForm = () => {
           response.data.loginUserMute.user.email
         )
         localStorage.setItem('authToken', response.data.loginUserMute.token)
+        let theme = response.data.loginUserMute.user.theme
+        if (!theme) theme = 'light'
+        localStorage.setItem('theme', theme)
         navigate('/code-translator')
         location.reload()
       }
@@ -301,7 +305,9 @@ const RegisterForm = () => {
       {passwordMatchError && (
         <p className="mt-2 text-sm text-red-500">Passwords do not match.</p>
       )}
-      <Submit className="submitbox">Submit</Submit>
+      <Submit className="mb-6 mt-16 w-full max-w-full items-center justify-center rounded-2xl border border-solid border-black bg-blue-500 px-16 py-2.5 text-white shadow-sm md:w-[381px]">
+        Submit
+      </Submit>
     </Form>
   )
 }

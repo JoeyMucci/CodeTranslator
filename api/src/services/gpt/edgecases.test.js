@@ -6,6 +6,29 @@ describe('comment edgecase', () => {
       fromLanguage: 'C',
       code: '```C \n/* comment comment comment */\n// comment \nprint("Hello world")\n```',
     })
+    console.log(result)
+    expect(result).not.toContain('```')
+    expect(result).not.toContain('C')
+  })
+
+  it('deal with more difficult pyhton code being translated to a comment', () => {
+    const result = cleanup({
+      fromLanguage: 'C',
+      code: 'Here is the translated code:\n\n```C \n/* comment comment comment */\n// comment \nprint("Hello world")\n```\n\nThat was the translated code',
+    })
+    console.log(result)
+    expect(result).not.toContain('translated')
+    expect(result).not.toContain('```')
+    expect(result).not.toContain('C')
+  })
+
+  it('deal with most difficult pyhton code being translated to a comment', () => {
+    const result = cleanup({
+      fromLanguage: 'C',
+      code: 'Here  ```` is the translated code:\n\n```C \n/* comment comment comment */\n// comment \nprint("Hello world")\n```\n\nThat was the translated ``` code',
+    })
+    console.log(result)
+    expect(result).not.toContain('translated')
     expect(result).not.toContain('```')
     expect(result).not.toContain('C')
   })
