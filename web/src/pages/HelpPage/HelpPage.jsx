@@ -55,7 +55,7 @@ const HelpPage = () => {
         <iframe
           width="420"
           height="315"
-          title="vid"
+          title="login"
           src="https://www.youtube.com/embed/vFDhltQ0_TM"
         ></iframe>
       ),
@@ -68,7 +68,7 @@ const HelpPage = () => {
         <iframe
           width="420"
           height="315"
-          title="vid"
+          title="translation"
           src="https://www.youtube.com/embed/2S1sn5n9_oI"
         ></iframe>
       ),
@@ -81,7 +81,7 @@ const HelpPage = () => {
         <iframe
           width="420"
           height="315"
-          title="vid"
+          title="profile"
           src="https://www.youtube.com/embed/NKSvYfs7Pqg"
         ></iframe>
       ),
@@ -94,7 +94,7 @@ const HelpPage = () => {
         <iframe
           width="420"
           height="315"
-          title="vid"
+          title="history"
           src="https://www.youtube.com/embed/3yXik4REdUQ"
         ></iframe>
       ),
@@ -107,7 +107,7 @@ const HelpPage = () => {
         <iframe
           width="420"
           height="315"
-          title="vid"
+          title="feedback"
           src="https://www.youtube.com/embed/-PLi74i_hcE"
         ></iframe>
       ),
