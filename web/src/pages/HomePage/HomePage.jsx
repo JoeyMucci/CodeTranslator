@@ -83,9 +83,6 @@ const LoginForm = () => {
   const [loginUser] = useMutation(LOGIN_USER)
   const [wrongPasswordError, setWrongPasswordError] = useState(false)
   const [wrongEmailError, setWrongEmailError] = useState(false)
-
-  //const logIn = useAuth()
-
   const handleSubmit = async () => {
     try {
       const response = await loginUser({ variables: { email, password } })
@@ -100,11 +97,11 @@ const LoginForm = () => {
           'userEmail',
           response.data.loginUserMute.user.email
         )
-        localStorage.setItem('authToken', response.data.loginUserMute.token)
+        localStorage.setItem('TempAuthToken', response.data.loginUserMute.token)
         let theme = response.data.loginUserMute.user.theme
         if (!theme) theme = 'light'
         localStorage.setItem('theme', theme)
-        navigate('/code-translator')
+        navigate('/two-factor')
         location.reload()
       }
     } catch (error) {
@@ -138,54 +135,56 @@ const LoginForm = () => {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light')
 
   return (
-    <Form
-      className={` flex flex-col rounded-xl bg-gray-100 px-20 py-12 max-md:max-w-full max-md:px-5 `}
-      onSubmit={handleSubmit}
-    >
-      <Label htmlFor="emailInput" className="mt-2 text-black">
-        Email:
-      </Label>
-      <input
-        id="emailInput"
-        type="email"
-        className="mt-2 w-full max-w-full items-start justify-center rounded-xl bg-gray-200 py-3 pl-3 pr-16 text-gray-800 md:w-[381px]"
-        placeholder="Example.email@njit.edu"
-        aria-label="Enter your email"
-        value={email}
-        onChange={(e) => {
-          setEmail(e.target.value)
-          setWrongEmailError(false)
-        }}
-      />
-      {wrongEmailError && (
-        <p className="mt-2 text-sm text-red-500">Email is incorrect</p>
-      )}
-      <Label htmlFor="passwordInput" className="mt-6 text-black max-md:mt-2">
-        Password:
-      </Label>
-      <input
-        id="passwordInput"
-        type="password"
-        className="mt-2 w-full max-w-full items-start justify-center rounded-xl bg-gray-200 py-3 pl-3 pr-16 text-gray-800 md:w-[381px]"
-        placeholder="SuperSecretPassword11!"
-        aria-label="Enter your password"
-        value={password}
-        onChange={(e) => {
-          setPassword(e.target.value)
-          setWrongPasswordError(false)
-        }}
-      />
-
-      {wrongPasswordError && (
-        <p className="mt-2 text-sm text-red-500">Password is incorrect</p>
-      )}
-      <Submit
-        data-testid="login"
-        className="mb-6 mt-16 w-full max-w-full items-center justify-center rounded-2xl border border-solid border-black bg-blue-500 px-16 py-2.5 text-white shadow-sm md:w-[381px]"
+    <div>
+      <Form
+        className={` flex flex-col rounded-xl bg-gray-100 px-20 py-12 max-md:max-w-full max-md:px-5 `}
+        onSubmit={handleSubmit}
       >
-        Login
-      </Submit>
-    </Form>
+        <Label htmlFor="emailInput" className="mt-2 text-black">
+          Email:
+        </Label>
+        <input
+          id="emailInput"
+          type="email"
+          className="mt-2 w-full max-w-full items-start justify-center rounded-xl bg-gray-200 py-3 pl-3 pr-16 text-gray-800 md:w-[381px]"
+          placeholder="Example.email@njit.edu"
+          aria-label="Enter your email"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value)
+            setWrongEmailError(false)
+          }}
+        />
+        {wrongEmailError && (
+          <p className="mt-2 text-sm text-red-500">Email is incorrect</p>
+        )}
+        <Label htmlFor="passwordInput" className="mt-6 text-black max-md:mt-2">
+          Password:
+        </Label>
+        <input
+          id="passwordInput"
+          type="password"
+          className="mt-2 w-full max-w-full items-start justify-center rounded-xl bg-gray-200 py-3 pl-3 pr-16 text-gray-800 md:w-[381px]"
+          placeholder="SuperSecretPassword11!"
+          aria-label="Enter your password"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value)
+            setWrongPasswordError(false)
+          }}
+        />
+
+        {wrongPasswordError && (
+          <p className="mt-2 text-sm text-red-500">Password is incorrect</p>
+        )}
+        <Submit
+          data-testid="login"
+          className="mb-6 mt-16 w-full max-w-full items-center justify-center rounded-2xl border border-solid border-black bg-blue-500 px-16 py-2.5 text-white shadow-sm md:w-[381px]"
+        >
+          Login
+        </Submit>
+      </Form>
+    </div>
   )
 }
 

@@ -4,7 +4,7 @@ import { navigate } from '@redwoodjs/router'
 
 const AuthLayout = () => {
   const authToken = localStorage.getItem('authToken')
-  if (location.pathname === '/reset-password') {
+  if (location.pathname === '/reset-password' || location.pathname === '/two-factor') {
     return null
   }
   if (!authToken) {

@@ -14,10 +14,16 @@ export const schema = gql`
     error: String
   }
 
+  type VerificationResponse {
+    success: Boolean!
+    message: String
+  }
+
   type Query {
     users: [User!]! @skipAuth
     user(id: Int!): User @skipAuth
     userByEmail(emmy: String!): User @skipAuth
+    TwoFactorCode(email: String!): TwoFactorCode @skipAuth
   }
 
   input CreateUserInput {
@@ -44,6 +50,11 @@ export const schema = gql`
     user: User!
   }
 
+  type TwoFactorCode {
+    userEmail: String!
+    Code: Int!
+    User: User
+  }
   type AuthPayloadRes {
     token: String
     user: User
@@ -59,6 +70,8 @@ export const schema = gql`
     updateUserMute(email: String!, input: UpdateUserInput!): UserRes! @skipAuth
     changePassword(id: Int!, input: ChangePasswordInput!): User! @skipAuth
     deleteUser(id: Int!): User! @skipAuth
+    verifyCode(email: String!, Code: String!): VerificationResponse! @skipAuth
+    initiate2FA(email: String!): VerificationResponse! @skipAuth
     deleteUserByEmail(email: String!): User! @skipAuth
   }
 `
