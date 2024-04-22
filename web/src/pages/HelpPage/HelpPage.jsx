@@ -76,6 +76,32 @@ const HelpPage = () => {
     },
 
     {
+      question: 'How do I make changes to my profile?',
+      answer: (
+        <iframe
+          width="420"
+          height="315"
+          title="vid"
+          src="https://www.youtube.com/embed/NKSvYfs7Pqg"
+        ></iframe>
+      ),
+      open: false,
+    },
+
+    {
+      question: 'How can I see my previous translations?',
+      answer: (
+        <iframe
+          width="420"
+          height="315"
+          title="vid"
+          src="https://www.youtube.com/embed/3yXik4REdUQ"
+        ></iframe>
+      ),
+      open: false,
+    },
+
+    {
       question: 'How Can I leave feedback??',
       answer: (
         <iframe
