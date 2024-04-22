@@ -104,6 +104,7 @@ const RecordhistoryPage = () => {
                 <option value="C">C</option>
                 <option value="C++">C++</option>
                 <option value="Java">Java</option>
+                <option value="Javascript">Javascript</option>
                 <option value="PHP">PHP</option>
                 <option value="Python">Python</option>
                 <option value="SQL">SQL</option>
@@ -130,6 +131,7 @@ const RecordhistoryPage = () => {
                 <option value="C">C</option>
                 <option value="C++">C++</option>
                 <option value="Java">Java</option>
+                <option value="Javascript">Javascript</option>
                 <option value="PHP">PHP</option>
                 <option value="Python">Python</option>
                 <option value="SQL">SQL</option>
