@@ -21,7 +21,7 @@ const Feedback = ({ id, subject, message, name, createdAt }) => {
     <>
       <div className="flex flex-col">
         <p className="text">{subject}</p>
-        <div className="rounded bg-text_box p-5 hover:bg-blue-300">
+        <div className="rounded bg-dropdown p-5 hover:bg-blue-300">
           <pre
             style={{
               whiteSpace: 'pre-wrap',

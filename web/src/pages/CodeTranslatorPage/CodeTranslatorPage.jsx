@@ -409,7 +409,7 @@ const CodeTranslatorPage = () => {
                   onChange={handleFileChange}
                   style={{ display: 'none' }}
                 />
-
+                
                 <button
                   className=" basis-1/8 bg-button w-8 rounded"
                   aria-label="add file"
@@ -433,6 +433,7 @@ const CodeTranslatorPage = () => {
                 placeholder="Enter code to translate"
                 className=" mt-5 w-full resize-none rounded border-gray-300 bg-text_box p-4 placeholder-gray-600"
                 data-testid="InputBoxTestId"
+                style={{wordWrap: 'break-word', whiteSpace: 'pre-wrap'}}
               />
 
               <button
@@ -443,7 +444,6 @@ const CodeTranslatorPage = () => {
                 Translate
               </button>
             </div>
-
             {/* Output Box */}
             <div className="flex basis-1/4 flex-col ">
               <label htmlFor="language">
@@ -507,6 +507,7 @@ const CodeTranslatorPage = () => {
                   fontSize: '16px', // Adjust as needed
                   lineHeight: '1.5', // Adjust as needed
                   overflowY: 'auto', // Ensure vertical scrolling
+                   wordWrap: 'break-word'
                 }}
                 aria-readonly="true"
                 data-testid="codeDivTestId"

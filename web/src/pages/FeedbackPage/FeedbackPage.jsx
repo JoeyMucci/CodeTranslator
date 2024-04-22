@@ -61,6 +61,9 @@ const ContactPage = () => {
         loading={loading}
         formMethods={formMethods}
       />
+      <br></br>
+      <br></br>
+      <br></br>
       <FeedbacksCell></FeedbacksCell>
       </div>
     </>

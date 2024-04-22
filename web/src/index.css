@@ -696,7 +696,7 @@ h1 {
   font-size: 48px;
   font-weight: 700;
   text-transform: uppercase;
-  padding-left: 20px;
+  //padding-left: 20px;
   max-width: 1536px;
   margin: auto;
 }
@@ -793,6 +793,13 @@ Record h2 {
 
 
 /***** CSS Magic to Highlight Stars on Hover *****/
+
+
+.rating > label { /*This is the outline*/
+  cursor: pointer;
+  -webkit-text-stroke: 1px black;
+}
+
 
 .rating > input:checked ~ label, /* show gold star when clicked */
 .rating:not(:checked) > label:hover, /* hover current star */

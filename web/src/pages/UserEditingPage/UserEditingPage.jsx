@@ -230,7 +230,7 @@ const UserEditingPage = () => {
   return (
     <>
       <div
-        className={`  ${
+        className={` min-h-full  ${
           theme === 'light'
             ? 'light-theme'
             : theme === 'dark'
@@ -249,6 +249,7 @@ const UserEditingPage = () => {
             ? 'copper-theme'
             : 'beach-theme'
         }`}
+        style={{minHeight: '100hv'}}
       >
         <MetaTags title="Edit Profile" description="Edit your profile" />
         <br></br>

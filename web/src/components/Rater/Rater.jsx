@@ -5,12 +5,13 @@ const Rater = ({ onSubmit, error, loading, formMethods }) => {
     <>
       <Form onSubmit={onSubmit} error={error} formMethods={formMethods}>
         <p className="smalltext"> How was our translation?</p>
-        <fieldset className="rating">
+        <fieldset className="rating" >
           <RadioField
             id="star5"
             name="score"
             value={5}
             validation={{ required: true }}
+            style={{outline: '2px'}}
           />
           <Label
             className="full"
