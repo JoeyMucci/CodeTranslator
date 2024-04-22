@@ -113,7 +113,7 @@ const handleDeleteByIdClick = (id) => {
       case 'Java':
         fileExtension = 'java'
         break
-      case 'Javascript':
+      case 'JavaScript':
         fileExtension = 'js'
         break
       case 'PHP':

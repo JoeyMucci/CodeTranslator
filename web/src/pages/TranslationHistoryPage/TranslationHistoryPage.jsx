@@ -8,7 +8,7 @@ import { toast, Toaster } from '@redwoodjs/web/toast'
 import arrow from 'web/public/Arrow.png';
 
 const QUERY = gql`
-query RecordsQuery($goal: String!) {
+query RecordsQueryTwo($goal: String!) {
   records: myTranslations(emmy: $goal){
     id
   }
@@ -104,7 +104,7 @@ const RecordhistoryPage = () => {
                 <option value="C">C</option>
                 <option value="C++">C++</option>
                 <option value="Java">Java</option>
-                <option value="Javascript">Javascript</option>
+                <option value="JavaScript">JavaScript</option>
                 <option value="PHP">PHP</option>
                 <option value="Python">Python</option>
                 <option value="SQL">SQL</option>
@@ -131,7 +131,7 @@ const RecordhistoryPage = () => {
                 <option value="C">C</option>
                 <option value="C++">C++</option>
                 <option value="Java">Java</option>
-                <option value="Javascript">Javascript</option>
+                <option value="JavaScript">JavaScript</option>
                 <option value="PHP">PHP</option>
                 <option value="Python">Python</option>
                 <option value="SQL">SQL</option>
