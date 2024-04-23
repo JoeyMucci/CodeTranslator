@@ -28,7 +28,7 @@ const ResendCodeButton = () => {
   const handleResendCode = async () => {
     try {
       const email = localStorage.getItem('userEmail')
-      const response = initiate2FA({ variables: { email } })
+      const response = await initiate2FA({ variables: { email } })
       if (response.data.initiate2FA.success) {
         toast.success('Code Sent to Email')
       } else {
