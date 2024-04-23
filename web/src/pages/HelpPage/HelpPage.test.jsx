@@ -100,11 +100,43 @@ describe('HelpPage', () => {
     expect(myClass).toBe(true)
   })
 
-  test('renders a link to the tutorial vid', async () => {
+  test('renders a link to the feedback tutorial vid', async () => {
     render(<HelpPage />)
-    expect(screen.getByTitle('vid')).toHaveAttribute(
+    expect(screen.getByTitle('feedback')).toHaveAttribute(
       'src',
-      'https://www.youtube.com/embed/8NLhRSeONqM'
+      'https://www.youtube.com/embed/-PLi74i_hcE'
+    )
+  })
+
+  test('renders a link to the login register tutorial vid', async () => {
+    render(<HelpPage />)
+    expect(screen.getByTitle('login')).toHaveAttribute(
+      'src',
+      'https://www.youtube.com/embed/vFDhltQ0_TM'
+    )
+  })
+
+  test('renders a link to the translation tutorial vid', async () => {
+    render(<HelpPage />)
+    expect(screen.getByTitle('translation')).toHaveAttribute(
+      'src',
+      'https://www.youtube.com/embed/2S1sn5n9_oI'
+    )
+  })
+
+  test('renders a link to the profile tutorial vid', async () => {
+    render(<HelpPage />)
+    expect(screen.getByTitle('profile')).toHaveAttribute(
+      'src',
+      'https://www.youtube.com/embed/NKSvYfs7Pqg'
+    )
+  })
+
+  test('renders a link to the history tutorial vid', async () => {
+    render(<HelpPage />)
+    expect(screen.getByTitle('history')).toHaveAttribute(
+      'src',
+      'https://www.youtube.com/embed/3yXik4REdUQ'
     )
   })
 

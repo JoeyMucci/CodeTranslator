@@ -52,14 +52,67 @@ const HelpPage = () => {
         'it depends on the size of the file you are trying to convert. If its a small file it should only take a few seconds. As for larger files it may vary',
       open: false,
     },
+
     {
-      question: 'How about a video tutorial?',
+      question: 'How do I log in and register?',
       answer: (
         <iframe
           width="420"
           height="315"
-          title="vid"
-          src="https://www.youtube.com/embed/8NLhRSeONqM"
+          title="login"
+          src="https://www.youtube.com/embed/vFDhltQ0_TM"
+        ></iframe>
+      ),
+      open: false,
+    },
+
+    {
+      question: 'How do I Translate code?',
+      answer: (
+        <iframe
+          width="420"
+          height="315"
+          title="translation"
+          src="https://www.youtube.com/embed/2S1sn5n9_oI"
+        ></iframe>
+      ),
+      open: false,
+    },
+
+    {
+      question: 'How do I make changes to my profile?',
+      answer: (
+        <iframe
+          width="420"
+          height="315"
+          title="profile"
+          src="https://www.youtube.com/embed/NKSvYfs7Pqg"
+        ></iframe>
+      ),
+      open: false,
+    },
+
+    {
+      question: 'How can I see my previous translations?',
+      answer: (
+        <iframe
+          width="420"
+          height="315"
+          title="history"
+          src="https://www.youtube.com/embed/3yXik4REdUQ"
+        ></iframe>
+      ),
+      open: false,
+    },
+
+    {
+      question: 'How Can I leave feedback??',
+      answer: (
+        <iframe
+          width="420"
+          height="315"
+          title="feedback"
+          src="https://www.youtube.com/embed/-PLi74i_hcE"
         ></iframe>
       ),
       open: false,
