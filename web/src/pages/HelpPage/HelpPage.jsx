@@ -67,7 +67,7 @@ const HelpPage = () => {
     },
 
     {
-      question: 'How do I Translate code?',
+      question: 'How do I translate code?',
       answer: (
         <iframe
           width="420"
@@ -106,7 +106,7 @@ const HelpPage = () => {
     },
 
     {
-      question: 'How Can I leave feedback??',
+      question: 'How can I leave feedback?',
       answer: (
         <iframe
           width="420"
