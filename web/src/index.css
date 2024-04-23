@@ -5,6 +5,12 @@
 @tailwind components;
 @tailwind utilities;
 
+li {
+  font-size: 14px;
+  margin-left: 10px;
+  list-style-type: circle;
+}
+
 
 /*POTENTIAL THEMING*/
 

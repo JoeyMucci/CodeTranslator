@@ -41,7 +41,7 @@ const ResendCodeButton = () => {
 
   return (
     <button
-      className="rounded-xl bg-gray-600 px-6 py-3 text-white"
+      className="rounded-xl bg-gray-600 px-6 py-3 text-white md:w-[381px]"
       onClick={handleResendCode}
     >
       Resend Code

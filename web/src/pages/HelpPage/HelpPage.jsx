@@ -26,7 +26,7 @@ const HelpPage = () => {
     {
       question: 'How will I know when GPT-3 is available?',
       answer:
-        "On the translation page there will be an availabilty indicator to let you know if GPT-3 is available for translation. A green indicator means you're good to go, and a red indicator mean's there's an issue.",
+        'Hit the translate button! We will let you know if there is an issue connecting with GPT-3',
       open: false,
     },
     {
