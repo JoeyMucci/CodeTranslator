@@ -24,17 +24,24 @@ model Rating {
   createdAt DateTime @default(now())
 }
 
+model TwoFactorCode {
+  userEmail String @id
+  Code      Int
+  user      User   @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+}
+
 model User {
-  id                  Int           @id @default(autoincrement())
+  id                  Int             @id @default(autoincrement())
   name                String?
-  email               String        @unique
+  email               String          @unique
   password            String
   theme               String?
   resetToken          String?
   resetTokenExpiresAt DateTime?
-  roles               String        @default("moderator")
+  roles               String          @default("moderator")
   translations        Translation[]
   contacts            Contact[]
+  TwoFactorCode       TwoFactorCode[]
 }
 
 model Translation {
@@ -46,10 +53,4 @@ model Translation {
   translatedLanguage String
   createdAt          DateTime @default(now())
   user               User     @relation(fields: [userEmail], references: [email], onDelete: Cascade)
-}
-
-model blacklisted_tokens {
-  id         Int      @id @default(autoincrement())
-  token      String
-  created_at DateTime @default(now())
 }
