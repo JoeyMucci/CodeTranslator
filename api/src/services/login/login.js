@@ -59,12 +59,12 @@ export const sendCodeEmail = async (to, Code) => {
   var sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail()
 
   sendSmtpEmail.subject = 'Rosetta Code 2 factor Authentification'
-  sendSmtpEmail.sender = { name: 'Rosetta Code', email: 'RosettaCodeOfficial@gmail.com' }
+  sendSmtpEmail.sender = { name: 'Rosetta Code', email: 'jmucci314@gmail.com' }
   sendSmtpEmail.type = 'classic'
   sendSmtpEmail.htmlContent = `Your 6 digit 2-factor authentification code is ${Code}` // Assuming text is HTML content
   sendSmtpEmail.to = [{ email: `${to}` }]
   try {
-    const data = apiInstance.sendTransacEmail(sendSmtpEmail)
+    const data = await apiInstance.sendTransacEmail(sendSmtpEmail)
     console.log('API called successfully. Returned data: ' + data)
     return true
   } catch (error) {
