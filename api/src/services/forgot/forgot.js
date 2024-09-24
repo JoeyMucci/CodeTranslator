@@ -34,10 +34,10 @@ export const sendPasswordResetEmail = async (to, resetLink) => {
   sendSmtpEmail.subject = 'Rosetta Code Password Reset'
   sendSmtpEmail.sender = { name: 'Rosetta Code', email: 'jmucci314@gmail.com' }
   sendSmtpEmail.type = 'classic'
-  sendSmtpEmail.htmlContent = `${resetLink}` // Assuming text is HTML content
+  sendSmtpEmail.htmlContent = `Reset your password at: ${resetLink}` // Assuming text is HTML content
   sendSmtpEmail.to = [{ email: `${to}` }]
   try {
-    const data = apiInstance.sendTransacEmail(sendSmtpEmail)
+    const data = await apiInstance.sendTransacEmail(sendSmtpEmail)
     console.log('API called successfully. Returned data: ' + data)
     return { success: true, message: 'Email sent successfully' }
   } catch (error) {
