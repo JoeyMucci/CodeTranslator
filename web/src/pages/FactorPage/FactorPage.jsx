@@ -81,7 +81,7 @@ const TwoFactorAuthPage = () => {
     >
       <Toaster />
       <Label htmlFor="codeInput" className="mt-2 text-black">
-        Code:
+        Code (check email):
       </Label>
       <input
         id="codeInput"
