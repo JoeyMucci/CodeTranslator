@@ -32,7 +32,7 @@ export const sendPasswordResetEmail = async (to, resetLink) => {
   var sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail()
 
   sendSmtpEmail.subject = 'Rosetta Code Password Reset'
-  sendSmtpEmail.sender = { name: 'Rosetta Code', email: 'RosettaCodeOfficial@gmail.com' }
+  sendSmtpEmail.sender = { name: 'Rosetta Code', email: 'jmucci314@gmail.com' }
   sendSmtpEmail.type = 'classic'
   sendSmtpEmail.htmlContent = `${resetLink}` // Assuming text is HTML content
   sendSmtpEmail.to = [{ email: `${to}` }]
